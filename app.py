@@ -15,5 +15,6 @@ class Hola2(Resource):
 api.add_resource(Hola, '/hola/<name>')
 api.add_resource(Hola2, '/hola2')
 
+
 if __name__ == '__main__':
      app.run(debug=True)
