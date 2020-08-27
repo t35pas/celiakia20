@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 
 api = Api(app)
 
-from models import Book
+from models import Receta
 
 class Hola(Resource):
     def get(self, name):

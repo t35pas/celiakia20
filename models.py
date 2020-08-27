@@ -1,25 +1,25 @@
 from app import db
 
-class Book(db.Model):
-    __tablename__ = 'books'
+class Receta(db.Model):
+    __tablename__ = 'receta'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    author = db.Column(db.String())
-    published = db.Column(db.String())
+    nombre = db.Column(db.String())
+    calificacion = db.Column(db.Integer)
+    tiempoPreparacion = db.Column(db.Integer)
 
-    def __init__(self, name, author, published):
-        self.name = name
-        self.author = author
-        self.published = published
+    def __init__(self, nombre, calificacion, tiempoPreparacion):
+        self.nombre = nombre
+        self.calificacion = calificacion
+        self.tiempoPreparacion = tiempoPreparacion
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
-    
+
     def serialize(self):
         return {
-            'id': self.id, 
-            'name': self.name,
-            'author': self.author,
-            'published':self.published
-        }
+            'id': self.id,
+            'nombre': self.nombre,
+            'calificacion': self.calificacion,
+            'tiempoPreparacion':self.tiempoPreparacion
+}
