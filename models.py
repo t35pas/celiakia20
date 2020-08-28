@@ -38,6 +38,7 @@ class Usuario(db.Model):
         self.apellido = apellido
         self.email = email
 
+
     def __repr__(self):
         return '<id {}>'.format(self.id)
 
