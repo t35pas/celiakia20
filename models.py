@@ -53,8 +53,8 @@ class Favorito(db.Model):
     __tablename__ = 'favorito'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.String(), db.ForeignKey('receta.id'))
-    id_usuario = db.Column(db.String(), db.ForeignKey('usuario.id'))
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
 
     def __init__(self, id_receta, id_usuario):
         self.id_receta = id_receta
