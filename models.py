@@ -3,7 +3,7 @@ from app import db
 class Receta(db.Model):
     __tablename__ = 'receta'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String())
     calificacion = db.Column(db.Integer)
     tiempoPreparacion = db.Column(db.Integer)
