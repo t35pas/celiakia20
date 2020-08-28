@@ -23,6 +23,6 @@ class Receta(db.Model):
             'id': self.id,
             'nombre': self.nombre,
             'calificacion': self.calificacion,
-            'tiempoPreparacion':self.tiempoPreparacion
+            'tiempoPreparacion':self.tiempoPreparacion,
             'nuevo':self.nuevo
 }
