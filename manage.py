@@ -7,7 +7,5 @@ manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
-from models import Receta
-
 if __name__ == '__main__':
     manager.run()
