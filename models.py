@@ -53,10 +53,10 @@ class Favorito(db.Model):
     __tablename__ = 'favorito'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    idReceta = db.Column(db.String(), db.ForeignKey('receta.id'))
-    idUsuario = db.Column(db.String(), db.ForeignKey('usuario.id'))
+    id_receta = db.Column(db.String(), db.ForeignKey('receta.id'))
+    id_usuario = db.Column(db.String(), db.ForeignKey('usuario.id'))
 
-    def __init__(self, idReceta, idUsuario):
+    def __init__(self, id_receta, id_usuario):
         self.nombre = nombre
         self.apellido = apellido
 
@@ -66,6 +66,6 @@ class Favorito(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'idReceta': self.idReceta,
-            'idUsuario': self.idUsuario
+            'id_receta': self.id_receta,
+            'id_usuario': self.id_usuario
 }
