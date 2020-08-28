@@ -57,8 +57,8 @@ class Favorito(db.Model):
     id_usuario = db.Column(db.String(), db.ForeignKey('usuario.id'))
 
     def __init__(self, id_receta, id_usuario):
-        self.nombre = nombre
-        self.apellido = apellido
+        self.id_receta = id_receta
+        self.id_usuario = id_usuario
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
