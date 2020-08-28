@@ -33,7 +33,7 @@ class Usuario(db.Model):
     apellido = db.Column(db.String())
     email = db.Column(db.String())
 
-   def __init__(self, nombre, apellido, email):
+    def __init__(self, nombre, apellido, email):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
