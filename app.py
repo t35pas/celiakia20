@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 
 api = Api(app)
 
-from models import Receta, Preparacion, Usuario, Favorito
+from models import Receta, Preparacion, Dificultad, Unidad, Ingrediente, Ingrediente_Por_Receta, Usuario, Favorito
 
 class Hola(Resource):
     def get(self, name):
