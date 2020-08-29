@@ -28,7 +28,7 @@ class Receta(db.Model):
 class Preparacion(db.Model):
     __tablename__ = 'preparacion'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Serial)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
     orden_del_paso = db.Column(db.Integer)
     descripcion = db.Column(db.String())
