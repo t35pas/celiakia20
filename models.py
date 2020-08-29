@@ -9,7 +9,7 @@ class Receta(db.Model):
     calificacion = db.Column(db.Integer)
     tiempoPreparacion = db.Column(db.Integer)
 
-    def __init__(self, nombre, calificacion, tiempoPreparacion, nuevo):
+    def __init__(self, nombre, calificacion, tiempoPreparacion):
         self.nombre = nombre
         self.calificacion = calificacion
         self.tiempoPreparacion = tiempoPreparacion
@@ -23,6 +23,30 @@ class Receta(db.Model):
             'nombre': self.nombre,
             'calificacion': self.calificacion,
             'tiempoPreparacion':self.tiempoPreparacion
+}
+
+class Preparacion(db.Model):
+    __tablename__ = 'preparacion'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    orden_del_paso = db.Column(db.Integer)
+    descripcion = db.Column(db.String())
+
+    def __init__(self, id_receta, orden_del_paso, descripcion):
+        self.id_receta = id_receta
+        self.orden_del_paso = orden_del_paso
+        self.descripcion = descripcion
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'id_receta': self.id_receta,
+            'orden_del_paso': self.orden_del_paso,
+            'descripcion':self.descripcion
 }
 
 class Usuario(db.Model):
