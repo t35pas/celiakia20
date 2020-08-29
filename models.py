@@ -28,7 +28,7 @@ class Receta(db.Model):
 class Preparacion(db.Model):
     __tablename__ = 'preparacion'
 
-    id = db.Column(db.Serial)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
     orden_del_paso = db.Column(db.Integer)
     descripcion = db.Column(db.String())
@@ -47,6 +47,87 @@ class Preparacion(db.Model):
             'id_receta': self.id_receta,
             'orden_del_paso': self.orden_del_paso,
             'descripcion':self.descripcion
+}
+
+class Dificultad(db.Model):
+    __tablename__ = 'dificultad'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descripcion = db.Column(db.String())
+
+    def __init__(self, descripcion):
+        self.descripcion = descripcion
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'descripcion': self.descripcion
+}
+
+class Unidad(db.Model):
+    __tablename__ = 'unidad'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descripcion = db.Column(db.String())
+
+    def __init__(self, descripcion):
+        self.descripcion = descripcion
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'descripcion': self.descripcion
+}
+
+class Ingrediente(db.Model):
+    __tablename__ = 'ingrediente'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descripcion = db.Column(db.String())
+    id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
+
+    def __init__(self, descripcion, id_unidad):
+        self.descripcion = descripcion
+        self.id_unidad = id_unidad
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'descripcion': self.descripcion,
+            'id_unidad': id_unidad
+}
+
+class Ingrediente_Por_Receta(db.Model):
+    __tablename__ = 'ingrediente_por_receta'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'))
+    cantidad = db.Column(db.Integer)
+
+    def __init__(self, id_receta, id_ingrediente, cantidad):
+        self.id_receta = id_receta
+        self.id_ingrediente = id_ingrediente
+        self.cantidad = cantidad
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'id_receta': self.id_receta,
+            'id_ingrediente': id_ingrediente,
+            'cantidad': cantidad
 }
 
 class Usuario(db.Model):
