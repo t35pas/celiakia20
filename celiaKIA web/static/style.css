@@ -1,0 +1,170 @@
+html, body, div, h1, h2, a, img, ol, ul, li, form, table, tbody,
+tfoot, thead, tr, th, td, footer, header, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline; 
+  }
+
+body {
+	background-color: rgb(24, 24, 24);
+	padding: 0em 4em 4em 4em; 
+  }
+
+	body, input, select, textarea {
+		color: rgba(255, 255, 255, 0.55);
+		font-family: "Courier New", monospace;
+		font-size: 16.5pt;
+		font-weight: normal;
+		line-height: 1.75;
+	}
+
+	h1, h2 {
+		color: #ffffff;
+		font-weight: bold;
+		line-height: 1.5;
+		margin: 0 0 0.5em 0;
+	}
+
+	h1 {
+		font-size: 2.75em;
+		text-align: center;
+	}
+
+		h1.major, div.major {
+			margin: 0 0 45px 0;
+			position: relative;
+			padding-bottom: 0.35em;
+		}
+
+			h1.major:after, div.major:after {
+				background-image: linear-gradient(to right, #3a8350, #84e691);
+				border-radius: 0.2em;
+				bottom: 0;
+				content: '';
+				height: 0.05em;
+				position: absolute;
+				right: 0;
+				width: 100%;
+			}
+
+	h2 {
+		font-size: 1.75em;
+	}
+
+	input[type="text"] {
+		appearance: none;
+		transform: scale(1);
+		background-color: transparent;
+		border-radius: 6px;
+		border: solid 2px rgba(255, 255, 255, 0.35);
+		color: inherit;
+		display: block;
+		outline: 0;
+		padding: 0 1em;
+		text-decoration: none;
+		position: relative;
+	  }
+	  input[type="text"]:focus {
+		background-color: rgba(255, 255, 255, 0.125);
+		border-color: #1cb495; }
+	  
+	  input[type="text"]{
+		height: 40px;
+		width: 300px;
+		float: left; }
+	  
+	  input[type="submit"] {
+		background-color: #1cb495;
+		border-radius: 6px;
+		border: 0;
+		color: #ffffff;
+		font-weight: 700;
+		height: 45px;
+		display: block;
+		line-height: 40px;
+		padding: 0 1.125em;
+		text-align: center;
+	  }
+
+	header p {
+		color: rgba(255, 255, 255, 0.35);
+		position: relative;
+		margin: 0 0 1.5em 0;
+	}
+
+	header h2 + p {
+		font-size: 1.25em;
+		margin-top: -1em;
+		line-height: 1.5em;
+	}
+
+	
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+
+		table tbody tr {
+			border: solid 1px rgba(255, 255, 255, 0.15);
+			border-left: 0;
+			border-right: 0;
+		}
+
+			table tbody tr:nth-child(2n + 1) {
+				background-color: rgba(255, 255, 255, 0.05);
+			}
+
+		table td {
+			padding: 0.75em 0.75em;
+		}
+
+		table th {
+			color: #ffffff;
+			font-size: 1em;
+			font-weight: bold;
+			padding: 0 0.75em 0.75em 0.75em;
+			text-align: left;
+		}
+
+		table thead {
+			border-bottom: solid 2px rgba(255, 255, 255, 0.15);
+		}
+
+		table tfoot {
+			border-top: solid 2px rgba(255, 255, 255, 0.15);
+		}
+		
+	.wrapper {
+		position: relative;
+	}
+
+		.wrapper > .inner {
+			padding: 3em 0em 0em 0em ;
+			max-width: 100%;
+			width: 75em;
+		}
+
+	#header {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		background-color: #1cb495;
+		cursor: default;
+		opacity: 100%;
+		padding: 20px 30px;
+		text-align: center;
+	}
+
+		#header > .title {
+			border: 0;
+			color: #ffffff;
+			display: block;
+			text-align: center;
+			font-size: 50px;
+			font-weight: bold;
+		}
