@@ -1,6 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -36,9 +36,15 @@ class RecetasPorNombre(Resource):
         recetasPorNombre = Receta.query.filter(Receta.nombre.like(nombre)).all()
         return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
+class ObtenerImagen(Resource):
+    def get(self, nombre):
+        filename = 'imagenes/'+nombre
+        return send_file(filename, mimetype='image/jpg')
+
 api.add_resource(Hola, '/hola/<name>')
 api.add_resource(Hola2, '/hola2')
 api.add_resource(RecetasPorNombre, '/recetas/<nombre>')
+api.add_resource(ObtenerImagen, '/obtener_imagen/<nombre>')
 
 if __name__ == '__main__':
      app.run(debug=True)
