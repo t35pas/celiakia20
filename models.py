@@ -6,12 +6,16 @@ class Receta(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String())
     calificacion = db.Column(db.Integer)
-    tiempoPreparacion = db.Column(db.Integer)
+    tiempo_preparacion = db.Column(db.Integer)
+    id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
+	url_imagen = db.Column(db.String())
 
-    def __init__(self, nombre, calificacion, tiempoPreparacion):
+    def __init__(self, nombre, calificacion, tiempo_preparacion, id_dificultad, url_imagen):
         self.nombre = nombre
         self.calificacion = calificacion
-        self.tiempoPreparacion = tiempoPreparacion
+        self.tiempo_preparacion = tiempo_preparacion
+        self.id_dificultad = id_dificultad
+        self.url_imagen = url_imagen
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -21,7 +25,9 @@ class Receta(db.Model):
             'id': self.id,
             'nombre': self.nombre,
             'calificacion': self.calificacion,
-            'tiempoPreparacion':self.tiempoPreparacion
+            'tiempo_preparacion':self.tiempo_preparacion
+            'id_dificultad':self.id_dificultad
+            'url_imagen':self.url_imagen
 }
 
 class Preparacion(db.Model):

@@ -40,6 +40,5 @@ api.add_resource(Hola, '/hola/<name>')
 api.add_resource(Hola2, '/hola2')
 api.add_resource(RecetasPorNombre, '/recetas/<nombre>')
 
-
 if __name__ == '__main__':
      app.run(debug=True)
