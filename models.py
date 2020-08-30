@@ -25,8 +25,8 @@ class Receta(db.Model):
             'id': self.id,
             'nombre': self.nombre,
             'calificacion': self.calificacion,
-            'tiempo_preparacion':self.tiempo_preparacion
-            'id_dificultad':self.id_dificultad
+            'tiempo_preparacion':self.tiempo_preparacion,
+            'id_dificultad':self.id_dificultad,
             'url_imagen':self.url_imagen
 }
 
