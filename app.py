@@ -22,16 +22,23 @@ class Hola2(Resource):
     def get(self):
         return {"HOLASA":"HOLASA"}
 
-@app.route("/getall")
-def get_all():
+@app.route("/recetas")
+def get_recetas():
     try:
         recetas=Receta.query.all()
-        return  jsonify([e.serialize() for e in recetas])
+        return  jsonify([receta.serialize() for receta in recetas])
     except Exception as e:
 	    return(str(e))
 
+class RecetasPorNombre(Resource):
+    def get(self, nombre):
+        nombre = "%{}%".format(nombre)
+        recetasPorNombre = Receta.query.filter(Receta.nombre.like(nombre)).all()
+        return  jsonify([receta.serialize() for receta in recetasPorNombre])
+
 api.add_resource(Hola, '/hola/<name>')
 api.add_resource(Hola2, '/hola2')
+api.add_resource(RecetasPorNombre, '/recetas/<nombre>')
 
 
 if __name__ == '__main__':
