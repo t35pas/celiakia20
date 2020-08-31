@@ -1,6 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -40,6 +40,10 @@ class ObtenerImagen(Resource):
     def get(self, nombre):
         filename = 'imagenes/'+nombre
         return send_file(filename, mimetype='image/jpg')
+
+@app.route('/')
+def Login():
+        return render_template('login.html')
 
 api.add_resource(Hola, '/hola/<name>')
 api.add_resource(Hola2, '/hola2')
