@@ -4,14 +4,14 @@ class Receta(db.Model):
     __tablename__ = 'receta'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String())
+    titulo = db.Column(db.String())
     calificacion = db.Column(db.Integer)
     tiempo_preparacion = db.Column(db.Integer)
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
     nombre_imagen = db.Column(db.String())
 
-    def __init__(self, nombre, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen):
-        self.nombre = nombre
+    def __init__(self, titulo, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen):
+        self.titulo = titulo
         self.calificacion = calificacion
         self.tiempo_preparacion = tiempo_preparacion
         self.id_dificultad = id_dificultad
@@ -23,7 +23,7 @@ class Receta(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'nombre': self.nombre,
+            'titulo': self.titulo,
             'calificacion': self.calificacion,
             'tiempo_preparacion':self.tiempo_preparacion,
             'id_dificultad':self.id_dificultad,
