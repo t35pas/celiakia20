@@ -179,3 +179,24 @@ class Favorito(db.Model):
             'id_receta': self.id_receta,
             'id_usuario': self.id_usuario
 }
+
+class Administrador(db.Model):
+    __tablename__ = 'administrador'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String())
+    password = db.Column(db.String())
+
+    def __init__(self, nombre, password):
+        self.nombre = nombre
+        self.password = password
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'password': self.password
+}

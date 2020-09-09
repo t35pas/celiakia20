@@ -14,15 +14,17 @@ api = Api(app)
 
 from models import Receta, Preparacion, Dificultad, Unidad, Ingrediente, Ingrediente_Por_Receta, Usuario, Favorito
 
+@app.route('/hola/<name>')
 class Hola(Resource):
     def get(self, name):
         return {"Hello":name}
 
+@app.route('/hola2')
 class Hola2(Resource):
     def get(self):
         return {"HOLASA":"HOLASA"}
 
-@app.route("/recetas")
+@app.route('/recetas')
 def get_recetas():
     try:
         recetas=Receta.query.all()
@@ -30,12 +32,14 @@ def get_recetas():
     except Exception as e:
 	    return(str(e))
 
+@app.route('/recetas/<nombre>')
 class RecetasPorNombre(Resource):
     def get(self, nombre):
         nombre = "%{}%".format(nombre)
         recetasPorNombre = Receta.query.filter(Receta.nombre.like(nombre)).all()
         return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
+@app.route('/obtener_imagen/<nombre>')
 class ObtenerImagen(Resource):
     def get(self, nombre):
         filename = 'imagenes/'+nombre
@@ -45,10 +49,16 @@ class ObtenerImagen(Resource):
 def Login():
         return render_template('login.html')
 
-api.add_resource(Hola, '/hola/<name>')
-api.add_resource(Hola2, '/hola2')
-api.add_resource(RecetasPorNombre, '/recetas/<nombre>')
-api.add_resource(ObtenerImagen, '/obtener_imagen/<nombre>')
+@app.route('/crear')
+def Crear_receta():
+        return render_template('crear_receta.html')
+
+@app.route('/ingresar', methods = ['POST','GET'])
+def Ingresar():
+    if request.method == 'POST':
+        nombre_admin = request.form['nombre_admin']
+        password_admin = request.form['password_admin']
+    return render_template('index.html')
 
 if __name__ == '__main__':
      app.run(debug=True)
