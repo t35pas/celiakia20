@@ -1,47 +1,44 @@
 {% extends 'layout_login.html' %}
 {% block body %}
-<body style="background-image:linear-gradient( #20c9a6 10%,#224abe 100%);">
-<div class="container">
-    <div class="row justify-content-center" style="margin-top: 120px;">
-      	<div class="col-xl-10 col-lg-12 col-md-9">
-        	<div class="card o-hidden border-0 shadow-lg my-5">
-          		<div class="card-body p-0">
-            		<div class="row">
-		            	<div class="col-lg-6 d-none d-lg-block">
-							<img src="{{url_for('static', filename = 'camaleon2.jpg')}}" alt="" style="width: 480px; height: 340px;">
-						</div>
-              			<div class="col-lg-6">
-                			<div class="p-5">
-                  				<div class="text-center">
+
+<body style="background-image:url({{ url_for('static', filename='camaleonportada.jpg') }});">
+	<div class="container">
+		<div class="row justify-content-center" style="margin-top: 120px;">
+			<div class="col-xl-6 col-lg-12 col-md-9">
+				<div class="card o-hidden border-0 shadow-lg my-5">
+					<div class="card-body p-0">
+						<div class="row">
+							<div class="p-5">
+								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Administrador CeliaKIA!</h1>
 									<p>Para ingresar al maravilloso mundo de KIA debes ingresar la contraseña...</p>
 								</div>
 								<hr>
-                  				<form class="user" id="form" method="POST" action="/ingresar">
+								<form class="user" id="form" method="POST" action="/inicio">
 									<div class="form-group">
-										<input name="nombre_admin" id="nombre_admin" type="text" class="form-control form-control-user"  placeholder="Nombre">
-										<input name="password_admin" id="password_admin" type="password" class="form-control form-control-user"  placeholder="Contraseña">
+										<input class="form-control form-control-user" name="nombre_admin" id="nombre_admin" type="text" placeholder="Nombre">
 									</div>
-									<a class="btn btn-success btn-user btn-block" style="color: #fff">Ingresar</a>
-                    			</form>
-                  				
-                			</div>
-              			</div>
-            		</div>
-          		</div>
-        	</div>
-      	</div>
-    </div>
-</div>
+									<div class="form-group">
+										<input class="form-control form-control-user" name="password_admin" id="password_admin" type="password"placeholder="Contraseña">
+									</div>
+									<Button class="btn btn-success btn-user btn-block">Ingresar</Button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	  <!-- Bootstrap core JavaScript-->
+	  <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+	  <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+	
+	  <!-- Core plugin JavaScript-->
+	  <script src="{{url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+	
+	  <!-- Custom scripts for all pages-->
+	  <script src="{{url_for('static', filename = 'js/sb-admin-2.min.js')}}"></script>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{{url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{{url_for('static', filename = 'js/sb-admin-2.min.js')}}"></script>
-</body>
 {% endblock %}

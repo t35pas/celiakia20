@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,36 +16,11 @@
 
   <!-- Custom styles for this template-->
   <link href="{{url_for('static', filename = 'css/sb-admin-2.min.css')}}" rel="stylesheet">
-
 </head>
-	<body>
-
-        <!-- El body va a cambiar entre lo que hay en index.html y editar_receta.html -->
-        {% block body %}
-        
-        {% endblock %}
-
-        <!-- Scripts -->
-        <script>
-        var campos_max = 100;   //max de 10 campos
-        var x = 1;
-        // Agregar
-        $('#add_field').click (function(e) {
-                e.preventDefault();     //prevenir clicks
-                if (x < campos_max) {
-                    $('#listas').append('<div>\
-                        <input type="text" name="campo"'+ x +'" >\
-                        <a href="#" class="remover_campo">Remover</a>\
-                        </div>');
-                    x++;
-                }
-        });
-        // Remover
-        $('#listas').on("click",".remover_campo",function(e) {
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-        });
-</script>
-    </body>
+<body>
+  <!-- El body va a cambiar entre lo que hay en index.html y editar_receta.html -->
+  {% block body %}
+  
+  {% endblock %}
+</body>
 </html>

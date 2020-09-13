@@ -19,33 +19,97 @@
   <link href="{{url_for('static', filename = 'css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
-	<body id="page-top">
+<body id="page-top">
 
-        <!-- El body va a cambiar entre lo que hay en index.html y editar_receta.html -->
-        {% block body %}
-        {% endblock %}
+  <div id="wrapper">
 
-        <!-- Scripts -->
-        <script>
-            var campos_max = 100;   //max de 10 campos
-            var x = 1;
-            // Agregar
-            $('#add_field').click (function(e) {
-                    e.preventDefault();     //prevenir clicks
-                    if (x < campos_max) {
-                        $('#listas').append('<div class="input-group mb-3">\
-                            <input class="form-control" type="text" name="campo'+ x +'" placeholder="Paso numero: '+ x +'">\
-                              <button class="btn btn btn-danger btn-circle remover_campo" type="button"><i class="fas fa-trash"></i></button>\
-                            </div>');
-                        x++;
-                    }
-            });
-            // Remover
-            $('#listas').on("click",".remover_campo",function(e) {
-                    e.preventDefault();
-                    $(this).parent('div').remove();
-                    x--;
-            });
-        </script>
-    </body>
+    <!-- Barra lateral de Navegacion -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"> 
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+        <div class="sidebar-brand-text mx-3">CeliaKIA</div>
+      </a>
+      <hr class="sidebar-divider my-0">
+
+      <!-- Items de la barra de navegacion -->
+      <li class="nav-item">
+        <a class="nav-link" href="/receta/nueva">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Crear receta</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/inicio">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Listado de recetas</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Read me</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Administrador</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="" data-toggle="modal" data-target="#logoutModal">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Salir</span>
+        </a>
+      </li>
+      <hr class="sidebar-divider d-none d-md-block">
+    </ul> 
+    <!-- Contenido del body de cada pagina en particular -->
+    {% block body %}
+    
+    {% endblock %}
+    <!-- Footer -->
+    
+  </div>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cerrar sesion</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Para cerrar sesion selecciona "Salir".</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/">Salir</a>
+        </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    var campos_max = 100;   //max de 10 campos
+    var x = 1;
+    // Agregar
+    $('#add_field').click (function(e) {
+      e.preventDefault();     //prevenir clicks
+      if (x < campos_max) {
+      $('#listas').append('<div class="input-group mb-3">\
+        <input class="form-control" type="text" name="campo'+ x +'" placeholder="Paso numero: '+ x +'">\
+        <button class="btn btn btn-danger btn-circle remover_campo" type="button"><i class="fas fa-trash"></i></button>\
+        </div>');
+        x++;
+      }
+    });
+    // Remover
+    $('#listas').on("click",".remover_campo",function(e) {
+      e.preventDefault();
+       $(this).parent('div').remove();
+        x--;
+    });
+  </script>
+</body>
 </html>

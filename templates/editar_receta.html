@@ -1,92 +1,41 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<!-- Page Wrapper -->
-<div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-              <div class="sidebar-brand-text">CeliaKIA</div>
-            </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="/crear">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Crear receta</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="/inicio">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Listado de recetas</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            <h1 class="h3 mb-2 text-gray-800">R E C E T A S</h1>
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Salir
-                </a>
-            </li>
-
-          </ul>
-
-        </nav>
-        <!-- End of Topbar -->
-      <!-- Begin Page Content -->
-      <div class="container-fluid">
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
 
 <div style="margin: 100px;">
-    <h1>Editar receta</h1>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="card card-body">      
-                <form class="user" action="/actualizar/{{receta.0}}" method="POST">
-                    <div class="form-group">
-                        <label>Nombre de la Receta</label>
-                        <input class="form-control" type="text" name="nombre" placeholder="nombre de receta" value="{{receta.0}}">
-                    </div>
-                    <div class="form-group">
-                        <label>Ingredientes</label>
-                        <input type="text" class="form-control" name="ingrediente" placeholder="ingredientes de receta" value="{{receta.1}}">
-                    </div>
-                    <div class="form-group">
-                        <label>Preparacion</label>
-                        <input class="form-control" type="text" name="preparacion" placeholder="pasos de receta" value="{{receta.2}}">
-                    </div>
-                    <button type="submit" class="btn btn-outline-success">Enviar</button>
+  <h1>Editar receta</h1>
+  <div class="row">
+      <div class="col-md-5">
+          <div class="card card-body">      
+              <form class="user" action="/actualizar/{{receta.id}}" method="POST">
+                <div class="form-group">
+                    <label>Titulo</label>
+                    <input class="form-control" type="text" name="titulo" value={{receta.titulo}}>
+                  </div>
+                  <div class="form-group">
+                    <label>tiempo de preparacion</label>
+                    <input class="form-control" type="number" name="tiempo_preparacion" value={{receta.tiempo_preparacion}}>
+                  </div>
+                  <div class="form-group">
+                    <label>Dificultad</label>
+                    <input class="form-control" type="text" name="dificultad"  value={{receta.id_dificultad}}>
+                  </div>
+                  <div class="form-group">
+                    <label>Calificacion</label>
+                    <input class="form-control" type="number" name="calificacion"  value={{receta.calificacion}}>
+                  </div>
+                  <div class="form-group">
+                    <label>nombre imagen</label>
+                    <input class="form-control" type="text" name="nombre_imagen"  value={{receta.nombre_imagen}}>
+                  </div>
+                  <button type="submit" class="btn btn-outline-success">Enviar</button>
                 </form>
-            </div>
-        </div>
-    </div>
+          </div>
+      </div>
+  </div>
 </div>
 </div>
 <!-- Bootstrap core JavaScript-->
@@ -105,4 +54,5 @@
 
 <!-- Page level custom scripts -->
 <script src="{{url_for('static', filename = 'js/demo/datatables-demo.js')}}"></script>
+
 {% endblock %}
