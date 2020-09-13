@@ -50,12 +50,12 @@ def Index():
         password_admin = request.form['password_admin']
         admin_loggeando = Administrador.query.filter_by(nombre=nombre_admin).first()
         if (admin_loggeando.password == password_admin):
-            recetas = Receta.query.all()
+            recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id).add_columns(Receta.id, Receta.titulo, Receta.calificacion, Receta.tiempo_preparacion, Receta.nombre_imagen, Dificultad.descripcion).all()
             return render_template('index.html', recetas = recetas)
         else:
             return redirect(url_for('Login'))
     else:
-        recetas = Receta.query.all()
+        recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id).add_columns(Receta.id, Receta.titulo, Receta.calificacion, Receta.tiempo_preparacion, Receta.nombre_imagen, Dificultad.descripcion).all()
         return render_template('index.html', recetas = recetas)
 
 @app.route('/receta/nueva')
@@ -71,7 +71,7 @@ def Crear_receta():
         dificultad = request.form['dificultad']
         nombre_imagen = request.form['nombre_imagen']
 
-        id_dificultad = Dificultad.query.filter_by(descripcion=dificultad).first()
+        id_dificultad = Dificultad.query.filter_by(descripcion = dificultad).first()
 
         nueva_receta = Receta(nombre, calificacion, tiempo_preparacion, id_dificultad.id, nombre_imagen)
         
@@ -84,7 +84,10 @@ def Crear_receta():
 @app.route('/editar/<id>')
 def obtener_receta(id):
     receta = Receta.query.get(id)
-    return render_template('editar_receta.html', receta = receta)
+    id_dif = receta.id_dificultad
+    dificultad = Dificultad.query.get(id_dif)
+    print(dificultad)
+    return render_template('editar_receta.html', receta = receta, dificultad = dificultad)
 
 @app.route('/actualizar/<id>', methods = ['POST'])
 def actualizar_receta(id):

@@ -6,54 +6,107 @@
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
-  <!-- Main Content -->
-  <div id="content">
+  <div id="content" style="margin-top: 68px;">
 
-  <!-- Begin Page Content -->
-  <div class="container-fluid">
-
-    <div class="row">
-      <div class="col-md-5">
-          <div class="card card-body">
+    <div class="container-fluid">
+      <div class="row">
+        
+        <div class="col-lg-6">
+        
+          <div class="card shadow mb-4">
+        
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Informacion General</h6>
+            </div>
+        
+            <div class="card-body">
               <form action="/crear" method="POST">
-                  <div class="form-group">
-                    <label>Nombre de la Receta</label>
-                    <input  class="form-control" type="text" name="titulo" placeholder="nombre de receta">  
-                  </div>
-                  <div class="form-group">
-                    <label>Tiempo de preparacion</label>                
-                    <input  class="form-control" type="number" name="tiempo_preparacion" placeholder="Tiempo de preparacion">
-                  </div>
-                  <div class="form-group">
-                    <label>Calificacion</label>                
-                    <input class="form-control" type="number" name="calificacion" placeholder="Calificacion">
-                  </div>
-                  <div class="form-group">
-                    <label>Dificultad</label>                
-                    <input  class="form-control" type="text" name="dificultad" placeholder="dificultad">
-                  </div>
-                  <div class="form-group">
-                    <label>Nombre Imagen</label>                
-                    <input  class="form-control" type="text" name="nombre_imagen" placeholder="nombre_imagen">
-                  </div>
-                  <div class="form-group">
-                      <label>Pasos de la receta</label>
-                      <input class="form-control" type="text" name="preparacion" placeholder="paso numero: 0">
-                      <div id="listas" style="margin-top: 15px;"></div>
-                      <div class="input-group-append">
-                        <button class="btn btn-info btn-icon-split" id="add_field" value="adicionar" type="button">
-                          <span class="icon text-white-50">
-                            <i class="fas fa-plus-circle"></i>
-                          </span>
-                          <span class="text">Agregar Paso</span>
-                        </button>
-                      </div>
-                  </div>
-                  <button type="submit" class="btn btn-outline-success">Enviar</button>
+                <div class="form-group">
+                  <label>Nombre de la Receta</label>
+                  <input  class="form-control" type="text" name="titulo" placeholder="nombre de receta">  
+                </div>
+                <div class="form-group">
+                  <label>Tiempo de preparacion</label>                
+                  <input  class="form-control" type="number" name="tiempo_preparacion" placeholder="Tiempo de preparacion">
+                </div>
+                <div class="form-group">
+                  <label>Calificacion</label>                
+                  <input class="form-control" type="number" name="calificacion" placeholder="Calificacion">
+                </div>
+                <div class="form-group">
+                  <label>Dificultad</label>                
+                  <input  class="form-control" type="text" name="dificultad" placeholder="dificultad">
+                </div>
+                <div class="form-group">
+                  <label>Nombre Imagen</label>                
+                  <input  class="form-control" type="text" name="nombre_imagen" placeholder="nombre_imagen">
+                </div>
+                <button type="submit" class="btn btn-outline-success">Enviar</button>
               </form>
+            </div>
+        
           </div>
+        
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="card shadow mb-4">
+
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Preparacion</h6>
+              <div class="input-group-append">
+                <button class="btn btn-info btn-icon-split" style="align-self: center;" id="add_paso" value="adicionar" type="button">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus-circle"></i>
+                  </span>
+                  <span class="text">Agregar Paso</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Pasos de la receta</label>
+                <input class="form-control" type="text" name="preparacion" placeholder="paso numero: 0">
+                <div id="preparacion" style="margin-top: 15px;"></div>
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="card shadow mb-4">
+
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Ingredientes</h6>
+              <div class="input-group-append">
+                <button class="btn btn-info btn-icon-split" style="align-self: center;" id="add_ingrediente" value="adicionar" type="button">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-plus-circle"></i>
+                  </span>
+                  <span class="text">Agregar Ingrediente</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Pasos de la receta</label>
+                <input class="form-control" type="text" name="ingrediente" placeholder="Ingrediente numero: 0">
+                <div id="ingredientes" style="margin-top: 15px;"></div>
+              </div>
+            </div>
+          
+          </div>
+
+        </div>
+
       </div>
+
+    </div>
+
   </div>
+
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
