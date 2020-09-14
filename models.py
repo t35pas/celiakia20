@@ -76,10 +76,10 @@ class Unidad(db.Model):
     __tablename__ = 'unidad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String())
+    descripcion_u = db.Column(db.String())
 
     def __init__(self, descripcion):
-        self.descripcion = descripcion
+        self.descripcion_u = descripcion_u
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -87,7 +87,7 @@ class Unidad(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'descripcion': self.descripcion
+            'descripcion': self.descripcion_u
 }
 
 class Ingrediente(db.Model):
