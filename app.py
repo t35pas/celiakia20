@@ -77,8 +77,7 @@ def Crear_receta():
         
         db.session.add(nueva_receta)
         db.session.commit()
-
-        flash('Receta agregada exitosamente!')
+        flash("Receta agregada exitosamente!")
         return redirect(url_for('Index'))
 
 @app.route('/editar/<id>')
@@ -119,6 +118,28 @@ def Eliminar_receta(id):
     db.session.commit()
     flash('Receta eliminada correctamente')
     return redirect(url_for('Index'))
+
+@app.route('/admins')
+def Admins():
+        administradores = Administrador.query.all()
+        return render_template('administrador.html', administradores = administradores)
+
+@app.route('/cambio/password',  methods = ['POST', 'GET'])
+def Cambio_Pass_Admin():
+        if request.method == 'POST':
+            nombre_a = request.form['nombre_a']
+            vieja_pass = request.form['password_vieja']
+            nueva_pass = request.form['password_nueva']
+
+            admin = Administrador.query.filter_by(nombre = nombre_a).first()
+
+            if (vieja_pass == admin.password):
+                admin.password = nueva_pass
+                db.session.commit()
+                flash('Felicitaciones! El cambio de contrase;a ha sido exitoso')
+            else: 
+                flash('Ingresaste una contrase;a incorrecta, intenta nuevamente!')
+        return redirect(url_for('Admins'))
 
 if __name__ == '__main__':
      app.run(debug=True)

@@ -18,6 +18,9 @@
   <!-- Custom styles for this template-->
   <link href="{{url_for('static', filename = 'css/sb-admin-2.min.css')}}" rel="stylesheet">
 
+  <!-- Custom styles for this page -->
+  <link href="{{url_for('static', filename = 'vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+
 </head>
 <body id="page-top">
 
@@ -33,25 +36,19 @@
       <!-- Items de la barra de navegacion -->
       <li class="nav-item">
         <a class="nav-link" href="/receta/nueva">
-          <i class="fas fa-fw fa-chart-area"></i>
+          <i class="far fa-fw fa-plus-square"></i>
           <span>Crear receta</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/inicio">
-          <i class="fas fa-fw fa-table"></i>
+          <i class="fas fa-fw fa-clipboard-list"></i>
           <span>Listado de recetas</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Read me</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="">
-          <i class="fas fa-fw fa-table"></i>
+        <a class="nav-link" href="/admins">
+          <i class="fas fa-fw fa-users"></i>
           <span>Administrador</span>
         </a>
       </li>
