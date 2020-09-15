@@ -1,5 +1,6 @@
 from app import db
 
+
 class Receta(db.Model):
     __tablename__ = 'receta'
 
