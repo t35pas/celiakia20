@@ -7,7 +7,22 @@
   <div id="content">
 
     <div class="container-fluid">
-      <h1 style="margin-top: 20px; margin-bottom: 20px;">EDITAR RECETA</h1>
+  
+      <h1 style="margin-top: 20px; margin-bottom: 20px; text-align: center;">{{receta.titulo}}</h1>
+  
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+        {% endif %}
+      {% endwith %}
+
       <div class="row">
         
         <div class="col-lg-6">
@@ -20,69 +35,107 @@
         
             <div class="card-body">
               <form class="user" action="/actualizar/{{receta.id}}" method="POST">
-                <div class="form-group">
-                    <label>Titulo</label>
-                    <input class="form-control" type="text" name="titulo" value={{receta.titulo}}>
-                  </div>
-                  <div class="form-group">
-                    <label>tiempo de preparacion</label>
-                    <input class="form-control" type="number" name="tiempo_preparacion" value={{receta.tiempo_preparacion}}>
-                  </div>
-                  <div class="form-group">
-                    <label>Dificultad</label>
-                    <input class="form-control" type="text" name="dificultad"  value={{dificultad.descripcion}}>
-                  </div>
-                  <div class="form-group">
-                    <label>Calificacion</label>
-                    <input class="form-control" type="number" name="calificacion"  value={{receta.calificacion}}>
-                  </div>
-                  <div class="form-group">
-                    <label>nombre imagen</label>
-                    <input class="form-control" type="text" name="nombre_imagen"  value={{receta.nombre_imagen}}>
+                <div class="form-row">  
+                  <div class="form-group col-md-6">
+                      <label>Titulo</label>
+                      <input class="form-control" type="text" name="titulo" value={{receta.titulo}}>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>tiempo de preparacion</label>
+                      <input class="form-control" type="number" name="tiempo_preparacion" value={{receta.tiempo_preparacion}}>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Dificultad</label>
+                      <select class="form-control" id="dificultad" name="dificultad" value={{dificultad.descripcion}}>
+                        <option>facil</option>
+                        <option>intermedio</option>
+                        <option>dificil</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Calificacion</label>
+                      <input class="form-control" type="number" name="calificacion"  value={{receta.calificacion}}>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>nombre imagen</label>
+                      <input class="form-control" type="text" name="nombre_imagen"  value={{receta.nombre_imagen}}>
+                    </div>
                   </div>
                   <button type="submit" class="btn btn-outline-success">Actualizar</button>
                 </form>
             </div>
         
           </div>
+
+          <div class="card shadow mb-4">
+                  
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Ingredientes</h6>
+                <div class="input-group-append">
+                  <a href="/receta/ingredientes/{{receta.id}}" class="btn btn-info btn-sm">Agregar Ingrediente</a>
+                </div>
+            </div>
+      
+            <div class="card-body">
+              <form action="/receta/actualizar/ingredientes/{{receta.id}}" method="POST">
+                {% for ingrediente in ingredientes %}
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label>Cantidad</label>
+                      <input  class="form-control" type="number" name="cantidad{{ingrediente.id}}" value={{ingrediente.cantidad}}>  
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Unidad</label>
+                      <input  class="form-control" type="text" name="unidad" value={{ingrediente.descripcion_u}} readonly>  
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Nombre</label>
+                      <input  class="form-control" type="text" name="nombre_ingrediente" value={{ingrediente.descripcion}} readonly>  
+                    </div>
+                  </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-outline-success">Actualizar</button>
+              </form>
+            </div>
+
+        </div>
         
         </div>
 
         <div class="col-lg-6">
 
           <div class="card shadow mb-4">
-
+                  
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-primary">Preparacion</h6>
-            </div>
-
-            <div class="card-body">
-              <div class="form-group">
-                <label>Pasos de la receta</label>
-                <input class="form-control" type="text" name="preparacion" placeholder="paso numero: 0">
-                <div id="preparacion" style="margin-top: 15px;"></div>
+              <div class="input-group-append">
+                <a href="/receta/preparacion/{{receta.id}}" class="btn btn-info btn-sm">Agregar Paso</a>
               </div>
             </div>
-          
-          </div>
-
-          <div class="card shadow mb-4">
-
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary">Ingredientes</h6>
-            </div>
-
+        
             <div class="card-body">
-              <div class="form-group">
-                <label>Pasos de la receta</label>
-                <input class="form-control" type="text" name="ingrediente" placeholder="Ingrediente numero: 0">
-                <div id="ingredientes" style="margin-top: 15px;"></div>
-              </div>
+              <form action="/receta/actualizar/preparacion/{{receta.id}}" method="POST">
+              {% for preparacion in preparaciones %}
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label>Paso Numero</label>
+                    <input  class="form-control" type="text" name="orden{{preparacion.id}}" value={{preparacion.orden_del_paso}}>  
+                  </div>
+                  <div class="form-group col-md-9">
+                    <label>Descripcion</label>
+                    <input  class="form-control" type="text" name="descripcion{{preparacion.id}}" maxlength="100" value= {{preparacion.descripcion}}>  
+                  </div>
+                </div>
+              {% endfor %}
+                <button type="submit" class="btn btn-outline-success">Actualizar</button>
+              </form>      
             </div>
-          
+        
           </div>
 
-        </div>
+          
 
       </div>
 

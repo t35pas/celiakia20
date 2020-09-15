@@ -8,11 +8,11 @@
     <div id="content">
       <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 style="margin-top: 20px; margin-bottom: 20px;">R E C E T A S</h1>   
+        <h1 style="margin-top: 20px; margin-bottom: 20px; text-align: center;">R E C E T A S</h1>   
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Listado de recetas de CeliaKIA</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Informacion General</h6>
           </div>
           <div class="card-body">
               <div class="dataTable">
@@ -37,8 +37,8 @@
                             <td> {{ receta.calificacion}}</td>
                             <td>
                                 <a href="" class="btn btn-outline-success">Ver</a>
-                                <a href="/editar/{{receta.id}}" class="btn btn-outline-info">Editar</a>
-                                <a href="/eliminar/{{receta.id}}" class="btn btn-outline-danger" >Eliminar</a>
+                                <a href="/actualizar/{{receta.id}}" class="btn btn-outline-info">Editar</a>
+                                <a href="/receta/eliminar/{{receta.id}}" class="btn btn-outline-danger" >Eliminar</a>
                             </td>
                         </tr>
                         {% endfor %}

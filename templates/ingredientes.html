@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <div id="content">
+
+        <div class="container-fluid">
+
+            <h1 style="margin-top: 20px; margin-bottom: 20px; text-align: center;">I N G R E D I E N T E S</h1>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        
+            <nav class="nav nav-pills flex-column flex-sm-row" style="margin-bottom: 20px; margin-top: 20px;">
+                <a class="flex-sm-fill text-sm-center nav-link disabled" href="" tabindex="-1" aria-disabled="true">Información General</a>
+                <a class="flex-sm-fill text-sm-center nav-link active" href="">Ingredientes</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="/receta/preparacion/{{nueva_receta.id}}">Preparacion</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="">Finalizar</a>
+            </nav>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
+              
+            <div class="row">
+              
+                <div class="col-lg-6">  
+
+                    <div class="card shadow mb-4">
+                        
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Listado de ingredientes</h6>
+                                <div class="input-group-append">
+                                    <a href="/receta/actualizar/ingredientes/{{nueva_receta.id}}" class="btn btn-warning btn-sm" >Editar Ingredientes</a>
+                                </div>
+                            </div>
+                        
+                        <div class="card-body">
+                            <div class="dataTable">
+                                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                            <th>Nombre</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ingrediente in ingredientes %}
+                                        <tr>
+                                            <td> {{ ingrediente.id}} </td>
+                                            <td> {{ ingrediente.cantidad}} </td>
+                                            <td> {{ ingrediente.descripcion_u}} </td>
+                                            <td> {{ ingrediente.descripcion}} </td>
+                                            <td>
+                                                <a href="/receta/{{nueva_receta.id}}/ingrediente/eliminar/{{ingrediente.id}}" class="btn btn btn-danger remover_campo" type="button"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+        
+                    <div class="card shadow mb-4">
+                  
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Agregar ingrediente</h6>
+                        </div>
+                  
+                        <div class="card-body">
+                            <form action="/receta/ingredientes/{{nueva_receta.id}}" method="POST">
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Cantidad</label>
+                                        <input  class="form-control" type="number" name="cantidad" placeholder="Cantidad">  
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Unidad</label>
+                                        <select class="form-control" type="text" name="unidad" placeholder="Unidad del ingrediente">
+                                            {% for unidad in unidades %}
+                                            <option>{{unidad.descripcion_u}}</option>
+                                            {% endfor %}
+                                          </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Nombre</label>
+                                        <input  class="form-control" type="text" name="nombre_ingrediente" placeholder="Ingrediente a agregar a la receta">  
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-outline-success">Enviar</button>
+                            </form>
+                        </div>
+                  
+                    </div>
+                  
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{url_for('static', filename = 'js/sb-admin-2.min.js')}}"></script>
+
+<!-- Page level plugins -->
+<script src="{{url_for('static', filename = 'vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static', filename = 'vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{url_for('static', filename = 'js/demo/datatables-demo.js')}}"></script>
+        
+{% endblock %}

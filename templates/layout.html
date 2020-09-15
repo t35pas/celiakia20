@@ -47,7 +47,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admins">
+        <a class="nav-link" href="/administrador">
           <i class="fas fa-fw fa-users"></i>
           <span>Administrador</span>
         </a>
@@ -85,43 +85,6 @@
         </div>
     </div>
   </div>
-
-  <!-- Scripts -->
-  <script>
-    var campos_max = 100;   //max de 10 campos
-    var x = 1;
-    // Agregar
-    $('#add_paso').click (function(e) {
-      e.preventDefault();     //prevenir clicks
-      if (x < campos_max) {
-      $('#preparacion').append('<div class="input-group mb-3">\
-        <input class="form-control" type="text" name="paso'+ x +'" placeholder="Paso numero: '+ x +'">\
-        <button class="btn btn btn-danger remover_campo" type="button"><i class="fas fa-trash"></i></button>\
-        </div>');
-        x++;
-      }
-    });
-    $('#add_ingrediente').click (function(e) {
-      e.preventDefault();     //prevenir clicks
-      if (x < campos_max) {
-      $('#ingredientes').append('<div class="input-group mb-3">\
-        <input class="form-control" type="text" name="ingrediente'+ x +'" placeholder="Ingrediente numero: '+ x +'">\
-        <button class="btn btn btn-danger remover_campo" type="button"><i class="fas fa-trash"></i></button>\
-        </div>');
-        x++;
-      }
-    });
-    // Remover
-    $('#ingredientes').on("click",".remover_campo",function(e) {
-      e.preventDefault();
-       $(this).parent('div').remove();
-        x--;
-    });
-    $('#preparacion').on("click",".remover_campo",function(e) {
-      e.preventDefault();
-       $(this).parent('div').remove();
-        x--;
-    });
-  </script>
+  
 </body>
 </html>

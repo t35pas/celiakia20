@@ -9,6 +9,18 @@
 					<div class="card-body p-0">
 						<div class="row">
 							<div class="p-5">
+								{% with messages = get_flashed_messages() %}
+									{% if messages %}
+											{% for message in messages %}
+											<div class="alert alert-danger alert-dismissible fade show" role="alert">
+												{{ message }}
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											{% endfor %}
+									{% endif %}
+								{% endwith %}
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Administrador CeliaKIA!</h1>
 									<p>Para ingresar al maravilloso mundo de KIA debes ingresar la contraseña...</p>
