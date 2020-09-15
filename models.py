@@ -9,6 +9,9 @@ class Receta(db.Model):
     tiempo_preparacion = db.Column(db.Integer)
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
     nombre_imagen = db.Column(db.String())
+    preparacion = db.relationship('Preparacion', backref='receta')
+    ingrediente_por_receta = db.relationship('Ingrediente_Por_Receta', backref='receta')
+    favorito = db.relationship('Favorito', backref='receta')
 
     def __init__(self, titulo, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen):
         self.titulo = titulo
@@ -35,6 +38,7 @@ class Preparacion(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    receta = relationship(Receta, backref=backref('preparacion', uselist=True))
     orden_del_paso = db.Column(db.Integer)
     descripcion = db.Column(db.String())
 
@@ -59,6 +63,7 @@ class Dificultad(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String())
+    receta = db.relationship('Receta', backref='dificultad')
 
     def __init__(self, descripcion):
         self.descripcion = descripcion
@@ -77,6 +82,7 @@ class Unidad(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion_u = db.Column(db.String())
+    unidad = relationship(Ingrediente, backref=backref('unidades', uselist=True))
 
     def __init__(self, descripcion):
         self.descripcion_u = descripcion_u
@@ -116,7 +122,9 @@ class Ingrediente_Por_Receta(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    receta = relationship(Receta, backref=backref('ingredientes_por_receta', uselist=True))
     id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'))
+    ingredientes = relationship(Ingrediente, backref=backref('ingredientes', uselist=True))
     cantidad = db.Column(db.Integer)
 
     def __init__(self, id_receta, id_ingrediente, cantidad):
