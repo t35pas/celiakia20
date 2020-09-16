@@ -378,5 +378,21 @@ def Actualizar_ingrediente(id):
        
         return render_template('editar_receta.html', receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
 
+@app.route('/receta/ver/<id>', methods = ['POST', 'GET'])
+def Ver_receta(id):
+
+    receta = Receta.query.get(id)
+    dificultad = Dificultad.query.get(receta.id_dificultad)
+    preparaciones = Preparacion.query.filter_by(id_receta = id).all()
+    
+    ingredientes = Ingrediente_Por_Receta.query.filter_by(id_receta = id)\
+                        .join(Ingrediente, Ingrediente_Por_Receta.id_ingrediente == Ingrediente.id)\
+                        .add_columns(Ingrediente_Por_Receta.id_receta, Ingrediente_Por_Receta.cantidad, Ingrediente.id, Ingrediente.descripcion, Ingrediente.id_unidad)\
+                        .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
+                        .add_columns(Unidad.descripcion_u)\
+                        .all()
+       
+    return render_template('ver_receta.html', nueva_receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
+
 if __name__ == '__main__':
      app.run(debug=True)

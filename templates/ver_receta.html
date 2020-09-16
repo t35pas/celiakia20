@@ -1,0 +1,125 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <div id="content">
+
+        <div class="container-fluid">
+
+            <h1 style="margin-top: 20px; margin-bottom: 20px; text-align: center;">{{nueva_receta.titulo}}</h1>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
+              
+            <div class="row">
+
+                <div class="col-lg-6">
+        
+                    <div class="card shadow mb-4">
+                        
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Pasos de la Receta</h6>
+                            <div class="input-group-append">
+                                <a href="/receta/actualizar/preparacion/{{nueva_receta.id}}" class="btn btn-warning btn-sm" >Editar Preparacion</a>
+                            </div>
+                        </div>
+                    
+                    <div class="card-body">
+                        <div>
+                            <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Orden</th>
+                                        <th>Descripcion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for preparacion in preparaciones %}
+                                    <tr>
+                                        <td> {{ preparacion.id}}</td>
+                                        <td> {{ preparacion.orden_del_paso}}</td>
+                                        <td> {{ preparacion.descripcion}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">  
+
+                    <div class="card shadow mb-4">
+                        
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Listado de ingredientes</h6>
+                                <div class="input-group-append">
+                                    <a href="/receta/actualizar/ingredientes/{{nueva_receta.id}}" class="btn btn-warning btn-sm" >Editar Ingredientes</a>
+                                </div>
+                            </div>
+                        
+                        <div class="card-body">
+                            <div>
+                                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                            <th>Nombre</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ingrediente in ingredientes %}
+                                        <tr>
+                                            <td> {{ ingrediente.id}} </td>
+                                            <td> {{ ingrediente.cantidad}} </td>
+                                            <td> {{ ingrediente.descripcion_u}} </td>
+                                            <td> {{ ingrediente.descripcion}} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{url_for('static', filename = 'js/sb-admin-2.min.js')}}"></script>
+
+<!-- Page level plugins -->
+<script src="{{url_for('static', filename = 'vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static', filename = 'vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{url_for('static', filename = 'js/demo/datatables-demo.js')}}"></script>
+        
+{% endblock %}
