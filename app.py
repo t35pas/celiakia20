@@ -2,12 +2,15 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash
 from flask_restful import Resource, Api
+from werkzeug.utils import secure_filename
+
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = './imagenes'
 db = SQLAlchemy(app)
 
 api = Api(app)
@@ -32,7 +35,7 @@ class RecetasPorNombre(Resource):
         return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
 @app.route('/obtener_imagen/<nombre>')
-class ObtenerImagen(Resource):
+class Obtener_imagen(Resource):
     def get(self, nombre):
         filename = 'imagenes/'+ nombre
         return send_file(filename, mimetype='image/jpg')
@@ -64,15 +67,30 @@ def Index():
                                  .add_columns(Receta.id, Receta.titulo, Receta.calificacion, Receta.tiempo_preparacion, Receta.nombre_imagen, Dificultad.descripcion)\
                                  .all()
         return render_template('index.html', recetas = recetas)
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/receta/nueva', methods = ['POST','GET'])
 def Crear_receta():
+    unidades = Unidad.query.all()
     if request.method == 'POST':
         nombre = request.form['titulo']
         calificacion = request.form['calificacion']
         tiempo_preparacion = request.form['tiempo_preparacion']
         dificultad = request.form['dificultad']
         nombre_imagen = request.form['nombre_imagen']
+        
+        if 'archivo' not in request.files:
+            flash('No se encontro archivo')
+            return redirect(request.url)
+        file = request.files['archivo']
+        if file.filename == '':
+            flash('No Seleccionaste el archivo')
+        if file and allowed_file(file.filename):
+            filename = nombre_imagen
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         id_dificultad = Dificultad.query.filter_by(descripcion = dificultad).first()
 
@@ -82,8 +100,8 @@ def Crear_receta():
         db.session.commit()
         
         receta = Receta.query.get(nueva_receta.id)
-        flash('Genial! La informacion general se guardo en la base de datos, sigue')
-        return render_template('ingredientes.html', nueva_receta = receta)
+        flash('Genial! La informacion general se guardo en la base de datos, sigue asi!')
+        return render_template('ingredientes.html', nueva_receta = receta, unidades = unidades)
     else:
         return render_template('crear_receta.html')
 
@@ -96,14 +114,14 @@ def Preparacion_nueva(id):
         orden = request.form['orden']
         descripcion = request.form['descripcion']
 
+        existe = Preparacion.query.filter_by(orden_del_paso = orden).first()
         
-        no_existe = Preparacion.query.filter_by(orden_del_paso = orden).first()
-        
-        if no_existe: 
+        if existe: 
         
             print('Ya existe ese paso')
+            
             preparaciones = Preparacion.query.filter_by(id_receta = id).all()
-
+            flash('Ese paso ya existe')
             return render_template('preparacion.html', nueva_receta = receta, preparaciones = preparaciones)
 
         else:
@@ -114,7 +132,7 @@ def Preparacion_nueva(id):
             db.session.commit()
 
             preparaciones = Preparacion.query.filter_by(id_receta = id).all()
-
+            flash('Paso guardado!')
             return render_template('preparacion.html', nueva_receta = receta, preparaciones = preparaciones)
     else:
 
@@ -140,13 +158,13 @@ def Ingredientes(id):
 
         if existe_ingrediente:
             print('Existe el ingrediente')
-            print(existe_ingrediente.id)
             
             existe_ingrediente_receta = Ingrediente_Por_Receta.query.filter_by(id_ingrediente = existe_ingrediente.id, id_receta = id).first()
 
             if existe_ingrediente_receta:
 
-                print('Ya existe ese ingrediente en la receta')
+                print('Ya existe ese ingrediente en la receta!')
+                flash('Ya existe ese ingrediente en la receta!')
                 ingredientes_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id)\
                                     .join(Ingrediente, Ingrediente_Por_Receta.id_ingrediente == Ingrediente.id)\
                                     .add_columns(Ingrediente_Por_Receta.id_receta, Ingrediente_Por_Receta.cantidad, Ingrediente.id, Ingrediente.descripcion, Ingrediente.id_unidad)\
@@ -168,7 +186,7 @@ def Ingredientes(id):
                                     .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                                     .add_columns(Unidad.descripcion_u)\
                                     .all()
-
+                flash('Ingrediente agregado en la receta!')
                 return render_template('ingredientes.html', ingredientes = ingredientes_por_receta, nueva_receta = receta, unidades = unidades)       
 
         else:
@@ -192,7 +210,7 @@ def Ingredientes(id):
                                 .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                                 .add_columns(Unidad.descripcion_u)\
                                 .all()
-            
+            flash('Ingrediente guardado en la receta!')
             return render_template('ingredientes.html', ingredientes = ingredientes_por_receta, nueva_receta = receta, unidades = unidades)
 
     else: 
@@ -224,7 +242,7 @@ def Eliminar_receta(id):
     
     db.session.delete(receta)
     db.session.commit()
-
+    flash('Eliminaste la receta con exito.')
     return redirect(url_for('Index'))
 
 @app.route('/administrador',  methods = ['POST', 'GET'])
@@ -239,6 +257,7 @@ def Admin():
             if (vieja_pass == admin.password):
                 admin.password = nueva_pass
                 db.session.commit()
+                flash('Cambiaste la contraseña con exito!')
             else: 
                 return redirect(url_for('Admin'))
         else:
@@ -258,7 +277,7 @@ def Eliminar_ingrediente(id_receta, id):
                                 .all()
     db.session.delete(ingrediente_en_receta)    
     db.session.commit()
-    
+    flash('Eliminaste el ingrediente de la receta.')
     return render_template('ingredientes.html', nueva_receta = receta, ingredientes = ingredientes_por_receta)
 
 @app.route('/receta/<id_receta>/preparacion/eliminar/<id>')
@@ -269,7 +288,7 @@ def Eliminar_paso(id_receta, id):
     preparaciones = Preparacion.query.filter_by(id_receta = id_receta)
     db.session.delete(preparacion)
     db.session.commit()
-    
+    flash('Eliminaste el paso de la receta.')
     return render_template('preparacion.html', nueva_receta = receta, preparaciones = preparaciones)
 
 @app.route('/actualizar/<id>', methods = ['POST','GET'])
@@ -302,11 +321,11 @@ def Actualizar_receta(id):
         receta_update.nombre_imagen = nombre_imagen
        
         db.session.commit()
-        print(preparaciones[0].descripcion)
+        flash('Informacion actualizada exitosamente!')
         return render_template('editar_receta.html', receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
+
     else:
 
-        print(preparaciones[0].descripcion)
         return render_template('editar_receta.html', receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
 
 @app.route('/receta/actualizar/preparacion/<id>', methods = ['POST', 'GET'])
@@ -336,7 +355,7 @@ def Actualizar_preparacion(id):
             preparacion.descripcion = descripcion
        
             db.session.commit()
-            
+        flash('Informacion actualizada exitosamente!')            
         return render_template('editar_receta.html', receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
     else:
        
@@ -365,7 +384,7 @@ def Actualizar_ingrediente(id):
                         .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                         .add_columns(Unidad.descripcion_u)\
                         .all()
-
+        flash('Informacion actualizada exitosamente!')
         return render_template('editar_receta.html', receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
         
     else:
