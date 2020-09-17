@@ -18,9 +18,20 @@
                 <a class="flex-sm-fill text-sm-center nav-link disabled" href="" tabindex="-1" aria-disabled="true">Información General</a>
                 <a class="flex-sm-fill text-sm-center nav-link" href="/receta/ingredientes/{{nueva_receta.id}}">Ingredientes</a>
                 <a class="flex-sm-fill text-sm-center nav-link active" href="">Preparacion</a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="">Finalizar</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="/receta/ver/{{nueva_receta.id}}">Finalizar</a>
             </nav>
-
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div class="row">
               
                 <div class="col-lg-6">  
