@@ -55,7 +55,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow mb-4">
                         {% if filename %}
-                            <img src="{{url_for('Obtener_imagen', filename = filename)}}" class="card-img-top" alt="...">
+                            <img src="{{ url_for('send_file', filename = filename) }}" class="card-img-top" alt="..."> 
                         {% endif %}
                     </div>
                 </div>
