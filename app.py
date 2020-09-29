@@ -33,12 +33,8 @@ def receta_por_nombre(nombre):
     recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
     return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
-@app.route('/obtener_imagen/<nombre>')
-def obtener_imagen(nombre):
-    filename = 'imagenes/'+ nombre
-    return send_file(filename, mimetype='image/jpg')
 
-@app.route('/uploads/<filename>')
+@app.route('/obtener_imagen/<filename>')
 def send_file(filename):
        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
