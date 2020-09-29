@@ -229,16 +229,18 @@ def Ingredientes(id):
 @app.route('/receta/eliminar/<id>')
 def Eliminar_receta(id):
     receta = Receta.query.get(id)
-    ingrediente_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id).first()
-    preparacion = Preparacion.query.filter_by(id_receta = id).first()
+    ingredientes_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id).first()
+    preparaciones = Preparacion.query.filter_by(id_receta = id).first()
     
-    if preparacion: 
-        db.session.delete(preparacion)
-        db.session.commit()
+    if preparaciones: 
+        for preparacion in preparaciones
+            db.session.delete(preparacion)
+            db.session.commit()
     
-    if ingrediente_por_receta:    
-        db.session.delete(ingrediente_por_receta)
-        db.session.commit()
+    if ingredientes_por_receta:
+        for ingrediente in ingredientes_por_receta    
+            db.session.delete(ingrediente)
+            db.session.commit()
     
     db.session.delete(receta)
     db.session.commit()
@@ -264,27 +266,27 @@ def Admin():
             administradores = Administrador.query.all()
             return render_template('administrador.html', administradores = administradores)
 
-@app.route('/receta/<id_receta>/ingrediente/eliminar/<id>')
-def Eliminar_ingrediente(id_receta, id):
+@app.route('/receta/<id_receta>/ingrediente/eliminar/<id_ingr>')
+def Eliminar_ingrediente(id_receta, id_ingr):
     
-    receta = Receta.query.get(id)
-    ingrediente_en_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id_receta, id = id).first()
-    ingredientes_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id)\
+    receta = Receta.query.get(id_receta)
+    ingrediente = Ingrediente_Por_Receta.query.filter_by(id_receta = id_receta, id_ingrediente = id_ingr).first()
+    ingredientes_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id_receta)\
                                 .join(Ingrediente, Ingrediente_Por_Receta.id_ingrediente == Ingrediente.id)\
                                 .add_columns(Ingrediente_Por_Receta.id_receta, Ingrediente_Por_Receta.cantidad, Ingrediente.id, Ingrediente.descripcion, Ingrediente.id_unidad)\
                                 .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                                 .add_columns(Unidad.descripcion_u)\
                                 .all()
-    db.session.delete(ingrediente_en_receta)    
+    db.session.delete(ingrediente)    
     db.session.commit()
     flash('Eliminaste el ingrediente de la receta.')
     return render_template('ingredientes.html', nueva_receta = receta, ingredientes = ingredientes_por_receta)
 
-@app.route('/receta/<id_receta>/preparacion/eliminar/<id>')
-def Eliminar_paso(id_receta, id):
+@app.route('/receta/<id_receta>/preparacion/eliminar/<id_prep>')
+def Eliminar_paso(id_receta, id_prep):
 
     receta = Receta.query.get(id_receta)
-    preparacion = Preparacion.query.get(id)
+    preparacion = Preparacion.query.get(id_prep)
     preparaciones = Preparacion.query.filter_by(id_receta = id_receta)
     db.session.delete(preparacion)
     db.session.commit()
