@@ -233,12 +233,12 @@ def Eliminar_receta(id):
     preparaciones = Preparacion.query.filter_by(id_receta = id).first()
     
     if preparaciones: 
-        for preparacion in preparaciones
+        for preparacion in preparaciones:
             db.session.delete(preparacion)
             db.session.commit()
     
     if ingredientes_por_receta:
-        for ingrediente in ingredientes_por_receta    
+        for ingrediente in ingredientes_por_receta:   
             db.session.delete(ingrediente)
             db.session.commit()
     
