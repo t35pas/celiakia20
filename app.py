@@ -1,6 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash
+from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 
@@ -28,17 +28,19 @@ def get_recetas():
 
 #Ver receta particular
 @app.route('/receta/<nombre>')
-class RecetasPorNombre(Resource):
-    def get(self, nombre):
-        nombre = "%{}%".format(nombre)
-        recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
-        return  jsonify([receta.serialize() for receta in recetasPorNombre])
+def receta_por_nombre(nombre):
+    nombre = "%{}%".format(nombre)
+    recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
+    return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
 @app.route('/obtener_imagen/<nombre>')
-class Obtener_imagen(Resource):
-    def get(self, nombre):
-        filename = 'imagenes/'+ nombre
-        return send_file(filename, mimetype='image/jpg')
+def obtener_imagen(nombre):
+    filename = 'imagenes/'+ nombre
+    return send_file(filename, mimetype='image/jpg')
+
+@app.route('/uploads/<filename>')
+def send_file(filename):
+       return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 #Aplicacion WEB
@@ -224,6 +226,7 @@ def Ingredientes(id):
                                 .all()
            
         print(ingredientes_por_receta)
+
         return render_template('ingredientes.html', ingredientes = ingredientes_por_receta, nueva_receta = receta, unidades = unidades)
 
 @app.route('/receta/eliminar/<id>')
@@ -412,8 +415,10 @@ def Ver_receta(id):
                         .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                         .add_columns(Unidad.descripcion_u)\
                         .all()
+
+    filename =  receta.nombre_imagen
        
-    return render_template('ver_receta.html', nueva_receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
+    return render_template('ver_receta.html', filename = filename, nueva_receta = receta, dificultad = dificultad, ingredientes = ingredientes, preparaciones = preparaciones)
 
 if __name__ == '__main__':
      app.run(debug=True)
