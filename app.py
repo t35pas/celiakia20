@@ -271,14 +271,14 @@ def Eliminar_ingrediente(id_receta, id_ingr):
     
     receta = Receta.query.get(id_receta)
     ingrediente = Ingrediente_Por_Receta.query.filter_by(id_receta = id_receta, id_ingrediente = id_ingr).first()
+    db.session.delete(ingrediente)    
+    db.session.commit()
     ingredientes_por_receta = Ingrediente_Por_Receta.query.filter_by(id_receta = id_receta)\
                                 .join(Ingrediente, Ingrediente_Por_Receta.id_ingrediente == Ingrediente.id)\
                                 .add_columns(Ingrediente_Por_Receta.id_receta, Ingrediente_Por_Receta.cantidad, Ingrediente.id, Ingrediente.descripcion, Ingrediente.id_unidad)\
                                 .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                                 .add_columns(Unidad.descripcion_u)\
                                 .all()
-    db.session.delete(ingrediente)    
-    db.session.commit()
     flash('Eliminaste el ingrediente de la receta.')
     return render_template('ingredientes.html', nueva_receta = receta, ingredientes = ingredientes_por_receta)
 
