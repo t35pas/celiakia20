@@ -51,12 +51,15 @@ def Index():
         password_admin = request.form['password_admin']
         
         admin_loggeando = Administrador.query.filter_by(nombre=nombre_admin).first()
-
-        if (admin_loggeando.password == password_admin):
-            recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id)\
-                                    .add_columns(Receta.id, Receta.titulo, Receta.calificacion, Receta.tiempo_preparacion, Receta.nombre_imagen, Dificultad.descripcion)\
-                                    .all()
-            return render_template('index.html', recetas = recetas)
+        if admin_loggeando:
+            if (admin_loggeando.password == password_admin):
+                recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id)\
+                                        .add_columns(Receta.id, Receta.titulo, Receta.calificacion, Receta.tiempo_preparacion, Receta.nombre_imagen, Dificultad.descripcion)\
+                                        .all()
+                return render_template('index.html', recetas = recetas)
+            else:
+                flash("Usuario o contraseña incorrecta, intente nuevamente.")
+                return redirect(url_for('Login'))
         else:
             flash("Usuario o contraseña incorrecta, intente nuevamente.")
             return redirect(url_for('Login'))
