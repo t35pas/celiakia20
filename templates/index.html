@@ -31,8 +31,7 @@
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                   <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Titulo</th>
+                            <th>Nombre</th>
                             <th>Tiempo de preparacion</th>
                             <th>Dificultad</th>
                             <th>Calificacion</th>
@@ -42,7 +41,6 @@
                     <tbody>
                         {% for receta in recetas %}
                         <tr>
-                            <td> {{ receta.id}}</td>
                             <td> {{ receta.titulo}}</td>
                             <td> {{ receta.tiempo_preparacion}}</td>
                             <td> {{ receta.descripcion}}</td>
