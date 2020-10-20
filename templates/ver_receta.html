@@ -38,7 +38,7 @@
 
                         <div class="card-body">
                             <div>
-                                <h4> Titulo: {{nueva_receta.titulo}}</h4>
+                                <h4> Nombre: {{nueva_receta.titulo}}</h4>
                             </div>
                             <div>
                                 <h4> Tiempo de preparacion: {{nueva_receta.tiempo_preparacion}}</h4>
@@ -79,15 +79,13 @@
                                 <table class="table table-bordered" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Orden</th>
+                                            <th>Paso número</th>
                                             <th>Descripcion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for preparacion in preparaciones %}
                                         <tr>
-                                            <td> {{ preparacion.id}}</td>
                                             <td> {{ preparacion.orden_del_paso}}</td>
                                             <td> {{ preparacion.descripcion}}</td>
                                         </tr>
@@ -115,7 +113,6 @@
                                 <table class="table table-bordered" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>Cantidad</th>
                                             <th>Unidad</th>
                                             <th>Nombre</th>
@@ -124,7 +121,6 @@
                                     <tbody>
                                         {% for ingrediente in ingredientes %}
                                         <tr>
-                                            <td> {{ ingrediente.id}} </td>
                                             <td> {{ ingrediente.cantidad}} </td>
                                             <td> {{ ingrediente.descripcion_u}} </td>
                                             <td> {{ ingrediente.descripcion}} </td>

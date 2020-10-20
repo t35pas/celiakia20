@@ -51,7 +51,6 @@
                                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>Orden</th>
                                             <th>Descripcion</th>
                                             <th>Acciones</th>
@@ -60,7 +59,6 @@
                                     <tbody>
                                         {% for preparacion in preparaciones %}
                                         <tr>
-                                            <td> {{ preparacion.id}}</td>
                                             <td> {{ preparacion.orden_del_paso}}</td>
                                             <td> {{ preparacion.descripcion}}</td>
                                             <td>
