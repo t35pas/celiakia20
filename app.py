@@ -58,10 +58,10 @@ def Index():
                                         .all()
                 return render_template('index.html', recetas = recetas)
             else:
-                flash("Usuario o contraseña incorrecta, intente nuevamente.")
+                flash("Los datos son incorrectos, por favor intentá nuevamente.")
                 return redirect(url_for('Login'))
         else:
-            flash("Usuario o contraseña incorrecta, intente nuevamente.")
+            flash("Por favor, completá todos los campos y luego ingresá.")
             return redirect(url_for('Login'))
     else:
         recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id)\
