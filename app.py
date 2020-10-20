@@ -78,11 +78,12 @@ def Crear_receta():
     unidades = Unidad.query.all()
     if request.method == 'POST':
         nombre = request.form['titulo']
-        calificacion = request.form['calificacion']
         tiempo_preparacion = request.form['tiempo_preparacion']
         dificultad = request.form['dificultad']
         nombre_imagen = request.form['nombre_imagen']
         
+        calificacion = 5
+
         if 'archivo' not in request.files:
             flash('No se encontro archivo')
             return redirect(request.url)
@@ -115,7 +116,7 @@ def Preparacion_nueva(id):
         orden = request.form['orden']
         descripcion = request.form['descripcion']
 
-        existe = Preparacion.query.filter_by(orden_del_paso = orden).first()
+        existe = Preparacion.query.filter_by(orden_del_paso = orden, id_receta = id).first()
         
         if existe: 
         
