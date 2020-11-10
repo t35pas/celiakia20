@@ -282,8 +282,9 @@ def Eliminar_ingrediente(id_receta, id_ingr):
                                 .join(Unidad, Ingrediente.id_unidad == Unidad.id)\
                                 .add_columns(Unidad.descripcion_u)\
                                 .all()
+    unidades = Unidad.query.all()
     flash('Eliminaste el ingrediente de la receta.')
-    return render_template('ingredientes.html', nueva_receta = receta, ingredientes = ingredientes_por_receta)
+    return render_template('ingredientes.html', unidades = unidades, nueva_receta = receta, ingredientes = ingredientes_por_receta)
 
 @app.route('/receta/<id_receta>/preparacion/eliminar/<id_prep>')
 def Eliminar_paso(id_receta, id_prep):
