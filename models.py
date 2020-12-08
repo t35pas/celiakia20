@@ -7,13 +7,13 @@ class Receta(db.Model):
     __tablename__ = 'receta'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String(), unique = True, nullable = 'False')
-    calificacion = db.Column(db.Integer, unique = False, nullable = 'False')
-    tiempo_preparacion = db.Column(db.Integer, unique = False, nullable = 'False')
-    nombre_imagen = db.Column(db.String(), unique = True, nullable = 'False')
+    titulo = db.Column(db.String(), unique = True)
+    calificacion = db.Column(db.Integer, unique = False)
+    tiempo_preparacion = db.Column(db.Integer, unique = False)
+    nombre_imagen = db.Column(db.String(), unique = True)
     fecha_de_creacion = db.Column(db.DateTime, nullable = 'False', default = datetime.utcnow)
-    id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'), nullable = 'False')
-    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = 'False')
+    id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
+    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'))
     ingredientes = relationship('Ingrediente_por_receta', backref = 'receta', lazy = 'True')
     preparaciones = relationship('Preparacion', backref = 'receta', lazy = 'True')
     favoritos = relationship('Favorito', backref = 'receta', lazy = 'True')
@@ -42,9 +42,9 @@ class Preparacion(db.Model):
     __tablename__ = 'preparacion'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), unique = True, nullable = 'False')
-    orden_del_paso = db.Column(db.Integer, unique = True, nullable = 'False')
-    descripcion = db.Column(db.String(), unique = False, nullable = 'False')
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), unique = True)
+    orden_del_paso = db.Column(db.Integer, unique = True)
+    descripcion = db.Column(db.String(), unique = False)
 
     def __init__(self, id_receta, orden_del_paso, descripcion):
         self.id_receta = id_receta
@@ -66,7 +66,7 @@ class Dificultad(db.Model):
     __tablename__ = 'dificultad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String(), unique = True, nullable = 'False')
+    descripcion = db.Column(db.String(), unique = True)
     recetas = relationship('Receta', backref = 'difcultad', lazy = 'True')
 
     def __init__(self, descripcion):
@@ -85,7 +85,7 @@ class Unidad(db.Model):
     __tablename__ = 'unidad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion_u = db.Column(db.String(), unique = True, nullable = 'False')
+    descripcion_u = db.Column(db.String(), unique = True)
     ingredientes = relationship('Ingrediente', backref = 'unidad', lazy = 'True')
 
     def __init__(self, descripcion):
@@ -104,8 +104,8 @@ class Ingrediente(db.Model):
     __tablename__ = 'ingrediente'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String(), unique = True, nullable = 'False')
-    id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'), nullable = 'False')
+    descripcion = db.Column(db.String(), unique = True)
+    id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
     por_receta = relationship('Ingrediente_por_receta', backref = 'ingredientes', lazy = 'True')
 
     def __init__(self, descripcion, id_unidad):
@@ -126,9 +126,9 @@ class Ingrediente_Por_Receta(db.Model):
     __tablename__ = 'ingrediente_por_receta'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = 'False')
-    id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'), nullable = 'False')
-    cantidad = db.Column(db.Integer, unique = False, nullable = 'False')
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'))
+    cantidad = db.Column(db.Integer, unique = False)
 
     def __init__(self, id_receta, id_ingrediente, cantidad):
         self.id_receta = id_receta
@@ -150,9 +150,9 @@ class Usuario(db.Model):
     __tablename__ = 'usuario'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(), unique = False, nullable = 'False')
-    apellido = db.Column(db.String(), unique = False, nullable = 'False')
-    email = db.Column(db.String(), unique = True, nullable = 'False')
+    nombre = db.Column(db.String(), unique = False)
+    apellido = db.Column(db.String(), unique = False)
+    email = db.Column(db.String(), unique = True)
     favoritos = relationship('Favorito', backref = 'usuario', lazy = 'True')
     
 
@@ -176,8 +176,8 @@ class Favorito(db.Model):
     __tablename__ = 'favorito'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = 'False')
-    id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = 'False')
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
+    id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
 
     def __init__(self, id_receta, id_usuario):
         self.id_receta = id_receta
@@ -197,9 +197,9 @@ class Administrador(db.Model):
     __tablename__ = 'administrador'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre_de_usuario = db.Column(db.String(), unique = True, nullable = 'False')
-    password = db.Column(db.String(), unique = True, nullable = 'False')
-    email = db.Column(db.String(), unique = True, nullable = 'False')
+    nombre_de_usuario = db.Column(db.String(), unique = True)
+    password = db.Column(db.String(), unique = True)
+    email = db.Column(db.String(), unique = True)
     recetas = relationship('Receta', backref = 'autor', lazy = 'True')
 
     def __init__(self, nombre, password):
