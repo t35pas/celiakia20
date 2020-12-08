@@ -214,6 +214,6 @@ class Administrador(db.Model):
         return {
             'id': self.id,
             'nombre_de_usuario': self.nombre_de_usuario,
-            'password': self.password
+            'password': self.password,
             'email': self.email
 }
