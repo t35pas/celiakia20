@@ -213,7 +213,7 @@ class Administrador(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'nombre': self.nombre_de_usuario,
+            'nombre_de_usuario': self.nombre_de_usuario,
             'password': self.password
             'email': self.email
 }
