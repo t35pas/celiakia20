@@ -203,8 +203,9 @@ class Administrador(db.Model):
     recetas = relationship('Receta', backref = 'autor', lazy = 'True')
 
     def __init__(self, nombre, password):
-        self.nombre = nombre
+        self.nombre_de_usuario = nombre_de_usuario
         self.password = password
+        self.email = email
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -212,6 +213,7 @@ class Administrador(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'nombre': self.nombre,
+            'nombre': self.nombre_de_usuario,
             'password': self.password
+            'email': self.email
 }
