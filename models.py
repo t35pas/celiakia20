@@ -104,7 +104,7 @@ class Ingrediente(db.Model):
     __tablename__ = 'ingrediente'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String(), unique = True)
+    descripcion = db.Column(db.String())
     id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
     por_receta = relationship('Ingrediente_por_receta', backref = 'ingredientes', lazy = 'True')
 
