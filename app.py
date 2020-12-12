@@ -257,7 +257,7 @@ def Admin():
             vieja_pass = request.form['password_vieja']
             nueva_pass = request.form['password_nueva']
 
-            admin = Administrador.query.filter_by(nombre = nombre_a).first()
+            admin = Administrador.query.filter_by(nombre_de_usuario = nombre_a).first()
 
             if (vieja_pass == admin.password):
                 admin.password = nueva_pass
