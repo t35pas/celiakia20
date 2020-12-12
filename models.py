@@ -14,9 +14,9 @@ class Receta(db.Model):
     fecha_de_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
     id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'))
-    ingredientes = relationship('Ingrediente_por_receta', backref = 'receta', lazy = 'True')
-    preparaciones = relationship('Preparacion', backref = 'receta', lazy = 'True')
-    favoritos = relationship('Favorito', backref = 'receta', lazy = 'True')
+    ingredientes = relationship('Ingrediente_Por_Receta', backref = 'receta')
+    preparaciones = relationship('Preparacion', backref = 'receta')
+    favoritos = relationship('Favorito', backref = 'receta')
 
     def __init__(self, titulo, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen):
         self.titulo = titulo
@@ -67,7 +67,7 @@ class Dificultad(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String())
-    recetas = relationship('Receta', backref = 'difcultad', lazy = 'True')
+    recetas = relationship('Receta', backref = 'difcultad')
 
     def __init__(self, descripcion):
         self.descripcion = descripcion
@@ -86,7 +86,7 @@ class Unidad(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion_u = db.Column(db.String())
-    ingredientes = relationship('Ingrediente', backref = 'unidad', lazy = 'True')
+    ingredientes = relationship('Ingrediente', backref = 'unidad')
 
     def __init__(self, descripcion):
         self.descripcion_u = descripcion_u
@@ -106,7 +106,7 @@ class Ingrediente(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String())
     id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
-    por_receta = relationship('Ingrediente_por_receta', backref = 'ingredientes', lazy = 'True')
+    por_receta = relationship('Ingrediente_Por_Receta', backref = 'ingredientes')
 
     def __init__(self, descripcion, id_unidad):
         self.descripcion = descripcion
@@ -153,7 +153,7 @@ class Usuario(db.Model):
     nombre = db.Column(db.String())
     apellido = db.Column(db.String())
     email = db.Column(db.String())
-    favoritos = relationship('Favorito', backref = 'usuario', lazy = 'True')
+    favoritos = relationship('Favorito', backref = 'usuario')
     
 
     def __init__(self, nombre, apellido, email):
@@ -200,7 +200,7 @@ class Administrador(db.Model):
     nombre_de_usuario = db.Column(db.String())
     password = db.Column(db.String())
     email = db.Column(db.String())
-    recetas = relationship('Receta', backref = 'autor', lazy = 'True')
+    recetas = relationship('Receta', backref = 'autor')
 
     def __init__(self, nombre, password):
         self.nombre_de_usuario = nombre_de_usuario
