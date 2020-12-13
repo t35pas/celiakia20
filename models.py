@@ -142,8 +142,8 @@ class Ingrediente_Por_Receta(db.Model):
         return {
             'id': self.id,
             'id_receta': self.id_receta,
-            'id_ingrediente': id_ingrediente,
-            'cantidad': cantidad
+            'id_ingrediente': self.id_ingrediente,
+            'cantidad': self.cantidad
 }
 
 class Usuario(db.Model):
