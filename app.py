@@ -17,47 +17,6 @@ api = Api(app)
 
 from models import Receta, Preparacion, Dificultad, Unidad, Ingrediente, Ingrediente_Por_Receta, Usuario, Favorito, Administrador
 
-#Ver todas las recetas
-@app.route('/app/receta')
-def get_recetas():
-    try:
-        recetas = Receta.query.all()
-        return  jsonify([receta.serialize() for receta in recetas])
-    except Exception as e:
-	    return(str(e))
-
-def get_receta(id_receta):
-    return Receta.query.get(id_receta)
-
-#Ver receta particular ingresando el nombre
-@app.route('/app/receta/<nombre>')
-def recetasPorNombre(nombre):
-    nombre = "%{}%".format(nombre)
-    recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
-    return  jsonify([receta.serialize() for receta in recetasPorNombre])
-
-#Imagen de una Receta
-@app.route('/app/receta/obtenerImagen/<filename>')
-def send_file(filename):
-       return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-#Recetas favoritas de un usuario
-@app.route('/app/usuario/<id_usuario>/favoritos')
-def get_favorito(id_usuario):
-    try:
-        usuario = Usuario.query.get(id_usuario)
-        favoritos = usuario.favorito
-        recetasFavoritas = []
-        
-        #Busco las recetas
-        for x in range(len(favoritos)):
-            receta = get_receta(favoritos[x].id_receta)
-            recetasFavoritas.append(receta)
-        return  jsonify([receta.serialize() for receta in recetasFavoritas])
-    except Exception as e:
-	    return(str(e))
-
-#Todas las recetas en las que aparece un ingrediente determinado
 def get_recetas_ingrediente(ingrediente):
     ingrediente = Ingrediente.query.get(ingrediente)
     #Aca obtengo ingrediente por receta
@@ -69,7 +28,47 @@ def get_recetas_ingrediente(ingrediente):
         recetasTotales.append(receta)
     return  recetasTotales
 
-@app.route('/app/ingrediente/<ingredientes>/recetasTotales')
+def get_receta(id_receta):
+    return Receta.query.get(id_receta)
+
+#Ver todas las recetas
+@app.route('/receta')
+def get_recetas():
+    try:
+        recetas = Receta.query.all()
+        return  jsonify([receta.serialize() for receta in recetas])
+    except Exception as e:
+	    return(str(e))
+
+#Ver receta particular ingresando el nombre
+@app.route('/receta/<nombre>')
+def recetasPorNombre(nombre):
+    nombre = "%{}%".format(nombre)
+    recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
+    return  jsonify([receta.serialize() for receta in recetasPorNombre])
+
+#Imagen de una Receta
+@app.route('/receta/obtenerImagen/<filename>')
+def send_file(filename):
+       return send_from_directory(Config.UPLOAD_FOLDER, filename)
+
+#Recetas favoritas de un usuario
+@app.route('/usuario/<id_usuario>/favoritos')
+def get_favorito(id_usuario):
+    try:
+        usuario = Usuario.query.get(id_usuario)
+        favoritos = usuario.favorito
+        recetasFavoritas = []
+        
+        #Busco las recetas
+        for x in range(len(favoritos)):
+            receta = get_receta(favoritos[x].id_receta)
+            recetasFavoritas.movilend(receta)
+        return  jsonify([receta.serialize() for receta in recetasFavoritas])
+    except Exception as e:
+	    return(str(e))
+
+@app.route('/ingrediente/<ingredientes>/recetasTotales')
 def busquedaPorIngrediente(ingredientes):
     #Genero una lista con los ingredientes enviados
     listadoIngredientes = ingredientes.split('-')
@@ -84,7 +83,6 @@ def busquedaPorIngrediente(ingredientes):
     recetas = set(recetasTotales)
     #si buscara las repetidas me saldrian las que al menos coinciden 2 o mas ingredientes ingresados.
     return jsonify([receta.serialize() for receta in recetas])
-
 
 #Aplicacion WEB
 @app.route('/')
