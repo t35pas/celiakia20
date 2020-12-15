@@ -50,7 +50,7 @@ def recetasPorNombre(nombre):
 #Imagen de una Receta
 @app.route('/receta/obtenerImagen/<filename>')
 def send_file(filename):
-       return send_from_directory(Config.UPLOAD_FOLDER, filename)
+       return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 #Recetas favoritas de un usuario
 @app.route('/usuario/<id_usuario>/favoritos')
