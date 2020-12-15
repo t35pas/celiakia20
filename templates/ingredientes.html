@@ -35,7 +35,42 @@
             {% endwith %}
               
             <div class="row">
-              
+                <div class="col-lg-6">
+        
+                    <div class="card shadow mb-4">
+                  
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Agregar ingrediente</h6>
+                        </div>
+                  
+                        <div class="card-body">
+                            <form action="/receta/ingredientes/{{nueva_receta.id}}" method="POST">
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Cantidad</label>
+                                        <input  class="form-control" type="number" name="cantidad" placeholder="Cantidad">  
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Unidad</label>
+                                        <select class="form-control" type="text" name="unidad" placeholder="Unidad del ingrediente">
+                                            {% for unidad in unidades %}
+                                            <option>{{unidad.descripcion_u}}</option>
+                                            {% endfor %}
+                                          </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Nombre</label>
+                                        <input  class="form-control" type="text" name="nombre_ingrediente" placeholder="Ingrediente a agregar a la receta">  
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-outline-success">Agregar</button>
+                            </form>
+                        </div>
+                  
+                    </div>
+                  
+                </div>
+                
                 <div class="col-lg-6">  
 
                     <div class="card shadow mb-4">
@@ -65,7 +100,7 @@
                                             <td> {{ ingrediente.descripcion_u}} </td>
                                             <td> {{ ingrediente.descripcion}} </td>
                                             <td>
-                                                <a href="/receta/{{nueva_receta.id}}/ingrediente/eliminar/{{ingrediente.id}}" class="btn btn btn-danger remover_campo" type="button"><i class="fas fa-trash"></i></a>
+                                                <a href="/receta/{{nueva_receta.id}}/ingrediente/eliminar/{{ingrediente.id}}" class="btn btn-outline-danger" >Eliminar</a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -75,43 +110,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6">
-        
-                    <div class="card shadow mb-4">
-                  
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Agregar ingrediente</h6>
-                        </div>
-                  
-                        <div class="card-body">
-                            <form action="/receta/ingredientes/{{nueva_receta.id}}" method="POST">
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label>Cantidad</label>
-                                        <input  class="form-control" type="number" name="cantidad" placeholder="Cantidad">  
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>Unidad</label>
-                                        <select class="form-control" type="text" name="unidad" placeholder="Unidad del ingrediente">
-                                            {% for unidad in unidades %}
-                                            <option>{{unidad.descripcion_u}}</option>
-                                            {% endfor %}
-                                          </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Nombre</label>
-                                        <input  class="form-control" type="text" name="nombre_ingrediente" placeholder="Ingrediente a agregar a la receta">  
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-outline-success">Enviar</button>
-                            </form>
-                        </div>
-                  
-                    </div>
-                  
-                </div>
-
             </div>
         </div>
     </div>

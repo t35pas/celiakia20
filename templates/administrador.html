@@ -24,7 +24,40 @@
             {% endwith %}
 
             <div class="row">
-              
+                <div class="col-lg-6">
+        
+                    <div class="card shadow mb-4">
+                  
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Cambiar contraseña</h6>
+                      </div>
+                  
+                        <div class="card-body">
+                            <form action="/administrador" method="POST">
+                                <div class="form-group">
+                                    <label>Nombre de Usuario</label>
+                                    <input  class="form-control" type="text" name="nombre_a" placeholder="Tu nombre">  
+                                </div>
+                                <div class="form-group">
+                                    <label>Ingrese su contraseña actual</label>
+                                    <input  class="form-control" type="password" name="password_vieja" placeholder="Contraseña actual">  
+                                </div>
+                                <div class="form-group">
+                                    <label>Nueva Contraseña</label>                
+                                    <input  class="form-control" type="password" name="password_nueva" placeholder="Contraseña nueva">
+                                </div>
+                                <div class="form-group">
+                                    <label>Repita la nueva Contraseña</label>                
+                                    <input  class="form-control" type="password" name="repetir_password_nueva" placeholder="Repetir contraseña nueva">
+                                </div>
+                                <button type="submit" class="btn btn-outline-success">Enviar</button>
+                            </form>
+                        </div>
+                  
+                    </div>
+                  
+                </div>
+
                 <div class="col-lg-6">  
 
                     <div class="card shadow mb-4">
@@ -53,37 +86,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6">
-        
-                    <div class="card shadow mb-4">
-                  
-                      <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Cambiar contraseña</h6>
-                      </div>
-                  
-                        <div class="card-body">
-                            <form action="/administrador" method="POST">
-                                <div class="form-group">
-                                    <label>Nombre</label>
-                                    <input  class="form-control" type="text" name="nombre_a" placeholder="Tu nombre">  
-                                </div>
-                                <div class="form-group">
-                                    <label>Ingrese su contraseña actual</label>
-                                    <input  class="form-control" type="password" name="password_vieja" placeholder="Contraseña actual">  
-                                </div>
-                                <div class="form-group">
-                                    <label>Nueva Contraseña</label>                
-                                    <input  class="form-control" type="password" name="password_nueva" placeholder="Contraseña nueva">
-                                </div>
-                                <button type="submit" class="btn btn-outline-success">Enviar</button>
-                            </form>
-                        </div>
-                  
-                    </div>
-                  
-                </div>
-
             </div>
         </div>
     </div>

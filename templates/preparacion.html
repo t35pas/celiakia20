@@ -33,7 +33,33 @@
                 {% endif %}
             {% endwith %}
             <div class="row">
-              
+                <div class="col-lg-6">
+        
+                    <div class="card shadow mb-4">
+                  
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Agregar paso a la preparacion</h6>
+                      </div>
+                  
+                        <div class="card-body">
+                            <form action="/receta/preparacion/{{nueva_receta.id}}" method="POST">
+                                <div class="form-group">
+                                    <label>Paso Numero</label>
+                                    <input  class="form-control" type="text" name="orden" placeholder="Orden del paso que vas a ingresar">  
+                                </div>
+                                <div class="form-group">
+                                    <label>Descripcion</label>
+                                    <input  class="form-control" type="text" name="descripcion" placeholder="Descripcion">  
+                                </div>
+                                <button type="submit" class="btn btn-outline-success">Agregar</button>
+                            </form>
+                            
+                        </div>
+                  
+                    </div>
+                  
+                </div>
+                
                 <div class="col-lg-6">  
 
                     <div class="card shadow mb-4">
@@ -62,7 +88,7 @@
                                             <td> {{ preparacion.orden_del_paso}}</td>
                                             <td> {{ preparacion.descripcion}}</td>
                                             <td>
-                                                <a href="/receta/{{nueva_receta.id}}/preparacion/eliminar/{{preparacion.id}}" class="btn btn btn-danger remover_campo" type="button"><i class="fas fa-trash"></i></a>
+                                                <a href="/receta/{{nueva_receta.id}}/preparacion/eliminar/{{preparacion.id}}" class="btn btn-outline-danger" >Eliminar</a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -72,34 +98,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6">
-        
-                    <div class="card shadow mb-4">
-                  
-                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Agregar paso a la preparacion</h6>
-                      </div>
-                  
-                        <div class="card-body">
-                            <form action="/receta/preparacion/{{nueva_receta.id}}" method="POST">
-                                <div class="form-group">
-                                    <label>Paso Numero</label>
-                                    <input  class="form-control" type="text" name="orden" placeholder="Orden del paso que vas a ingresar">  
-                                </div>
-                                <div class="form-group">
-                                    <label>Descripcion</label>
-                                    <input  class="form-control" type="text" name="descripcion" placeholder="Descripcion">  
-                                </div>
-                                <button type="submit" class="btn btn-outline-success">Agregar</button>
-                            </form>
-                            
-                        </div>
-                  
-                    </div>
-                  
-                </div>
-
             </div>
         </div>
     </div>
