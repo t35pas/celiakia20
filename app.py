@@ -95,7 +95,7 @@ def Index():
         nombre_admin = request.form['nombre_admin']
         password_admin = request.form['password_admin']
         
-        admin_loggeando = Administrador.query.filter_by(nombre=nombre_admin).first()
+        admin_loggeando = Administrador.query.filter_by(nombre_de_usuario=nombre_admin).first()
         if admin_loggeando:
             if (admin_loggeando.password == password_admin):
                 recetas = Receta.query.join(Dificultad, Receta.id_dificultad == Dificultad.id)\
