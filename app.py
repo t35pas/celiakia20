@@ -32,7 +32,7 @@ def get_receta(id_receta):
     return Receta.query.get(id_receta)
 
 #Ver todas las recetas
-@app.route('/receta')
+@app.route('/app/receta')
 def get_recetas():
     try:
         recetas = Receta.query.all()
@@ -41,19 +41,19 @@ def get_recetas():
 	    return(str(e))
 
 #Ver receta particular ingresando el nombre
-@app.route('/receta/<nombre>')
+@app.route('/app/receta/<nombre>')
 def recetasPorNombre(nombre):
     nombre = "%{}%".format(nombre)
     recetasPorNombre = Receta.query.filter(Receta.titulo.like(nombre)).all()
     return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
 #Imagen de una Receta
-@app.route('/receta/obtenerImagen/<filename>')
+@app.route('/app/receta/obtenerImagen/<filename>')
 def send_file(filename):
        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 #Recetas favoritas de un usuario
-@app.route('/usuario/<id_usuario>/favoritos')
+@app.route('/app/usuario/<id_usuario>/favoritos')
 def get_favorito(id_usuario):
     try:
         usuario = Usuario.query.get(id_usuario)
@@ -68,7 +68,7 @@ def get_favorito(id_usuario):
     except Exception as e:
 	    return(str(e))
 
-@app.route('/ingrediente/<ingredientes>/recetasTotales')
+@app.route('/app/ingrediente/<ingredientes>/recetasTotales')
 def busquedaPorIngrediente(ingredientes):
     #Genero una lista con los ingredientes enviados
     listadoIngredientes = ingredientes.split('-')
