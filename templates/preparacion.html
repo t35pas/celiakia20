@@ -74,19 +74,19 @@
                     
                         <div class="card-body">
                             <div class="dataTable">
-                                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Orden</th>
-                                            <th>Descripcion</th>
-                                            <th>Acciones</th>
+                                            <th scope="col">Orden</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for preparacion in preparaciones %}
                                         <tr>
-                                            <td> {{ preparacion.orden_del_paso}}</td>
-                                            <td> {{ preparacion.descripcion}}</td>
+                                            <td style="color: black;"> {{ preparacion.orden_del_paso}}</td>
+                                            <td style="color: black;"> {{ preparacion.descripcion}}</td>
                                             <td>
                                                 <a href="/receta/{{nueva_receta.id}}/preparacion/eliminar/{{preparacion.id}}" class="btn btn-outline-danger" >Eliminar</a>
                                             </td>

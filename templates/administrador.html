@@ -66,18 +66,18 @@
                         </div>
                         <div class="card-body">
                             <div class="dataTable">
-                                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>Nombre</th>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Nombre</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for administrador in administradores %}
                                         <tr>
-                                            <td> {{ administrador.id}}</td>
-                                            <td> {{ administrador.nombre}}</td>
+                                            <td style="color: black;"> {{ administrador.id}}</td>
+                                            <td style="color: black;"> {{ administrador.nombre_de_usuario}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

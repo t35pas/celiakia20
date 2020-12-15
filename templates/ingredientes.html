@@ -84,21 +84,21 @@
                         
                         <div class="card-body">
                             <div class="dataTable">
-                                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Cantidad</th>
-                                            <th>Unidad</th>
-                                            <th>Nombre</th>
-                                            <th>Acciones</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Unidad</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for ingrediente in ingredientes %}
                                         <tr>
-                                            <td> {{ ingrediente.cantidad}} </td>
-                                            <td> {{ ingrediente.descripcion_u}} </td>
-                                            <td> {{ ingrediente.descripcion}} </td>
+                                            <td style="color: black;"> {{ ingrediente.cantidad}} </td>
+                                            <td style="color: black;"> {{ ingrediente.descripcion_u}} </td>
+                                            <td style="color: black;"> {{ ingrediente.descripcion}} </td>
                                             <td>
                                                 <a href="/receta/{{nueva_receta.id}}/ingrediente/eliminar/{{ingrediente.id}}" class="btn btn-outline-danger" >Eliminar</a>
                                             </td>

@@ -28,23 +28,23 @@
           </div>
           <div class="card-body">
               <div class="dataTable">
-                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                <table class="table table-bordered table-hover" id="dataTable" cellspacing="0">
                   <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Tiempo de preparacion</th>
-                            <th>Dificultad</th>
-                            <th>Calificacion</th>
-                            <th>Acciones</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Tiempo de preparacion</th>
+                            <th scope="col">Dificultad</th>
+                            <th scope="col">Calificacion</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for receta in recetas %}
                         <tr>
-                            <td> {{ receta.titulo}}</td>
-                            <td> {{ receta.tiempo_preparacion}}</td>
-                            <td> {{ receta.descripcion}}</td>
-                            <td> {{ receta.calificacion}}</td>
+                            <td style="color: black;"> {{ receta.titulo}}</td>
+                            <td style="color: black;"> {{ receta.tiempo_preparacion}}</td>
+                            <td style="color: black;"> {{ receta.descripcion}}</td>
+                            <td style="color: black;"> {{ receta.calificacion}}</td>
                             <td>
                                 <a href="/receta/ver/{{receta.id}}" class="btn btn-outline-success">Ver</a>
                                 <a href="/actualizar/{{receta.id}}" class="btn btn-outline-info">Editar</a>
