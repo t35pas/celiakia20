@@ -48,7 +48,7 @@ def recetasPorNombre(nombre):
     return  jsonify([receta.serialize() for receta in recetasPorNombre])
 
 #Imagen de una Receta
-@app.route('/app/receta/obtenerImagen/<filename>')
+@app.route('/receta/obtenerImagen/<filename>')
 def send_file(filename):
        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
