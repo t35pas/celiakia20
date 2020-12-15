@@ -1506,7 +1506,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #858796;
+  color: #080808;
 }
 
 .table th,
@@ -1556,7 +1556,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-  color: #858796;
+  color: #080808;
   background-color: rgba(0, 0, 0, 0.075);
 }
 
@@ -9905,8 +9905,7 @@ a:focus {
 }
 
 .bg-gradient-dark {
-  background-color: #5a5c69;
-  background-image: linear-gradient(180deg, #5a5c69 10%, #373840 100%);
+  background-color: #049e51;
   background-size: cover;
 }
 
