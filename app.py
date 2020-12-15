@@ -301,15 +301,22 @@ def Admin():
             nombre_a = request.form['nombre_a']
             vieja_pass = request.form['password_vieja']
             nueva_pass = request.form['password_nueva']
+            repetir_pass = request.form['repetir_password_nueva']
+            
+            if nueva_pass == repetir_pass:
 
-            admin = Administrador.query.filter_by(nombre_de_usuario = nombre_a).first()
+                admin = Administrador.query.filter_by(nombre_de_usuario = nombre_a).first()
 
-            if (vieja_pass == admin.password):
-                admin.password = nueva_pass
-                db.session.commit()
-                flash('Cambiaste la contraseña con exito!')
-            else: 
-                return redirect(url_for('Admin'))
+                if (vieja_pass == admin.password):
+                    admin.password = nueva_pass
+                    db.session.commit()
+                    flash('Cambiaste la contraseña con exito!')
+                else: 
+                    return redirect(url_for('Admin'))
+            else:
+                flash('Las contraseñas no coinciden')
+                administradores = Administrador.query.all()
+                return render_template('administrador.html', administradores = administradores)
         else:
             administradores = Administrador.query.all()
             return render_template('administrador.html', administradores = administradores)
