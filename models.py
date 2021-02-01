@@ -1,3 +1,4 @@
+from enum import unique
 from app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
@@ -6,24 +7,28 @@ from sqlalchemy.orm import relationship
 class Receta(db.Model):
     __tablename__ = 'receta'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String())
-    calificacion = db.Column(db.Integer)
-    tiempo_preparacion = db.Column(db.Integer)
-    nombre_imagen = db.Column(db.String())
-    fecha_de_creacion = db.Column(db.DateTime, default = datetime.utcnow)
-    id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'))
-    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'))
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    titulo = db.Column(db.String(), nullable = False)
+    fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
+    fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
+    calificacion = db.Column(db.Integer, default = 0)
+    tiempo_preparacion = db.Column(db.Integer, unique = True, nullable = False)
+    nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
+    id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'), nullable = False)
+    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
     ingredientes = relationship('Ingrediente_Por_Receta', backref = 'receta')
-    preparaciones = relationship('Preparacion', backref = 'receta')
-    favoritos = relationship('Favorito', backref = 'receta')
+    preparacion = relationship('Preparacion', backref = 'receta')
+    favorita = relationship('Favorito', backref = 'receta')
 
-    def __init__(self, titulo, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen):
+    def __init__(self, titulo, calificacion, tiempo_preparacion, id_dificultad, nombre_imagen, fecha_modificacion, fecha_creacion, id_administrador):
         self.titulo = titulo
         self.calificacion = calificacion
         self.tiempo_preparacion = tiempo_preparacion
         self.id_dificultad = id_dificultad
         self.nombre_imagen = nombre_imagen
+        self.fecha_modificacion = fecha_modificacion
+        self.fecha_creacion = fecha_creacion
+        self.id_administrador = id_administrador
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -35,7 +40,10 @@ class Receta(db.Model):
             'calificacion': self.calificacion,
             'tiempo_preparacion':self.tiempo_preparacion,
             'id_dificultad':self.id_dificultad,
-            'nombre_imagen':self.nombre_imagen
+            'nombre_imagen':self.nombre_imagen,
+            'id_administrador':self.id_administrador,
+            'fecha_creacion':self.fecha_creacion,
+            'fecha_modificacion':self.fecha_modificacion
 }
 
 class Preparacion(db.Model):
@@ -85,11 +93,11 @@ class Unidad(db.Model):
     __tablename__ = 'unidad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion_u = db.Column(db.String())
+    descripcion = db.Column(db.String())
     ingredientes = relationship('Ingrediente', backref = 'unidad')
 
     def __init__(self, descripcion):
-        self.descripcion_u = descripcion_u
+        self.descripcion = descripcion
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -97,7 +105,7 @@ class Unidad(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'descripcion': self.descripcion_u
+            'descripcion': self.descripcion
 }
 
 class Ingrediente(db.Model):
@@ -107,10 +115,16 @@ class Ingrediente(db.Model):
     descripcion = db.Column(db.String())
     id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
     por_receta = relationship('Ingrediente_Por_Receta', backref = 'ingredientes')
+    fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
+    fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
+    nombre_imagen = db.Column(db.String())
 
-    def __init__(self, descripcion, id_unidad):
+    def __init__(self, descripcion, id_unidad, fecha_creacion, fecha_modificacion, nombre_imagen):
         self.descripcion = descripcion
         self.id_unidad = id_unidad
+        self.nombre_imagen = nombre_imagen
+        self.fecha_modificacion = fecha_modificacion
+        self.fecha_creacion = fecha_creacion
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -118,8 +132,11 @@ class Ingrediente(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'descripcion': self.descripcion,
-            'id_unidad': id_unidad
+            'descripcion_ing': self.descripcion_ing,
+            'id_unidad': self.id_unidad,
+            'fecha_creacion':self.fecha_creacion,
+            'fecha_modificacion':self.fecha_modificacion,
+            'nombre_imagen':self.nombre_imagen
 }
 
 class Ingrediente_Por_Receta(db.Model):
@@ -197,15 +214,21 @@ class Administrador(db.Model):
     __tablename__ = 'administrador'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre_de_usuario = db.Column(db.String())
-    password = db.Column(db.String())
+    nombre_usuario = db.Column(db.String())
+    contrasenia = db.Column(db.String())
     email = db.Column(db.String())
-    recetas = relationship('Receta', backref = 'autor')
+    fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
+    fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
+    nombre_imagen = db.Column(db.String())
+    recetas = relationship('Receta', backref = 'autor', lazy = True)
 
-    def __init__(self, nombre, password):
-        self.nombre_de_usuario = nombre_de_usuario
-        self.password = password
+    def __init__(self, nombre_usuario, contrasenia, email, fecha_creacion, fecha_modificacion, nombre_imagen):
+        self.nombre_usuario = nombre_usuario
+        self.contrasenia = contrasenia
         self.email = email
+        self.fecha_creacion = fecha_creacion
+        self.fecha_modificacion = fecha_modificacion
+        self.nombre_imagen = nombre_imagen
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -213,7 +236,10 @@ class Administrador(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'nombre_de_usuario': self.nombre_de_usuario,
-            'password': self.password,
-            'email': self.email
-}
+            'nombre_usuario': self.nombre_usuario,
+            'contrasenia': self.contrasenia,
+            'email': self.email,
+            'fecha_creacion':self.fecha_creacion,
+            'fecha_modificacion':self.fecha_modificacion,
+            'nombre_imagen':self.nombre_imagen
+    }
