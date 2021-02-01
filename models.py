@@ -74,7 +74,7 @@ class Dificultad(db.Model):
     __tablename__ = 'dificultad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String())
+    descripcion = db.Column(db.String(30), unique = True, nullable = False)
     recetas = relationship('Receta', backref = 'difcultad')
 
     def __init__(self, descripcion):
@@ -93,7 +93,7 @@ class Unidad(db.Model):
     __tablename__ = 'unidad'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String())
+    descripcion = db.Column(db.String(30), unique = True, nullable = False)
     ingredientes = relationship('Ingrediente', backref = 'unidad')
 
     def __init__(self, descripcion):
