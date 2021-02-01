@@ -1,7 +1,7 @@
 from enum import unique
 from app import db
 from datetime import datetime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import defaultload, relationship
 
 
 class Receta(db.Model):
@@ -50,9 +50,9 @@ class Preparacion(db.Model):
     __tablename__ = 'preparacion'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
-    orden_del_paso = db.Column(db.Integer)
-    descripcion = db.Column(db.String())
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
+    orden_del_paso = db.Column(db.Integer, unique = True, nullable = False)
+    descripcion = db.Column(db.String(), nullable = False)
 
     def __init__(self, id_receta, orden_del_paso, descripcion):
         self.id_receta = id_receta
@@ -112,12 +112,12 @@ class Ingrediente(db.Model):
     __tablename__ = 'ingrediente'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descripcion = db.Column(db.String())
-    id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'))
+    descripcion = db.Column(db.String(), nullable = False)
+    id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'), nullable = False)
     por_receta = relationship('Ingrediente_Por_Receta', backref = 'ingredientes')
     fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
-    nombre_imagen = db.Column(db.String())
+    nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
 
     def __init__(self, descripcion, id_unidad, fecha_creacion, fecha_modificacion, nombre_imagen):
         self.descripcion = descripcion
@@ -143,9 +143,9 @@ class Ingrediente_Por_Receta(db.Model):
     __tablename__ = 'ingrediente_por_receta'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
-    id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'))
-    cantidad = db.Column(db.Integer)
+    id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
+    id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'), nullable = False)
+    cantidad = db.Column(db.Integer, nullable = False)
 
     def __init__(self, id_receta, id_ingrediente, cantidad):
         self.id_receta = id_receta
@@ -214,12 +214,12 @@ class Administrador(db.Model):
     __tablename__ = 'administrador'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre_usuario = db.Column(db.String())
-    contrasenia = db.Column(db.String())
-    email = db.Column(db.String())
+    nombre_usuario = db.Column(db.String(), unique = True, nullable = False)
+    contrasenia = db.Column(db.String(), nullable = False)
+    email = db.Column(db.String(), unique = True, nullable = False)
     fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
-    nombre_imagen = db.Column(db.String())
+    nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
     recetas = relationship('Receta', backref = 'autor', lazy = True)
 
     def __init__(self, nombre_usuario, contrasenia, email, fecha_creacion, fecha_modificacion, nombre_imagen):
