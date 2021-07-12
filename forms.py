@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
                         ]
                     )
     contrasenia = PasswordField(
-                    'Contraseña',
+                    'Contrasenia',
                     validators=[
                         DataRequired()
                     ]
