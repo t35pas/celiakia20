@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <h1 class="font-weight-bold color-black">Bienvenid@,  {{ user.nombre_usuario }}</h1>
+            <p class="lead text-muted">
+                Te animamos a recorrer la app, para que puedas conocerla y asi crear la mayor<br>
+                cantidad de recetas para nuestros amigos celiacos...<br>
+                De todas formas, si se te presenta alguna inquietud o problema siempre podes <br>
+                recurrir a nuestra guia, simplemente deberas dar click en el boton verde aqui abajo!<br>
+            </p>
+        </div>
+    </div>
+    <div class="col-lg-3 d-flex p-t-30">
+      <button class="btn-green w-100 align-self-center">Guia CeliaKIA</button>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

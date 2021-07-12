@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<section class="py-3">
+    <div class="container">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+		  		{% for message in messages %}
+					<div class="alert alert-primary alert-dismissible fade show" role="alert">
+						{{ message }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{% endfor %}
+			{% endif %}
+	  	{% endwith %}
+		<div class="row">
+          	<div class="col-lg-9">
+              	<h1 class="font-weight-bold color-black">Recetas</h1>
+              	<p class="lead text-muted">
+                	Nueva Receta - Información General
+              	</p>
+        	</div>
+      	</div>
+      <hr>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="card">
+            <div class="card-body" style="height: 490px;">
+                <form class="login100-form p-l-55 p-r-55" id="formInfoGeneral" method="POST" action="{{url_for('InfoGeneral')}}" enctype="multipart/form-data">
+					{{ form.hidden_tag() }}
+					<div  class="wrap-input m-b-16">
+						{{ form.tituloReceta.label(class="txt5 col-sm-6 col-form-label") }}
+                        <div  class="wrap-input100 validate-input m-b-16">
+							{% if form.tituloReceta.errors %}
+								{{ form.tituloReceta(class="input100 is-invalid", placeholder="Título de la receta") }}
+								<div class="invalid-feedback">
+									{% for error in form.tituloReceta.errors %}
+										<span>{{ error }}</span> 
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.tituloReceta(class="input100", placeholder="Título de la receta") }}
+								<span class="focus-input100"></span>
+							{% endif %}
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6">
+								{{ form.tiempoPreparacion.label(class="txt5 col-sm-6 col-form-label") }}
+								<div  class="wrap-input100 validate-input m-b-16">
+									{% if form.tiempoPreparacion.errors %}
+									
+										{{ form.tiempoPreparacion(class="input100 is-invalid", placeholder="Tiempo de preparación") }}
+										<div class="invalid-feedback">
+											{% for error in form.tiempoPreparacion.errors %}
+												<span>{{ error }}</span> 
+											{% endfor %}
+										</div>
+									{% else %}
+									
+										{{ form.tiempoPreparacion(class="input100", type="number", placeholder="Tiempo de preparación") }}
+										<span class="focus-input100"></span>
+									{% endif %}
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								{{ form.dificultad.label(class="txt5 col-sm-6 col-form-label") }}
+								<div  class="wrap-input100 validate-input m-b-16">
+									{% if form.dificultad.errors %}
+									
+										{{ form.dificultad(class="input100 is-invalid", placeholder="Dificultad") }}
+										<div class="invalid-feedback">
+											{% for error in form.dificultad.errors %}
+												<span>{{ error }}</span> 
+											{% endfor %}
+										</div>
+									{% else %}
+									
+										{{ form.dificultad(class="input100", type="text", placeholder="Dificultad") }}
+										<span class="focus-input100"></span>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								{{ form.nombreImagen.label(class="txt5 col-sm-6 col-form-label") }}
+								<div  class="wrap-input100 validate-input m-b-16">
+									{% if form.nombreImagen.errors %}
+										
+										{{ form.nombreImagen(class="input100 is-invalid", placeholder="Nombre de la Imagen") }}
+										<div class="invalid-feedback">
+											{% for error in form.nombreImagen.errors %}
+												<span>{{ error }}</span> 
+											{% endfor %}
+										</div>
+									{% else %}
+					
+										{{ form.nombreImagen(class="input100", placeholder="Nombre de la Imagen") }}
+										<span class="focus-input100"></span>
+									{% endif %}
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								{{ form.imagenReceta.label(class="txt5 col-sm-6 col-form-label") }}
+								<div  class="wrap-input100 validate-input m-b-16">
+									{% if form.imagenReceta.errors %}
+										
+										{{ form.imagenReceta }}
+										<div class="invalid-feedback">
+											{% for error in form.imagenReceta.errors %}
+												<span>{{ error }}</span> 
+											{% endfor %}
+										</div>
+									{% else %}
+										{{ form.imagenReceta }}
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					
+						<div class="container-login100-form-btn">
+							{{ form.submit(class="login100-form-btn") }}
+						</div>
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

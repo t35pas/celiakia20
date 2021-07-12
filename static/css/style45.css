@@ -1,0 +1,160 @@
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+  @font-face {
+    font-family: Ubuntu-Regular;
+    src: url('../fonts/ubuntu/Ubuntu-Regular.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Ubuntu-Bold;
+    src: url('../fonts/ubuntu/Ubuntu-Bold.ttf'); 
+  }
+  
+  @font-face {
+    font-family: JosefinSans-Bold;
+    src: url('../fonts/JosefinSans/JosefinSans-Bold.ttf'); 
+  }
+
+/*//////////////////////////////////////////////////////////////////
+[ STYLES ]*/
+
+body {
+    overflow: hidden;
+    font-family: JosefineSans-Bold;
+    font-weight: 300;
+    color: rgb(0, 0, 0);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+hr {
+  margin-bottom: 0rem  !important;
+  margin-top: 10px;
+}
+
+.txt1{
+  font-family: Ubuntu-Regular;
+  font-size: 15px;
+  color: white;
+}
+.bg-primary {
+  background-color:#222222 !important;
+}
+
+.bg-light {
+  background-color: white !important;
+}
+
+.bg-mix {
+  background: linear-gradient(180deg, white 50%, rgb(126, 206, 139) 0);
+}
+
+.bg-green {
+  background-color: rgb(126, 206, 139);
+}
+
+#sidebar-container {
+    min-height: 100vh;
+}
+
+#sidebar-container .logo {
+    padding: .875rem 1.25rem;
+}
+
+#sidebar-container .menu {
+    width:  18rem;
+}
+
+.btn-search {
+  right: 5px;
+}
+
+.avatar {
+  max-width: 35px;
+}
+
+#content {
+  overflow-y: auto;
+  height: 100vh;
+  padding-bottom: 5rem;
+}
+
+.color-black {
+  color:black;
+}
+
+.btn-green {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  background-color: #57b846;
+  border-radius: 25px;
+
+  font-family: Ubuntu-Bold;
+  font-size: 15px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-green:hover {
+  background-color: #1b3815;
+}
+
+.stat {
+  border-right: 1px solid rgb(194, 192, 192);
+}
+
+/* Style the sidenav links and the dropdown button */
+.dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Add an active class to the active dropdown button */
+.active-dropdown {
+  background-color: #57b846;
+  color: white;
+}
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}

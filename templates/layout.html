@@ -1,90 +1,106 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
+	<head>
+		<!-- META TAGS -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
+		<!-- LINKS -->
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+		
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css"/>	
+		
+		<link href="{{url_for('static', filename = 'fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static', filename = 'css/style45.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static', filename = 'css/mainLogin9.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static', filename = 'css/util.css')}}" rel="stylesheet" type="text/css">
+		
+		<title>CeliaKIA Administrador</title>
+	
+	</head>
+	<body>
+		<div class="d-flex">
+			<div id="sidebar-container" class="bg-primary">
+				<div class="logo m-t-20">
+					<center>
+						<img src="{{url_for('static', filename='kiasf2.png')}}" width="120" height="85">
+					</center>
+					<h4 class="text-light text-center font-weight-bold"> CeliaKIA <br> Administrador</h4>
+				</div>
+				<div class="menu">
+					<div>
+						<button class="dropdown-btn d-block text-light p-l-30 m-t-20">
+							<i class="bi bi-caret-down"></i>
+							Recetas 
+							
+						</button>
+						<div class="dropdown-container p-l-30">
+							<a href="{{url_for('Listado')}}" class="d-block text-light m-t-12"><i class="bi bi-file-text p-r-15 lead"></i>Listado Recetas</a>
+							<a href="{{url_for('InfoGeneral')}}" class="d-block text-light m-t-12"><i class="bi bi-plus p-r-15 lead"></i>Nueva Receta</a>
+						</div>
+					</div>
+					<div>
+						<button class="dropdown-btn d-block text-light p-l-30 m-t-20">
+							<i class="bi bi-caret-down"></i>
+							Ingredientes 
+						</button>
+						<div class="dropdown-container p-l-30">
+							<a href="#" class="d-block text-light m-t-12"><i class="bi bi-basket p-r-15 lead"></i>Listado Ingredientes</a>
+							<a href="#" class="d-block text-light m-t-12"><i class="bi bi-plus p-r-15 lead"></i>Nuevo Ingrediente</a>
+							<a href="#" class="d-block text-light m-t-12"><i class="bi bi-plus p-r-15 lead"></i>Unidades</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="w-100">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+					<div class="container">
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" 
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<img src="{{url_for('static', filename='kiasf.png')}}" class="img-fluid rounded-circle avatar mr-2">
+										{{ user.nombre_usuario}}
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="#">Mi Perfil</a>
+										<a class="dropdown-item" href="#">Administradores</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="{{url_for('Logout')}}">Salir</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				
+				<!-- CAMBIO DE PAGINAS -->
+				<div id="content" class="bg-mix"> {% block content %}   {% endblock %} </div>
 
-  <title>CeliaKIA</title>
+			</div>
+		</div>
+		
+		<!-- SCRIPTS -->
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" 
+				integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" 
+				crossorigin="anonymous">
+		</script>
+		
+		<!-- DataTables -->
+		<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+		<script src="{{url_for('static', filename = 'chart21.js')}}"></script>
 
-  <!-- Custom fonts for this template-->
-  <link href="{{url_for('static', filename = 'vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="{{url_for('static', filename = 'css/sb-admin-2.min.css')}}" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="{{url_for('static', filename = 'vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
-</head>
-<body id="page-top">
-
-  <div id="wrapper">
-
-    <!-- Barra lateral de Navegacion -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"> 
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-        <div class="sidebar-brand-text mx-3">CeliaKIA</div>
-      </a>
-      <hr class="sidebar-divider my-0">
-
-      <!-- Items de la barra de navegacion -->
-      <li class="nav-item">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/receta/nueva">
-          <div class="sidebar-brand-text mx-3">Crear Receta</div>
-        </a>
-        <hr class="sidebar-divider my-0">
-      </li>
-      <li class="nav-item">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/inicio">
-          <div class="sidebar-brand-text mx-3">Listado de recetas</div>
-        </a>
-        <hr class="sidebar-divider my-0">      
-      </li>
-      <li class="nav-item">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/administrador">
-          <div class="sidebar-brand-text mx-3">Administrador</div>
-        </a>
-        <hr class="sidebar-divider my-0">
-      </li>
-      <li class="nav-item">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="" data-toggle="modal" data-target="#logoutModal">
-            <div class="sidebar-brand-text mx-3">Salir</div>
-          </a>
-          <hr class="sidebar-divider my-0">
-      </li>
-      <hr class="sidebar-divider d-none d-md-block">
-    </ul> 
-    <!-- Contenido del body de cada pagina en particular -->
-    {% block body %}
-    
-    {% endblock %}
-    <!-- Footer -->
-    
-  </div>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cerrar sesion</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Para cerrar sesion selecciona "Salir".</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="/">Salir</a>
-        </div>
-    </div>
-  </div>
-  
-</body>
+	</body>
 </html>

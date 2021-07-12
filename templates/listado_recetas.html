@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<section class="py-3">
+  <div class="container">
+    <div class="row">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <div class="col-lg-9">
+            <h1 class="font-weight-bold color-black">Recetas</h1>
+            <p class="lead text-muted">
+                Listado total de Recetas de CeliaKIA
+            </p>
+        </div>
+    </div>
+    <hr>
+  </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="dataTable">
+                    <table id="listadoRecetas" class="table table-striped" style="width: 100%;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nro.</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Tiempo de preparación</th>
+                                <th scope="col">Dificultad</th>
+                                <th scope="col">Calificación</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {% for receta in recetas %}
+                                <tr>
+                                    <td> {{ receta.id}}</td>
+                                    <td> {{ receta.titulo}}</td>
+                                    <td> {{ receta.tiempo_preparacion}}</td>
+                                    <td> {{ receta.difcultad.descripcion}}</td>
+                                    <td> {{ receta.calificacion}}</td>
+                                    <td>
+                                        <a href="/receta/{{receta.id}}" class="btn btn-outline-success"><i class="bi bi-eye-fill"></i></a>
+                                        <a href="/receta/editar/{{receta.id}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="/recetas/eliminar/{{receta.id}}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

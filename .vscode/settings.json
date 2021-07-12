@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Evelyn\\.virtualenvs\\celiakia20-4uiLMLq3\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\Evelyn\\.virtualenvs\\celiakia20-6EUQfMT1\\Scripts\\python.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint-flask"

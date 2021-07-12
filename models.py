@@ -82,7 +82,7 @@ class Receta(db.Model):
             'id_administrador':self.id_administrador,
             'fecha_creacion':self.fecha_creacion,
             'fecha_modificacion':self.fecha_modificacion
-}
+    }
 
 class Preparacion(db.Model):
     __tablename__ = 'preparacion'
@@ -106,7 +106,7 @@ class Preparacion(db.Model):
             'id_receta': self.id_receta,
             'orden_del_paso': self.orden_del_paso,
             'descripcion':self.descripcion
-}
+    }
 
 class Dificultad(db.Model):
     __tablename__ = 'dificultad'
@@ -125,7 +125,7 @@ class Dificultad(db.Model):
         return {
             'id': self.id,
             'descripcion': self.descripcion
-}
+    }
 
 class Unidad(db.Model):
     __tablename__ = 'unidad'
@@ -144,7 +144,7 @@ class Unidad(db.Model):
         return {
             'id': self.id,
             'descripcion': self.descripcion
-}
+    }
 
 class Ingrediente(db.Model):
     __tablename__ = 'ingrediente'
@@ -175,7 +175,7 @@ class Ingrediente(db.Model):
             'fecha_creacion':self.fecha_creacion,
             'fecha_modificacion':self.fecha_modificacion,
             'nombre_imagen':self.nombre_imagen
-}
+    }
 
 class Ingrediente_Por_Receta(db.Model):
     __tablename__ = 'ingrediente_por_receta'
@@ -199,7 +199,7 @@ class Ingrediente_Por_Receta(db.Model):
             'id_receta': self.id_receta,
             'id_ingrediente': self.id_ingrediente,
             'cantidad': self.cantidad
-}
+    }
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
@@ -225,7 +225,7 @@ class Usuario(db.Model):
             'nombre': self.nombre,
             'apellido': self.apellido,
             'email':self.email
-}
+    }
 
 class Favorito(db.Model):
     __tablename__ = 'favorito'
@@ -246,4 +246,4 @@ class Favorito(db.Model):
             'id': self.id,
             'id_receta': self.id_receta,
             'id_usuario': self.id_usuario
-}
+    }
