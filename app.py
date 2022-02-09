@@ -469,7 +469,7 @@ def EliminarRecetaListado(idReceta):
 
 #Aplicación CeliaKIA Web
 
-@app.route('/app', methods = ['GET', 'POST'])
+@app.route('/app/index', methods = ['GET', 'POST'])
 
 
 

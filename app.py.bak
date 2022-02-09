@@ -466,6 +466,13 @@ def EliminarRecetaListado(idReceta):
         return redirect(url_for('Listado'))
 
 @app.route('/logout', methods = ['GET', 'POST'])
+
+#Aplicación CeliaKIA Web
+
+@app.route('/app', methods = ['GET', 'POST'])
+
+
+
 @login_required
 def Logout():
         logout_user()
