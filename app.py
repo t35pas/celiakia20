@@ -470,7 +470,8 @@ def EliminarRecetaListado(idReceta):
 #Aplicación CeliaKIA Web
 
 @app.route('/app/index', methods = ['GET', 'POST'])
-
+def PruebaApp():
+return render_template('index.html')
 
 
 @login_required
