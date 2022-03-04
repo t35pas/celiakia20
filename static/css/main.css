@@ -1780,17 +1780,13 @@ input, select, textarea {
 			}
 
 /* MENU LATERAL LOGO */
-.navbar-logo {
-	display: inline-block;
-	vertical-align: middle;
-	width: 70px;
+#logo {
+	background: url(https://celiakia20.herokuapp.com/static/kiasf.png);
+	width: 40px;
+	height: 36px;
+	top: -5px;
 }
 
-	.navbar-logo img {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
 
 /* Button */
 
