@@ -1779,15 +1779,6 @@ input, select, textarea {
 				width: auto;
 			}
 
-/* MENU LATERAL LOGO */
-#logo {
-	background: url(https://celiakia20.herokuapp.com/static/kiasf.png);
-	width: 40px;
-	height: 36px;
-	top: -5px;
-}
-
-
 /* Button */
 
 	input[type="button"],
