@@ -1779,15 +1779,6 @@ input, select, textarea {
 				width: auto;
 			}
 
-
-/*Imagen*/
-.imagen {
-	margin: 0;
-	display: inline-block;
-	height: 18px;
-	float: none;
-}
-
 /* Button */
 
 	input[type="button"],
