@@ -1779,6 +1779,19 @@ input, select, textarea {
 				width: auto;
 			}
 
+/* MENU LATERAL LOGO */
+.navbar-logo {
+	display: inline-block;
+	vertical-align: middle;
+	width: 70px;
+}
+
+	.navbar-logo img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
 /* Button */
 
 	input[type="button"],
