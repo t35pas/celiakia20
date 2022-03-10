@@ -225,7 +225,9 @@ input, select, textarea {
 			.container {
 				width: 75em;
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 		}
 
 		@media screen and (max-width: 1280px) {
@@ -233,7 +235,9 @@ input, select, textarea {
 			.container {
 				width: calc(100% - 100px);
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 		}
 
 		@media screen and (max-width: 980px) {
@@ -241,7 +245,9 @@ input, select, textarea {
 			.container {
 				width: calc(100% - 100px);
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 		}
 
 		@media screen and (max-width: 736px) {
@@ -249,7 +255,9 @@ input, select, textarea {
 			.container {
 				width: calc(100% - 40px);
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 		}
 
 		@media screen and (max-width: 360px) {
@@ -257,7 +265,9 @@ input, select, textarea {
 			.container {
 				width: calc(100% - 30px);
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 		}
 
 /* Row */
@@ -504,7 +514,9 @@ input, select, textarea {
 				}
 
 		@media screen and (max-width: 1680px) {
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
@@ -749,7 +761,9 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 1280px) {
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
@@ -994,7 +1008,9 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 980px) {
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
@@ -1239,7 +1255,9 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 736px) {
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
@@ -1484,6 +1502,9 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 360px) {
+			.kia_avatar {
+				max-width: 10px;
+			}
 
 			.row {
 				display: flex;
@@ -2606,6 +2627,10 @@ input, select, textarea {
 
 	@media screen and (max-width: 1680px) {
 
+		.kia_avatar {
+			max-width: 10px;
+		}
+
 		/* Basic */
 
 			body, input, textarea, select {
@@ -2618,6 +2643,10 @@ input, select, textarea {
 /* Large */
 
 	@media screen and (max-width: 1280px) {
+
+		.kia_avatar {
+			max-width: 10px;
+		}
 
 		/* Basic */
 
@@ -2695,6 +2724,10 @@ input, select, textarea {
 	}
 
 	@media screen and (max-width: 980px) {
+
+		.kia_avatar {
+			max-width: 10px;
+		}
 
 		/* Basic */
 
@@ -3092,6 +3125,10 @@ input, select, textarea {
 				line-height: 1.75em;
 			}
 
+		.kia_avatar {
+			max-width: 10px;
+		}
+
 	}
 
 /* Small */
@@ -3103,7 +3140,9 @@ input, select, textarea {
 			body, input, textarea, select {
 				font-size: 10pt;
 			}
-
+			.kia_avatar {
+				max-width: 10px;
+			}
 	}
 
 .kia_avatar {
