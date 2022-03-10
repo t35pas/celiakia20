@@ -3105,3 +3105,7 @@ input, select, textarea {
 			}
 
 	}
+
+.kia_avatar {
+	max-width: 50px;
+}
