@@ -2720,7 +2720,7 @@ input, select, textarea {
 /* Medium */
 
 	#navPanel, #titleBar {
-		display: none;
+		display: inline-block;
 	}
 
 	@media screen and (max-width: 980px) {
