@@ -2916,7 +2916,7 @@ input, select, textarea {
 					text-decoration: none;
 					height: 44px;
 					line-height: 44px;
-					padding: 0 1em 0 1em;
+					padding: 1em 1em 1em 1em;
 					color: #888;
 					color: rgba(255, 255, 255, 0.5);
 					border-top: solid 2px rgba(87, 93, 89, 0.15);
@@ -2970,12 +2970,12 @@ input, select, textarea {
 				transform: translateX(275px);
 			}
 
-		body.navPanel-visible #navPanel {
-			-moz-transform: translateX(275px);
-			-webkit-transform: translateX(275px);
-			-ms-transform: translateX(275px);
-			transform: translateX(275px);
-		}
+			body.navPanel-visible #navPanel {
+				-moz-transform: translateX(0);
+				-webkit-transform: translateX(0);
+				-ms-transform: translateX(0);
+				transform: translateX(0);
+			}
 
 	}
 
