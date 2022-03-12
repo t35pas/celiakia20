@@ -3,15 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField, Selec
 from wtforms.fields.core import BooleanField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
-from models.administrador import Administrador
-from models.difciultad import Dificultad
-from models.favorito import Favorito
-from models.ingrediente import Ingrediente
-from models.ingrediente_por_receta import Ingrediente_Por_Receta
-from models.preparacion import Preparacion
-from models.receta import Receta
-from models.unidad import Unidad
-from models.usuario import Usuario
+from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 class LoginForm(FlaskForm):
     nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=20)])

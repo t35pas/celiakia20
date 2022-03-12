@@ -25,15 +25,7 @@ loginManager = LoginManager(app) #Para manejar las sesiones de los administrador
 loginManager.login_view = 'Login'
 
 from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
-from models.administrador import Administrador
-from models.difciultad import Dificultad
-from models.favorito import Favorito
-from models.ingrediente import Ingrediente
-from models.ingrediente_por_receta import Ingrediente_Por_Receta
-from models.preparacion import Preparacion
-from models.receta import Receta
-from models.unidad import Unidad
-from models.usuario import Usuario
+from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 #Aplicacion WEB
 def agregarEnReceta(form, idReceta):
