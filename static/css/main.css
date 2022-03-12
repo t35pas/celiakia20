@@ -2720,7 +2720,7 @@ input, select, textarea {
 /* Medium */
 
 	#navPanel, #titleBar {
-		display: inline-block;
+		display: none;
 	}
 
 	@media screen and (max-width: 980px) {
@@ -2970,12 +2970,12 @@ input, select, textarea {
 				transform: translateX(275px);
 			}
 
-			body.navPanel-visible #navPanel {
-				-moz-transform: translateX(0);
-				-webkit-transform: translateX(0);
-				-ms-transform: translateX(0);
-				transform: translateX(0);
-			}
+		body.navPanel-visible #navPanel {
+			-moz-transform: translateX(275px);
+			-webkit-transform: translateX(275px);
+			-ms-transform: translateX(275px);
+			transform: translateX(275px);
+		}
 
 	}
 
