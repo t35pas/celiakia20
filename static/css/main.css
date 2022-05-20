@@ -2364,6 +2364,10 @@ input, select, textarea {
 		padding-top: 3.25em;
 	}
 
+	.nav {
+		align-items:stretch
+	}
+
 	#nav {
 		position: fixed;
 		top: 0;
