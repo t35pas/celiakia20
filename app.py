@@ -428,7 +428,7 @@ def paginaInicio(name=None):
     return render_template('index.html', name=name)
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
-def paginaInicio(name=None):
+def paginaMundoCeliakia(name=None):
     return render_template('indexMundoCeliakia.html', name=name)
 
 if __name__ == '__main__':
