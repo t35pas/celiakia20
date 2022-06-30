@@ -9,8 +9,9 @@ def load_Admin(id_admin):
     return Administrador.query.get(int(id_admin))
 
 class Administrador(db.Model, UserMixin):
-
     __tablename__ = 'administrador'
+    __table_args__ = {'extend_existing': True} 
+
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre_usuario = db.Column(db.String(), unique = True, nullable = False)
@@ -61,6 +62,8 @@ class Administrador(db.Model, UserMixin):
 
 class Dificultad(db.Model):
     __tablename__ = 'dificultad'
+    __table_args__ = {'extend_existing': True} 
+
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String(30), unique = True, nullable = False)
@@ -93,6 +96,8 @@ class Dificultad(db.Model):
 
 class Favorito(db.Model):
     __tablename__ = 'favorito'
+    __table_args__ = {'extend_existing': True} 
+
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'))
@@ -134,6 +139,7 @@ class Favorito(db.Model):
 
 class Ingrediente_Por_Receta(db.Model):
     __tablename__ = 'ingrediente_por_receta'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
@@ -178,6 +184,7 @@ class Ingrediente_Por_Receta(db.Model):
 
 class Ingrediente(db.Model):
     __tablename__ = 'ingrediente'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String(), nullable = False)
@@ -219,6 +226,7 @@ class Ingrediente(db.Model):
 
 class Preparacion(db.Model):
     __tablename__ = 'preparacion'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
@@ -266,6 +274,7 @@ class Preparacion(db.Model):
 
 class Receta(db.Model):
     __tablename__ = 'receta'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     titulo = db.Column(db.String(), nullable = False)
@@ -324,6 +333,7 @@ class Receta(db.Model):
 
 class Unidad(db.Model):
     __tablename__ = 'unidad'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcion = db.Column(db.String(30), unique = True, nullable = False)
@@ -355,6 +365,7 @@ class Unidad(db.Model):
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
+    __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String())
