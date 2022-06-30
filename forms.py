@@ -42,14 +42,14 @@ class NuevoIngrediente(FlaskForm):
     submit = SubmitField('Agregar')
 
 
-class EditarInfoGral(FlaskForm):
+#class EditarInfoGral(FlaskForm):
     
-    tituloReceta = StringField('Titulo de la receta', id="editarTitulo",validators=[DataRequired(), Length(min=2, max=50)])
-    tiempoPreparacion = IntegerField('Tiempo de preparación', id="editarTiempoPreparacion",validators=[DataRequired()])
-    dificultad = SelectField('Dificultad',id="editarDificultad",choices=[(dif.id, dif.descripcion) for dif in Dificultad.query.all()], coerce=int)
-    imagenReceta = FileField('Imagen de la receta',id="editarImagenReceta",validators=[FileAllowed(['jpg', 'png'])])
-    nombreImagen = StringField('Nombre de la imagen',id="editarNombreImagenReceta", validators=[DataRequired(), Length(min=2, max=20),])
-    submit = SubmitField('Actualizar')
+#    tituloReceta = StringField('Titulo de la receta', id="editarTitulo",validators=[DataRequired(), Length(min=2, max=50)])
+#    tiempoPreparacion = IntegerField('Tiempo de preparación', id="editarTiempoPreparacion",validators=[DataRequired()])
+#    dificultad = SelectField('Dificultad',id="editarDificultad",choices=[(dif.id, dif.descripcion) for dif in Dificultad.query.all()], coerce=int)
+#    imagenReceta = FileField('Imagen de la receta',id="editarImagenReceta",validators=[FileAllowed(['jpg', 'png'])])
+#    nombreImagen = StringField('Nombre de la imagen',id="editarNombreImagenReceta", validators=[DataRequired(), Length(min=2, max=20),])
+#    submit = SubmitField('Actualizar')
 
 
 
