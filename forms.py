@@ -94,11 +94,11 @@ class NuevaUnidad(FlaskForm):
             raise ValidationError('Ya existe esa unidad!')
 
 
-class EditarIngrediente(FlaskForm):
-    nombreIngrediente = StringField('Nombre del ingrediente',id = 'editarNombreIngrediente',validators=[DataRequired(), Length(min=2, max=50)])
-    unidad = SelectField('Unidad',id = 'editarUnidad',choices=[(u.id, u.descripcion) for u in Unidad.query.all()], coerce=int)
-    cantidad = IntegerField('Cantidad',id = 'editarCantidad',validators=[DataRequired()])
-    imagenIngrediente = FileField('Imagen del Ingrediente',id = 'editarImagenIngrediente',validators=[FileAllowed(['jpg', 'png'])])
-    nombreImagen = StringField('Nombre de la imagen',id = 'editarNombreImagenIng', validators=[Length(min=2, max=20)])
-    submit = SubmitField('Actualizar')
+#class EditarIngrediente(FlaskForm):
+#    nombreIngrediente = StringField('Nombre del ingrediente',id = 'editarNombreIngrediente',validators=[DataRequired(), Length(min=2, max=50)])
+#    unidad = SelectField('Unidad',id = 'editarUnidad',choices=[(u.id, u.descripcion) for u in Unidad.query.all()], coerce=int)
+#    cantidad = IntegerField('Cantidad',id = 'editarCantidad',validators=[DataRequired()])
+#    imagenIngrediente = FileField('Imagen del Ingrediente',id = 'editarImagenIngrediente',validators=[FileAllowed(['jpg', 'png'])])
+#    nombreImagen = StringField('Nombre de la imagen',id = 'editarNombreImagenIng', validators=[Length(min=2, max=20)])
+#    submit = SubmitField('Actualizar')
 
