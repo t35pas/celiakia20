@@ -5,7 +5,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = '677a6637137a00c8c3aed7246b14d0e1d4eda1bfa4270a2f390580ddc3c3879d'
+    SECRET_KEY = '61c22808d676ccfad412d1f78effc60187fd6da7309cb51a30358a099543bac5'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
