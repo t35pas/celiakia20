@@ -12,7 +12,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 from flask_sqlalchemy import SQLAlchemy
 
 from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
+#from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
 
 app = Flask(__name__)
 
