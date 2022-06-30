@@ -24,7 +24,8 @@ bcrypt = Bcrypt(app) #Para encriptar las contrasenas
 loginManager = LoginManager(app) #Para manejar las sesiones de los administradores
 loginManager.login_view = 'Login'
 
-from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
+#from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
+from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarPreparacion
 from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 #Aplicacion WEB
@@ -189,9 +190,9 @@ def EditarReceta(idReceta, idIxR=0, idPrep=0):
         ingredientes = receta.ingredientes
         preparacion = receta.preparacion
         paso = Preparacion.query.get(idPrep)
-        form = EditarInfoGral()
+        #form = EditarInfoGral()
         formP = EditarPreparacion()
-        formI = EditarIngrediente()
+        #formI = EditarIngrediente()
         if form.validate_on_submit():
                 receta.titulo = form.tituloReceta.data
                 receta.tiempo_preparacion = form.tiempoPreparacion.data
@@ -284,7 +285,7 @@ def EditarIngPorReceta(idIxR):
                 ingredienteXreceta = Ingrediente_Por_Receta.query.get(idIxR)
                 ingrediente = Ingrediente.query.get(ingredienteXreceta.id_ingrediente)
                 
-                form = EditarIngrediente()
+                #form = EditarIngrediente()
                 
                 if form.validate_on_submit():
                 
