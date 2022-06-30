@@ -11,6 +11,9 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 
+from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
+
 app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -24,8 +27,6 @@ bcrypt = Bcrypt(app) #Para encriptar las contrasenas
 loginManager = LoginManager(app) #Para manejar las sesiones de los administradores
 loginManager.login_view = 'Login'
 
-from forms import LoginForm, NuevaReceta, NuevaPreparacion, NuevoIngrediente, EditarIngrediente, EditarPreparacion, EditarInfoGral
-from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 #Aplicacion WEB
 def agregarEnReceta(form, idReceta):
