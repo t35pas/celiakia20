@@ -371,12 +371,14 @@ class Usuario(db.Model):
     nombre = db.Column(db.String())
     apellido = db.Column(db.String())
     email = db.Column(db.String())
+    id_token = db.Column(db.String())
     favoritos = relationship('Favorito', backref = 'usuario')
     
-    def __init__(self, nombre, apellido, email):
+    def __init__(self, nombre, apellido, email, id_token):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
+        self.id_token = id_token
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -386,7 +388,8 @@ class Usuario(db.Model):
             'id': self.id,
             'nombre': self.nombre,
             'apellido': self.apellido,
-            'email':self.email
+            'email':self.email,
+            'id_token':self.id_token
     }
 
     @classmethod
