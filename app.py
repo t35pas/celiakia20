@@ -438,7 +438,7 @@ def paginaMundoCeliakia(name=None):
 #Buscar Por Nombre de Receta
 @app.route('/buscarPorNombre/<nombre>', methods = ['GET', 'POST'])
 def BuscarPorNombre(nombre):
-        receta = Receta.query.find_by_name(nombre)
+        receta = Receta.query.find_by(name=nombre)
         ingredientes = receta.ingredientes
         preparacion = receta.preparacion
         
