@@ -441,8 +441,8 @@ def Logout():
 
 #Aplicación CeliaKIA Web
 @app.route('/index', methods = ['GET', 'POST'])
-def paginaInicio(name=None):
-    return render_template('index.html', name=name)
+def paginaInicio():
+    return render_template('index.html', num_recetas=len(recetas))
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
 def paginaMundoCeliakia(name=None):
