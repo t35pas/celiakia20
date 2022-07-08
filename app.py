@@ -440,6 +440,7 @@ def Logout():
         return redirect(url_for('Login'))
 
 #Aplicación CeliaKIA Web
+recetas = []
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
     return render_template('index.html', num_recetas=len(recetas))
