@@ -451,7 +451,8 @@ def paginaMundoCeliakia(name=None):
 #Buscar Por Nombre de Receta
 @app.route('/buscarPorNombre/<nombre>', methods = ['GET', 'POST'])
 def BuscarPorNombre(nombre):
-        return Receta.query.filter_by(titulo=nombre).first()
+        num1=request.form.get("idNombreReceta")
+        return Receta.query.filter_by(titulo=num1).first()
 
 if __name__ == '__main__':
      app.run(debug=True)
