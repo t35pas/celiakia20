@@ -3,7 +3,7 @@ import imp
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session
+from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, current_app
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
