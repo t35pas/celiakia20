@@ -10,6 +10,7 @@ from werkzeug.datastructures import CombinedMultiDict
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash
 
 
 app = Flask(__name__)
