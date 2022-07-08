@@ -128,7 +128,19 @@ def editarIngPorReceta(ingredienteXreceta, ingrediente, form):
                 db.session.commit()
                 return True
         return False   
-        
+
+@app.route('/gen/<pass>', methods = ['GET', 'POST'])
+def create_user(pass):
+    """Creates user with encrypted password"""
+    # Hash the user password
+    Hash = generate_password_hash(
+        pass,
+        method='pbkdf2:sha256'
+    )
+    return Hash
+
+
+
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
