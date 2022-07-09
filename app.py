@@ -453,6 +453,7 @@ def paginaMundoCeliakia(name=None):
 @app.route('/buscarPorNombre/<nombre>', methods = ['GET', 'POST'])
 def BuscarPorNombre(nombre):
     current_app.logger.info('BuscarPorNombre')
+    recetas = []
     recetas.append(Receta.query.filter_by(titulo=nombre).first())
     current_app.logger.info('Longitud de recetas '+str(len(recetas)))
     return render_template('index.html', num_recetas=len(recetas))
