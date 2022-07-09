@@ -68,7 +68,11 @@
 				</div>
 			</section>
 
+			{% extends "indexRecetaBase.html" %}
+			{% block title %}Resultados de Búsqueda{% endblock %}
+			{% block content %}
 			{{ num_recetas }} recetas
+			{% endblock %}
 
 			<!-- Main -->
 			<section id="main">
