@@ -168,11 +168,11 @@ class Ingrediente_Por_Receta(db.Model):
 
     @classmethod
     def find_by_id(cls, id):
-        return cls.query.filter_by(id_receta=id).first()
+        return cls.query.filter_by(id=id).first()
 
     @classmethod
     def find_by_receta(cls, idReceta):
-        return cls.query.filter_by(id_receta=idReceta)
+        return cls.query.filter_by(id_receta=idReceta).all()
 
     def save_to_db(self):
         db.session.add(self)
@@ -215,6 +215,10 @@ class Ingrediente(db.Model):
     @classmethod
     def find_by_id(cls, idIngrediente):
         return cls.query.filter_by(id=idIngrediente).first()
+
+    @classmethod
+    def find_by_descripcion(cls, ingrediente_descripcion):
+        return cls.query.filter_by(descripcion = ingrediente_descripcion).first()
 
     def save_to_db(self):
         db.session.add(self)
@@ -354,6 +358,10 @@ class Unidad(db.Model):
     @classmethod
     def find_by_id(cls, idUnidad):
         return cls.query.filter_by(id=idUnidad).first()
+
+    @classmethod
+    def find_by_descripcion(cls, unidad_descripcion):
+        return cls.query.filter_by(descripcion=unidad_descripcion).first()
 
     def save_to_db(self):
         db.session.add(self)

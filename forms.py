@@ -30,16 +30,25 @@ class NuevaReceta(FlaskForm):
 
 class NuevaPreparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', validators=[DataRequired()])
-    descripcion = TextAreaField('Descripción',validators=[DataRequired()])
+    descripcionPaso = TextAreaField('Descripción',validators=[DataRequired()])
     tiempo = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
     submit = SubmitField('Agregar')
 
-class NuevoIngrediente(FlaskForm):
+class AgregarIngrediente(FlaskForm):
 
     descripcionIngrediente = SelectField('Nombre del ingrediente',id = 'descripcionIngrediente',choices=[],coerce=int)
     unidad = SelectField('Unidad',choices=[],coerce=int)
     cantidad = IntegerField('Cantidad',validators=[DataRequired()])
-    submit = SubmitField('Agregar')
+    submit = SubmitField('Guardar')
+
+
+class EditarIngrediente(FlaskForm):
+
+    descripcionIngrediente = SelectField('Nombre del ingrediente',id = 'descripcionIngrediente',choices=[],coerce=int)
+    unidad = SelectField('Unidad',choices=[],coerce=int)
+    cantidad = IntegerField('Cantidad',validators=[DataRequired()])
+    submit = SubmitField('Actualizar')
+
 
 
 class EditarInfoGral(FlaskForm):
@@ -56,6 +65,7 @@ class EditarInfoGral(FlaskForm):
 class EditarPreparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', id = 'editarOrdenPaso',validators=[DataRequired()])
     descripcion = TextAreaField('Descripción',id = 'editarDescripcion',validators=[DataRequired()])
+    tiempo = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
     submit = SubmitField('Actualizar',id = 'actualizar')
 
 class CambioContraseniaAdmin(FlaskForm):
@@ -93,12 +103,4 @@ class NuevaUnidad(FlaskForm):
         if unidad:
             raise ValidationError('Ya existe esa unidad!')
 
-
-class EditarIngrediente(FlaskForm):
-    nombreIngrediente = StringField('Nombre del ingrediente',id = 'editarNombreIngrediente',validators=[DataRequired(), Length(min=2, max=50)])
-    unidad = SelectField('Unidad',id = 'editarUnidad',choices=[(u.id, u.descripcion) for u in Unidad.query.all()], coerce=int)
-    cantidad = IntegerField('Cantidad',id = 'editarCantidad',validators=[DataRequired()])
-    imagenIngrediente = FileField('Imagen del Ingrediente',id = 'editarImagenIngrediente',validators=[FileAllowed(['jpg', 'png'])])
-    nombreImagen = StringField('Nombre de la imagen',id = 'editarNombreImagenIng', validators=[Length(min=2, max=20)])
-    submit = SubmitField('Actualizar')
 
