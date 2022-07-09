@@ -444,7 +444,7 @@ recetas = []
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
     recetas = []
-    return render_template('index.html', num_recetas=len(recetas))
+    return render_template('index.html')
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
 def paginaMundoCeliakia(name=None):
