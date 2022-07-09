@@ -68,11 +68,7 @@
 				</div>
 			</section>
 
-			{% extends "indexRecetaBase.html" %}
-			{% block title %}Resultados de Búsqueda{% endblock %}
-			{% block content %}
-			{{ num_recetas }} recetas
-			{% endblock %}
+			
 
 			<!-- Main -->
 			<section id="main">
@@ -88,14 +84,13 @@
 									<li><a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a></li>
 									<li><a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a></li>
 								</ul>
-								<header>
-									<h2>A random assortment of icons in circles</h2>
-									<p>And some text that attempts to explain their significance</p>
-								</header>
-								<p>
-									Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper mod quis eget mi. Etiam eu<br />
-									ante risus. Aliquam erat volutpat. Aliquam luctus et mattis lectus amet pulvinar. Nam nec turpis consequat.
-								</p>
+
+								{% extends "indexRecetaBase.html" %}
+								{% block title %}Resultados de Búsqueda{% endblock %}
+								{% block content %}
+								{{ num_recetas }} recetas
+								{% endblock %}
+
 							</section>
 
 						</div>
