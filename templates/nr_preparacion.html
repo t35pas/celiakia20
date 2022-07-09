@@ -42,7 +42,7 @@
                             Nuevo Paso
                         </span>
                         <div  class="wrap-input">
-                            <form class="login100-form" id="nuevaPreparacion" method="POST" action="{{url_for('PrepPorReceta')}}" enctype="multipart/form-data">
+                            <form class="login100-form" id="nuevaPreparacion" method="POST" action="{{url_for('PrepPorReceta',idPrep = idPrep)}}" enctype="multipart/form-data">
                                 {{ form.hidden_tag() }} 
                                 <div class="row">
                                     <div class="col-md-3">
@@ -77,23 +77,24 @@
                                             {% endif %}
                                         </div>
                                     </div>
-
-                                    <div class="col-md-9">
-                                        {{ form.tiempo.label(class="txt5 text-center col-md-12") }}
+                                
+                                    <div class="col-md-12">
+                                        
                                         <div  class="wrap-input100 validate-input m-b-16">
-                                            {% if form.tiempo.errors %}
-                                                {{ form.tiempo(class="inputTextArea is-invalid", rows="10") }}
+                                            {% if form.tiempoPaso.errors %}
+                                                {{ form.tiempoPaso(class="input100 is-invalid") }}
                                                 <div class="invalid-feedback">
-                                                    {% for error in form.tiempo.errors %}
+                                                    {% for error in form.tiempoPaso.errors %}
                                                         <span>{{ error }}</span> 
                                                     {% endfor %}
                                                 </div>
                                             {% else %}
-                                                {{ form.tiempo(class="input100", type="number") }}
+                                                {{ form.tiempoPaso(class="input100", type="number") }}
                                                 <span class="focus-input100"></span>
                                             {% endif %}
                                         </div>
                                     </div>
+
                                 </div>
                                 
                                 <div class="container-login100-form-btn">
@@ -124,7 +125,7 @@
                                             <td> {{ paso.orden_del_paso}}</td>
                                             <td> {{ paso.descripcion}}</td>
                                             <td>
-                                                <a href="{{url_for('EditarPrepPorReceta', idPrep=paso.id)}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
+                                                <a href="{{url_for('PrepPorReceta', idPrep=paso.id)}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
                                                 <a href="{{url_for('EliminarPrepPorReceta', idPrep=paso.id)}}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
                                             </td>
                                         </tr>

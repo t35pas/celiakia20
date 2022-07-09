@@ -111,8 +111,9 @@ def InfoGeneral():
         return render_template('nr_infoGeneral.html', form = receta, user = current_user)
 
 @app.route('/nuevo/ingredientes', methods = ['GET', 'POST'])
+@app.route('/nuevo/ingredientes/<idIXR>', methods = ['GET', 'POST'])
 @login_required
-def IngPorReceta():
+def IngPorReceta(idIXR=0):
         idReceta = session.get('idReceta')
         print(idReceta)
         if idReceta:
@@ -125,56 +126,86 @@ def IngPorReceta():
                         cantidad = ingrediente.cantidad.data
                         idUnidad = ingrediente.unidad.data #esto ya me trae el id de la unidad
                         
-                        ingredienteXreceta = Ingrediente_Por_Receta(
-                                id_receta = idReceta, 
-                                id_ingrediente = idIngrediente,
-                                cantidad = cantidad,
-                                id_unidad = idUnidad
-                        )
-
-                        Ingrediente_Por_Receta.save_to_db(ingredienteXreceta)
-                                
-                        return redirect(url_for('IngPorReceta'))
-                
-                ingredientesXreceta = Ingrediente_Por_Receta.query.filter_by(id_receta = idReceta)
-                return render_template('nr_ingredientes.html', 
-                                        form = ingrediente, 
-                                        user = current_user, 
-                                        ingredientesXreceta = ingredientesXreceta
-                                        )
+                        if idIXR == 0: #CREACION DE UN INGREDIENTE EN LA RECETA
+                                ingredienteXreceta = Ingrediente_Por_Receta(
+                                        id_receta = idReceta, 
+                                        id_ingrediente = idIngrediente,
+                                        cantidad = cantidad,
+                                        id_unidad = idUnidad
+                                )
+                                Ingrediente_Por_Receta.save_to_db(ingredienteXreceta)       
+                                return redirect(url_for('IngPorReceta'))
+                        else: #ACTUALIZACION DE UN INGREDIENTE EN LA RECETA
+                                ingrXreceta = Ingrediente_Por_Receta.find_by_id(idIXR)
+                                Ingrediente_Por_Receta.update_to_db(ingrXreceta,idIngrediente,idUnidad,cantidad)
+                                return redirect(url_for('IngPorReceta'))
+                else:
+                        if idIXR != 0: #GET INGREDIENTE A ACTUALIZAR
+                                ingrXreceta = Ingrediente_Por_Receta.find_by_id(idIXR)
+                                ingrediente.descripcionIngrediente.data = ingrXreceta.id_ingrediente
+                                ingrediente.cantidad.data = ingrXreceta.cantidad
+                                ingrediente.unidad.data = ingrXreceta.id_unidad
+                                return render_template('nr_ingredientes.html', 
+                                                form = ingrediente, 
+                                                ingredientesXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta), 
+                                                user = current_user,
+                                                idIXR = ingrXreceta.id)
+                        else:
+                                return render_template('nr_ingredientes.html',
+                                                form = ingrediente, 
+                                                ingredientesXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta), 
+                                                user = current_user,
+                                                idIXR = 0)
         else:
                 print('no esta en session')
                 return redirect(url_for('Home'))
 
 @app.route('/nuevo/preparacion', methods = ['GET', 'POST'])
+@app.route('/nuevo/preparacion/<idPrep>', methods = ['GET', 'POST'])
 @login_required
-def PrepPorReceta():
+def PrepPorReceta(idPrep=0):
         idReceta = session.get('idReceta')
-        
         if idReceta:
-                
                 preparacion = NuevaPreparacion()
-
+                
                 if preparacion.validate_on_submit():
-
                         ordenPaso = preparacion.ordenPaso.data
-                        descripcion = preparacion.descripcionPaso.data
-                        tiempo = preparacion.tiempo.data
-
-                        if Preparacion.find_by_paso_receta(ordenPaso,idReceta):
-                                return redirect(url_for('PrepPorReceta'))
-                        else:
+                        descripcionPaso = preparacion.descripcionPaso.data
+                        tiempoPaso = preparacion.tiempoPaso.data
+                        
+                        if idPrep == 0: #CREACION DE UN NUEVO PASO
                                 nuevoPaso = Preparacion(
                                         id_receta = idReceta,
                                         orden_del_paso = ordenPaso,
-                                        descripcion = descripcion,
-                                        tiempo_preparacion=tiempo
+                                        descripcion = descripcionPaso,
+                                        tiempo_preparacion=tiempoPaso
                                 )
                                 Preparacion.save_to_db(nuevoPaso)
-                return render_template('nr_preparacion.html', 
-                                        form = preparacion, 
-                                        preparacion = Preparacion.find_by_receta(idReceta), 
-                                        user = current_user)
+                                return redirect(url_for('PrepPorReceta'))
+
+                        else: #ACTUALIZACION DE UN PASO
+                                paso = Preparacion.find_by_id(idPrep)
+                                Preparacion.update_to_db(paso,ordenPaso,tiempoPaso,descripcionPaso)
+                                return redirect(url_for('PrepPorReceta'))                        
+                else:
+                        if idPrep != 0: #GET PASO A ACTUALIZAR
+                                paso = Preparacion.find_by_id(idPrep)
+                                print(paso.json())
+                                preparacion.ordenPaso.data = paso.orden_del_paso
+                                preparacion.descripcionPaso.data = paso.descripcion
+                                preparacion.tiempoPaso.data = paso.tiempo_preparacion
+                                return render_template('nr_preparacion.html', 
+                                                form = preparacion, 
+                                                preparacion = Preparacion.find_by_receta(idReceta), 
+                                                user = current_user,
+                                                idPrep = paso.id)
+                        else:
+                                return render_template('nr_preparacion.html', 
+                                                                form = preparacion, 
+                                                                preparacion = Preparacion.find_by_receta(idReceta), 
+                                                                user = current_user,
+                                                                idPrep=0)
+
         else: 
                 return redirect(url_for('Home'))
 
@@ -191,8 +222,55 @@ def VerReceta(idReceta):
                                 ingredientes = ingredientes,
                                 preparacion = preparacion)
 
+@app.route('/ingredientes/eliminar/<idIxR>', methods = ['GET', 'POST'])
+@login_required
+def eliminarIngPorReceta(idIxR):
+        idReceta = session.get('idReceta')
+        if idReceta:
+                ingrediente = Ingrediente_Por_Receta.find_by_id(idIxR)
+                Ingrediente_Por_Receta.delete_from_db(ingrediente)
+                flash('Ingrediente eliminado correctamente de la receta!')
+                return redirect(url_for('IngPorReceta'))
+        return redirect(url_for('Home'))
 
+@app.route('/preparacion/eliminar/<idPrep>', methods = ['GET', 'POST'])
+@login_required
+def EliminarPrepPorReceta(idPrep):
+        idReceta = session.get('idReceta')
+        
+        if idReceta:
+                paso = Preparacion.find_by_id(idPrep)
+                Preparacion.delete_from_db(paso)
+                flash('Paso eliminado correctamente de la receta!')
+                return redirect(url_for('PrepPorReceta'))
+        return redirect(url_for('Home'))
 
+@app.route('/recetas', methods = ['GET', 'POST'])
+@login_required
+def Listado():
+        recetas = Receta.query.all()
+        return render_template('listado_recetas.html', recetas = recetas, user = current_user)
+
+@app.route('/recetas/eliminar/<idReceta>', methods = ['GET', 'POST'])
+@login_required
+def EliminarRecetaListado(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        ingrXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta)
+        preparacion = Preparacion.find_by_receta(idReceta)
+    
+        if preparacion: 
+                for paso in preparacion:
+                        Preparacion.delete_from_db(paso)
+        
+        if ingrXreceta:
+                for ingrediente in ingrXreceta:   
+                        Ingrediente_Por_Receta.delete_from_bd(ingrediente)
+    
+        Receta.delete_from_db(receta)
+        flash('Eliminaste la receta con exito.')
+        return redirect(url_for('Listado'))
+
+#AUN EN PROCESO.. FALTA CORRECCION
 @app.route('/receta/editar/<idReceta>/preparacion/<idPrep>', methods = ['GET', 'POST'])
 @app.route('/receta/editar/<idReceta>', methods = ['GET', 'POST'])
 @app.route('/receta/editar/<idReceta>/ingredientes/<idIxR>', methods = ['GET', 'POST'])
@@ -246,92 +324,6 @@ def EditarReceta(idReceta, idIxR=0, idPrep=0):
                                 ingredientes = ingredientes, receta = receta, preparacion = preparacion,
                                 idPrep = idPrep, idIxR = idIxR, idReceta = idReceta,
                                 user = current_user)
-
-
-@app.route('/ingredientes/eliminar/<idIxR>', methods = ['GET', 'POST'])
-@login_required
-def eliminarIngPorReceta(idIxR):
-        idReceta = session.get('idReceta')
-        if idReceta:
-                ingrediente = Ingrediente_Por_Receta.find_by_id(idIxR)
-                Ingrediente_Por_Receta.delete_from_db(ingrediente)
-                flash('Ingrediente eliminado correctamente de la receta!')
-                return redirect(url_for('IngPorReceta'))
-        return redirect(url_for('Home'))
-        
-
-@app.route('/preparacion/editar/<idPrep>', methods = ['GET', 'POST'])
-@login_required
-def EditarPrepPorReceta(idPrep):
-        idReceta = session.get('idReceta')
-        
-        if idReceta:
-                
-                form = EditarPreparacion()
-                paso = Preparacion.find_by_id(idPrep)
-                print(paso.descripcion)
-                
-                if form.validate_on_submit():
-                        print('Se valido el formulario')
-                        paso.orden_del_paso = form.ordenPaso.data
-                        paso.descripcion = form.descripcion.data
-                        
-                        db.session.commit()
-                        print('Paso Actualizado')
-                        flash('Paso actualizado ok')
-                        
-                        return redirect(url_for('PrepPorReceta'))
-                
-                elif request.method == 'GET':
-                        print('Es un GET')
-                        form.ordenPaso.data = paso.orden_del_paso
-                        form.descripcion.data = paso.descripcion
-                preparacion = Preparacion.query.filter_by(id_receta = idReceta)
-                
-                return render_template('editar_preparacion.html', 
-                                        form = form, 
-                                        preparacion = preparacion, 
-                                        idPrep = idPrep,
-                                        user = current_user)
-        else: 
-                return redirect(url_for('PrepPorReceta'))
-
-@app.route('/preparacion/eliminar/<idPrep>', methods = ['GET', 'POST'])
-@login_required
-def EliminarPrepPorReceta(idPrep):
-        idReceta = session.get('idReceta')
-        
-        if idReceta:
-                paso = Preparacion.find_by_id(idPrep)
-                Preparacion.delete_from_db(paso)
-                flash('Paso eliminado correctamente de la receta!')
-                return redirect(url_for('PrepPorReceta'))
-        return redirect(url_for('Home'))
-
-@app.route('/recetas', methods = ['GET', 'POST'])
-@login_required
-def Listado():
-        recetas = Receta.query.all()
-        return render_template('listado_recetas.html', recetas = recetas, user = current_user)
-
-@app.route('/recetas/eliminar/<idReceta>', methods = ['GET', 'POST'])
-@login_required
-def EliminarRecetaListado(idReceta):
-        receta = Receta.find_by_id(idReceta)
-        ingrXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta)
-        preparacion = Preparacion.find_by_receta(idReceta)
-    
-        if preparacion: 
-                for paso in preparacion:
-                        Preparacion.delete_from_db(paso)
-        
-        if ingrXreceta:
-                for ingrediente in ingrXreceta:   
-                        Ingrediente_Por_Receta.delete_from_bd(ingrediente)
-    
-        Receta.delete_from_db(receta)
-        flash('Eliminaste la receta con exito.')
-        return redirect(url_for('Listado'))
 
 @app.route('/logout', methods = ['GET', 'POST'])
 @login_required

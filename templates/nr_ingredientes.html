@@ -33,16 +33,6 @@
 </section>
 
 <section>
-    <div class="container">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link active" id="nav-agregar-tab" data-toggle="tab" href="#agregarIngrediente" role="tab" aria-controls="nav-agregar" aria-selected="false">Agregar Ingredientes</a>
-            </div>
-        </nav>
-    </div>
-</section>
-
-<section>
     <div class="tab-content">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="agregarIngrediente" role="tabpanel" aria-labelledby="nav-agregar-tab">
@@ -55,7 +45,7 @@
                                         Agregar Ingrediente
                                     </span>   
                                     <div  class="wrap-input">
-                                        <form class="login100-form" id="formIngredientes" method="POST" action="{{url_for('IngPorReceta')}}" enctype="multipart/form-data">
+                                        <form class="login100-form" id="formIngredientes" method="POST" action="{{url_for('IngPorReceta', idIXR = idIXR)}}" enctype="multipart/form-data">
                                             {{ form.hidden_tag() }}
 
                                             <div class="col-md-14" id="descripcionIngrediente">
@@ -143,6 +133,7 @@
                                                         <td>{{ ixr.unidad.descripcion }}</td>
                                                         <td>{{ ixr.ingredientes.descripcion }}</td>
                                                         <td>
+                                                            <a href="{{url_for('IngPorReceta', idIXR=ixr.id)}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
                                                             <a id="delete{{ixr.id}}" href="/ingredientes/eliminar/{{ixr.id}}" class="btn btn-outline-danger" onclick="return confirm('Estas seguro que deseas eliminar el ingrediente de la receta?')">
                                                                 <i class="bi bi-trash"></i>
                                                             </a>

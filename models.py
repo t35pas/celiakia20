@@ -174,6 +174,12 @@ class Ingrediente_Por_Receta(db.Model):
     def find_by_receta(cls, idReceta):
         return cls.query.filter_by(id_receta=idReceta).all()
 
+    def update_to_db(self,ingrediente,unidad,cantidad):
+        self.id_ingrediente = ingrediente
+        self.id_unidad = unidad
+        self.cantidad = cantidad
+        db.session.commit()
+    
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
@@ -234,7 +240,7 @@ class Preparacion(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
-    orden_del_paso = db.Column(db.Integer, unique = True, nullable = False)
+    orden_del_paso = db.Column(db.Integer, nullable = False)
     descripcion = db.Column(db.String(), nullable = False)
     tiempo_preparacion = db.Column(db.Integer, nullable = False)
 
@@ -268,6 +274,12 @@ class Preparacion(db.Model):
     def find_by_paso_receta(cls, ordenPaso,idReceta):
         return cls.query.filter_by(id_receta = idReceta, orden_del_paso = ordenPaso).first()
         
+    def update_to_db(self,orden,tiempo,descripcion):
+        self.orden_del_paso = orden
+        self.descripcion = descripcion
+        self.tiempo_preparacion = tiempo
+        db.session.commit()
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
