@@ -150,7 +150,7 @@ def IngPorReceta(idIXR=0):
                                                 ingredientesXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta), 
                                                 user = current_user,
                                                 idIXR = ingrXreceta.id)
-                        else:
+                        elif idIXR == 0:
                                 return render_template('nr_ingredientes.html',
                                                 form = ingrediente, 
                                                 ingredientesXreceta = Ingrediente_Por_Receta.find_by_receta(idReceta), 
