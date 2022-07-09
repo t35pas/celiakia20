@@ -36,7 +36,6 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link " id="nav-lista-tab" data-toggle="tab" href="#listaIngredientes" role="tab" aria-controls="nav-lista" aria-selected="true">Listado de ingredientes totales</a>
                 <a class="nav-link active" id="nav-agregar-tab" data-toggle="tab" href="#agregarIngrediente" role="tab" aria-controls="nav-agregar" aria-selected="false">Agregar Ingredientes</a>
             </div>
         </nav>
@@ -46,41 +45,6 @@
 <section>
     <div class="tab-content">
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade" id="listaIngredientes" role="tabpanel" aria-labelledby="nav-lista-tab">
-                <div class="container m-t-15">
-                    <div class="card">
-                        <div class="card-body  m-b-50">
-                            <span class="form-title">
-                                Ingredientes
-                            </span>
-                            <div  class="wrap-input">
-                                <div class="dataTable">
-                                    <table class="display table table-striped" style="width: 100%;">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">Descripción</th>
-                                                <th scope="col">Unidad</th>
-                                                <th scope="col">Imagen</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            {% for i in ingredientes %}
-                                                <tr>
-                                                    <td> {{ i.descripcion}}</td>
-                                                    <td> {{ i.unidad.descripcion}}</td>
-                                                    <td> {{ i.nombre_imagen}}</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="tab-pane fade show active" id="agregarIngrediente" role="tabpanel" aria-labelledby="nav-agregar-tab">
                 <div class="container m-t-15">
                     <div class="row">
@@ -93,44 +57,20 @@
                                     <div  class="wrap-input">
                                         <form class="login100-form" id="formIngredientes" method="POST" action="{{url_for('IngPorReceta')}}" enctype="multipart/form-data">
                                             {{ form.hidden_tag() }}
-                                            <div class="col-md-14">
-                                                <fieldset>
-                                                    <label class="txt5 text-center col-md-12">El ingrediente que desea agregar:</label><br>
-                                                    <input type="radio" name="ingrediente" id="noExiste" checked> Existe en la base de datos<br>
-                                                    <input type="radio" name="ingrediente" id="existe"> No existe en la base de datos<br>
-                                                </fieldset>
-                                            </div> 
 
-                                            <div id="nombreIngrediente" class="col-md-14" style="display:none">
-                                                {{ form.nombreIngrediente.label(class="txt5 text-center col-md-12") }}
-                                                <div  class="wrap-input100 m-b-16">
-                                                    {% if form.nombreIngrediente.errors %}
-                                                        {{ form.nombreIngrediente(class="input100 is-invalid") }}
-                                                        <div class="invalid-feedback">
-                                                            {% for error in form.nombreIngrediente.errors %}
-                                                                    <span>{{ error }}</span> 
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% else %}
-                                                        {{ form.nombreIngrediente(class="input100") }}
-                                                        <span class="focus-input100"></span>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-14" id="elegirNombreIngrediente">
-                                                {{ form.elegirNombreIngrediente.label(class="txt5 text-center col-md-12") }}
+                                            <div class="col-md-14" id="descripcionIngrediente">
+                                                {{ form.descripcionIngrediente.label(class="txt5 text-center col-md-12") }}
                                                 <div  class="wrap-input100 validate-input m-b-16">
-                                                    {% if form.elegirNombreIngrediente.errors %}
+                                                    {% if form.descripcionIngrediente.errors %}
                                                     
-                                                        {{ form.elegirNombreIngrediente(class="input100 is-invalid") }}
+                                                        {{ form.descripcionIngrediente(class="input100 is-invalid") }}
                                                         <div class="invalid-feedback">
-                                                            {% for error in form.elegirNombreIngrediente.errors %}
+                                                            {% for error in form.descripcionIngrediente.errors %}
                                                                 <span>{{ error }}</span> 
                                                             {% endfor %}
                                                         </div>
                                                     {% else %}    
-                                                        {{ form.elegirNombreIngrediente(class="input100") }}
+                                                        {{ form.descripcionIngrediente(class="input100") }}
                                                         <span class="focus-input100"></span>
                                                     {% endif %}
                                                 </div>
@@ -173,38 +113,6 @@
                                                 </div>
                                             </div>
 
-                                            <div id="nombreImagen" class="col-md-14" style="display:none">
-                                                {{ form.nombreImagen.label(class="txt5 text-center col-md-12") }}
-                                                <div  class="wrap-input100 validate-input m-b-16">
-                                                    {% if form.nombreImagen.errors %}                            
-                                                        {{ form.nombreImagen(class="input100 is-invalid") }}
-                                                        <div class="invalid-feedback">
-                                                            {% for error in form.nombreImagen.errors %}
-                                                                <span>{{ error }}</span> 
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% else %}    
-                                                        {{ form.nombreImagen(class="input100") }}
-                                                        <span class="focus-input100"></span>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-
-                                            <div id="imagenIngrediente" class="col-md-12" style="display:none">
-                                                <div  class="wrap-input100 validate-input m-b-16">
-                                                    {% if form.imagenIngrediente.errors %}                        
-                                                        {{ form.imagenIngrediente }}
-                                                        <div class="invalid-feedback">
-                                                            {% for error in form.imagenIngrediente.errors %}
-                                                                <span>{{ error }}</span> 
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% else %}
-                                                        {{ form.imagenIngrediente }}
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-
                                             <div class="container-login100-form-btn">
                                                 {{ form.submit(class="login100-form-btn") }}
                                             </div>
@@ -224,7 +132,6 @@
                                                     <th scope="col">Cantidad</th>
                                                     <th scope="col">Unidad</th>
                                                     <th scope="col">Descripción</th>
-                                                    <th scope="col">Imagen</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -233,13 +140,9 @@
                                                 {% for ixr in ingredientesXreceta %}
                                                     <tr>
                                                         <td>{{ ixr.cantidad }}</td>
-                                                        <td>{{ ixr.ingredientes.unidad.descripcion }}</td>
+                                                        <td>{{ ixr.unidad.descripcion }}</td>
                                                         <td>{{ ixr.ingredientes.descripcion }}</td>
-                                                        <td>{{ ixr.ingredientes.nombre_imagen }}</td>
                                                         <td>
-                                                            <a id="edit{{ixr.id}}" type="button" class="btn btn-outline-info" href="/ingredientes/editar/{{ixr.id}}">
-                                                                <i class="bi bi-pencil-square"></i>
-                                                            </a>
                                                             <a id="delete{{ixr.id}}" href="/ingredientes/eliminar/{{ixr.id}}" class="btn btn-outline-danger" onclick="return confirm('Estas seguro que deseas eliminar el ingrediente de la receta?')">
                                                                 <i class="bi bi-trash"></i>
                                                             </a>

@@ -62,17 +62,34 @@
                                         </div>
                                     </div>
                                     <div class="col-md-9">
-                                        {{ form.descripcion.label(class="txt5 text-center col-md-12") }}
+                                        {{ form.descripcionPaso.label(class="txt5 text-center col-md-12") }}
                                         <div  class="wrap-input100 validate-input m-b-16">
-                                            {% if form.descripcion.errors %}
-                                                {{ form.descripcion(class="inputTextArea is-invalid", rows="10") }}
+                                            {% if form.descripcionPaso.errors %}
+                                                {{ form.descripcionPaso(class="inputTextArea is-invalid", rows="10") }}
                                                 <div class="invalid-feedback">
-                                                    {% for error in form.descripcion.errors %}
+                                                    {% for error in form.descripcionPaso.errors %}
                                                         <span>{{ error }}</span> 
                                                     {% endfor %}
                                                 </div>
                                             {% else %}
-                                                {{ form.descripcion(class="inputTextArea", rows="3") }}
+                                                {{ form.descripcionPaso(class="inputTextArea", rows="3") }}
+                                                <span class="focus-input100"></span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        {{ form.tiempo.label(class="txt5 text-center col-md-12") }}
+                                        <div  class="wrap-input100 validate-input m-b-16">
+                                            {% if form.tiempo.errors %}
+                                                {{ form.tiempo(class="inputTextArea is-invalid", rows="10") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.tiempo.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.tiempo(class="input100", type="number") }}
                                                 <span class="focus-input100"></span>
                                             {% endif %}
                                         </div>
