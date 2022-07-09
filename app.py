@@ -443,6 +443,7 @@ def Logout():
 recetas = []
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
+    recetas = []
     return render_template('index.html', num_recetas=len(recetas))
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
