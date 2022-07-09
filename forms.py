@@ -31,7 +31,7 @@ class NuevaReceta(FlaskForm):
 class NuevaPreparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', validators=[DataRequired()])
     descripcionPaso = TextAreaField('Descripción',validators=[DataRequired()])
-    tiempo = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
+    tiempoPaso = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
     submit = SubmitField('Agregar')
 
 class AgregarIngrediente(FlaskForm):
