@@ -5,7 +5,7 @@ import os
 from sqlalchemy import true
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session
+from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, current_app
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
@@ -340,9 +340,11 @@ def Logout():
         return redirect(url_for('Login'))
 
 #Aplicación CeliaKIA Web
+recetas = []
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
-    return render_template('index.html', num_recetas=len(recetas))
+    recetas = []
+    return render_template('index.html')
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
 def paginaMundoCeliakia(name=None):
@@ -351,8 +353,11 @@ def paginaMundoCeliakia(name=None):
 #Buscar Por Nombre de Receta
 @app.route('/buscarPorNombre/<nombre>', methods = ['GET', 'POST'])
 def BuscarPorNombre(nombre):
-        num1=request.form.get("idNombreReceta")
-        return Receta.query.filter_by(titulo=num1).first()
+    current_app.logger.info('BuscarPorNombre')
+    recetas = []
+    recetas.append(Receta.query.filter_by(titulo=nombre).first())
+    current_app.logger.info('Longitud de recetas '+str(len(recetas)))
+    return render_template('index.html', num_recetas=len(recetas))
 
 if __name__ == '__main__':
      app.run(debug=True)
