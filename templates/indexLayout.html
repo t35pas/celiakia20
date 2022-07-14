@@ -1,14 +1,15 @@
 <!DOCTYPE HTML>
-<html>
-<head>
-    <title>CeliaKIA</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-</head>
-<body class="homepage is-preload">
-    <div id="page-wrapper">
 
+<html>
+	<head>
+		<title>CeliaKIA</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+<<<<<<< HEAD
         <!-- MEN� Superior -->
         <nav id="nav">
             <!--<div >
@@ -35,77 +36,184 @@
                 <li><a href="{{url_for('Logout')}}">Salir</a></li>
             </ul>
         </nav>
+=======
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<img class="logo" src="static/kiasf2.png"/>
+						<h1><a href="index.html">CeliaKIA</a></h1>
+						<nav class="main">
+							<ul>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>¿Y ahora qué como?</h3>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Mis Favoritos</h3>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>El mundo de la celiaquía</h3>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>KIA - Sobre Nosotros</h3>
+											<p>Porta lectus amet ultricies</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Etiam sed consequat</h3>
+											<p>Porta lectus amet ultricies</p>
+										</a>
+									</li>
+								</ul>
+							</section>
+
+						<!-- Actions -->
+							<section>
+								<ul class="actions stacked">
+									<li><a href="#" class="button large fit">Configuración</a></li>
+								</ul>
+								<ul class="actions stacked">
+									<li><a href="#" class="button large fit">Salir</a></li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+				<div id="content" class="bg-mix"> {% block contentIndex %}   {% endblock %} </div>
+ 
+				<!-- Sidebar -->
+					<section id="sidebar">
+
+						<!-- Intro -->
+							<section id="intro">
+								<header>
+									<h2>¿Y ahora qué como?</h2>
+								</header>
+								<ul class="actions fit">
+									<li><a href="#" class="button fit">Buscar por ingrediente</a></li>
+									<li><a href="#" class="button fit">Buscar por nombre de receta</a></li>
+								</ul>
+								<form id="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+>>>>>>> 88c43576bead626460e96cec75aff5c3969e9943
 
 
 
-        <!-- CONTENIDO DE PAGINAS -->
-        <section id="banner">
-            <div class="container">
-                <div class="row gtr-200">
-                    <div class="col-12">
-                        {% block contentIndex %}   {% endblock %}
-                    </div>
-                </div>
-            </div>
-        </section>
+						<!-- Posts List -->
+							<section>
+								<h2>El mundo de la celiaquía </h2>
+								<ul class="posts">
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">Cuidemos la contaminación cruzada</a></h3>
+												<time class="published" datetime="2015-10-20">October 20, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="static/images/pic08.jpg" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">¿Cuáles son los síntomas más comunes?</a></h3>
+												<time class="published" datetime="2015-10-15">October 15, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="static/images/pic09.jpg" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">Consejos para ordenar el refrigerador</a></h3>
+												<time class="published" datetime="2015-10-10">October 10, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="static/images/pic10.jpg" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">¿Cómo llevar una dieta libre de glúten?</a></h3>
+												<time class="published" datetime="2015-10-08">October 8, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="static/images/pic11.jpg" alt="" /></a>
+										</article>
+									</li>
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">Comer fuera de casa, todo un desafío</a></h3>
+												<time class="published" datetime="2015-10-06">October 7, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="static/images/pic12.jpg" alt="" /></a>
+										</article>
+									</li>
+								</ul>
+							</section>
 
-        <!-- Footer -->
-        <footer id="footer">
-            <div class="container">
-                <div class="row gtr-200">
-                    <div class="col-12">
+						<!-- About -->
+							<section class="blurb">
+								<h2>KIA</h2>
+								<p>Conocé nuestra adorable mascota y cómo puede ayudarte a encontrar las recetas perfectas para tu hogar.</p>
+								<ul class="actions">
+									<li><a href="#" class="button">Leer más</a></li>
+								</ul>
+							</section>
 
-                        <!-- About -->
-                        <section>
-                            <h2 class="major"><span>What's this about?</span></h2>
-                            <p>
-                                This is <strong>TXT</strong>, yet another free responsive site template designed by
-                                <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>. It's released under the
-                                <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for
-                                whatever you're working on (personal or commercial), just be sure to give us credit for the design.
-                                That's basically it :)
-                            </p>
-                        </section>
+						<!-- Footer -->
+							<section id="footer">
+								<ul class="icons">
+									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
+									<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+								<p class="copyright">&copy; CELIAKIA. Aplicación diseñada y desarrollada por: Timoteo Pasinato - Nicolás Burgos - Evelyn Sacks </br> Ingeniería de Software 2022. Universidad Tecnológica Nacional, Facultad Regional Delta.</p>
+							</section>
 
-                    </div>
-                    <div class="col-12">
+					</section>
 
-                        <!-- Contact -->
-                        <section>
-                            <h2 class="major"><span>Get in touch</span></h2>
-                            <ul class="contact">
-                                <li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-                                <li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                                <li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-                                <li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-                                <li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
-                            </ul>
-                        </section>
+			</div>
 
-                    </div>
-                </div>
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script> 
 
-                <!-- Copyright -->
-                <div id="copyright">
-                    <ul class="menu">
-                        <li>&copy; Untitled. All rights reserved</li>
-                        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- Scripts -->
-    <script src="static/assets/js/jquery.min.js"></script>
-    <script src="static/assets/js/jquery.dropotron.min.js"></script>
-    <script src="static/assets/js/jquery.scrolly.min.js"></script>
-    <script src="static/assets/js/browser.min.js"></script>
-    <script src="static/assets/js/breakpoints.min.js"></script>
-    <script src="static/assets/js/util.js"></script>
-    <script src="static/assets/js/main.js"></script>
-
-</body>
+	</body>
 </html>

@@ -32,6 +32,7 @@ from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por
 from forms import AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente
 
 
+<<<<<<< HEAD
 
 
 @app.route('/gen/<passw>', methods = ['GET', 'POST'])
@@ -58,6 +59,8 @@ def guardar_imagen(nombreImagen, imagen):
         imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return true 
 
+=======
+>>>>>>> 88c43576bead626460e96cec75aff5c3969e9943
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
