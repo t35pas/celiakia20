@@ -1,0 +1,67 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+
+<!-- Main -->
+<div id="main">
+    <!-- Sidebar -->
+    <section id="sidebar">
+        <!-- Intro -->
+        <section id="intro">
+            <header>
+                <h2>Bienvenid@ Administrador</h2>
+            </header>
+        </section>
+    </section>
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a>Listado de recetas</a></h2>
+            </div>
+            <div class="meta">
+                <ul class="actions stacked">
+                    <li>
+                        <a href="{{url_for('InfoGeneral')}}" class="button large fit">Nueva Receta</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+                            
+        <section>
+            <div class="table-wrapper">
+                <div class="dataTable" style="width: 98.5%;">
+                    <table id="listadoRecetas" class="table table-striped" >
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nro.</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Dificultad</th>
+                                <th scope="col">Calificación</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {% for receta in recetas %}
+                                <tr>
+                                    <td> {{ receta.id}}</td>
+                                    <td> {{ receta.titulo}}</td>
+                                    <td> {{ receta.dificultad.descripcion}}</td>
+                                    <td> {{ receta.calificacion}}</td>
+                                    <td>
+                                        <a href="/receta/{{receta.id}}" class="btn btn-outline-success"><i class="bi bi-eye-fill"></i></a>
+                                        <a href="/receta/editar/{{receta.id}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="/recetas/eliminar/{{receta.id}}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </article>
+</div>
+
+{% endblock %}

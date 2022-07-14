@@ -1,0 +1,119 @@
+{% extends 'admin_layout.html' %}
+
+{% block content %}
+
+<div id="main">
+    <!-- Post -->
+    <article class="post">
+            
+        <header>
+            <div class="title">
+                <h2><a href="#">Nueva receta</a></h2>										
+                <ul class="actions fit">
+                    <li><a href="#" class="button fit disabled">Información general</a></li>
+                    <li><a href="#" class="button fit">Ingredientes</a></li>
+                    <li><a href="{{url_for('PrepPorReceta')}}" class="button fit">Preparación</a></li>
+                    <li><a href="#" class="button fit disabled">Finalizar</a></li>
+                </ul>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="2015-11-01">November 1, 2015</time>
+                <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+                <a href="#" class="button fit">Cancelar</a>
+            </div>
+        </header>
+        <div>
+            <section>
+                <h3>Ingredientes</h3>
+                <h4>Agregar nuevo ingrediente en {{ nombreReceta }}</h4>
+                <form id="formIngredientes" method="POST" action="{{url_for('IngPorReceta', idIXR = idIXR)}}" enctype="multipart/form-data">
+                    <div class="row gtr-uniform">
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token }}
+                            <div>
+                                {% if form.descripcionIngrediente.errors %}                    
+                                    {{ form.descripcionIngrediente() }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.descripcionIngrediente.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                    </div>
+                                {% else %}    
+                                    {{ form.descripcionIngrediente(placeholder="Elige el ingrediente")}}
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                {% if form.unidad.errors %}                            
+                                    {{ form.unidad() }}
+                                    <div>
+                                        {% for error in form.unidad.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                    </div>
+                                {% else %}    
+                                    {{ form.unidad(placeholder="Elige la unidad") }}
+                                {% endif %}
+                            </div>
+
+                            <div >
+                                {% if form.cantidad.errors %}
+                                
+                                    {{ form.cantidad() }}
+                                    <div>
+                                        {% for error in form.cantidad.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                    </div>
+                                {% else %}            
+                                    {{ form.cantidad(placeholder="cantidad")}}
+                                {% endif %}
+                            </div>                            
+
+                        <div>
+                            <ul class="actions">
+                                <li>{{ form.submit(type="submit", value="Guardar") }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section>
+                <div class="table-wrapper">
+                    <div class="dataTable" style="width: 98%;">
+                        <table class="display table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Unidad</th>
+                                    <th scope="col">Descripción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for ixr in ingredientesXreceta %}
+                                    <tr>
+                                        <td>{{ ixr.cantidad }}</td>
+                                        <td>{{ ixr.unidad.descripcion }}</td>
+                                        <td>{{ ixr.ingredientes.descripcion }}</td>
+                                        <td>
+                                            <a href="{{url_for('IngPorReceta', idIXR=ixr.id)}}" class="btn btn-outline-info"><i class="bi bi-pencil-square"></i></a>
+                                            <a id="delete{{ixr.id}}" href="/ingredientes/eliminar/{{ixr.id}}" class="btn btn-outline-danger" onclick="return confirm('Estas seguro que deseas eliminar el ingrediente de la receta?')">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </article>
+</div>
+
+
+
+{% endblock %}
