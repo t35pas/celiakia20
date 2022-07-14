@@ -199,7 +199,7 @@ def IngPorReceta(idIXR=0):
                 print('no esta en session')
                 return redirect(url_for('Home'))
 
-@app.route('/nuevo/preparacion', methods = ['GET', 'POST'])
+@app.route('/nuevo/preparacion', methods = ['GET', 'POST']) 
 @app.route('/nuevo/preparacion/<idPrep>', methods = ['GET', 'POST'])
 @login_required
 def PrepPorReceta(idPrep='0'):
