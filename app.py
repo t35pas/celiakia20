@@ -33,20 +33,6 @@ from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por
 from forms import AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente
 
 
-
-
-@app.route('/gen/<passw>', methods = ['GET', 'POST'])
-def create_user(passw):
-    """Creates user with encrypted password"""
-    # Hash the user password
-    hashpass = generate_password_hash(
-        passw,
-        method='pbkdf2:sha256'
-    )
-    return hashpass
-
-
-
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
