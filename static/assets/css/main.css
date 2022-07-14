@@ -99,8 +99,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #ececec;
-
+		background: #f4f4f4;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -113,10 +112,6 @@ input, select, textarea {
 			-ms-transition: none !important;
 			transition: none !important;
 		}
-	
-		.cambio-bg {
-			background-image: url('/static/images/fondoKIA3.png');
-		  }
 
 /* Type */
 
