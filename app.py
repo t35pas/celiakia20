@@ -410,7 +410,7 @@ def paginaMundoCeliakia(name=None):
     return render_template('indexMundoCeliakia.html', name=name)
 
 #Buscar Por Nombre de Receta
-@app.route('/buscarPorNombre/<nombre>', methods = ['GET', 'POST'])
+@app.route('/buscarPorNombre/<string:nombre>', methods = ['GET', 'POST'])
 def BuscarPorNombre(nombre):
     current_app.logger.info('BuscarPorNombre')
     recetas = []
