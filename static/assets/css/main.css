@@ -3346,6 +3346,7 @@ input, select, textarea {
 
 			#wrapper {
 				padding: 3em;
+				align-content:center;
 			}
 
 		}
