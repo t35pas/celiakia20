@@ -3518,6 +3518,11 @@ input, select, textarea {
 		text-align: center;
 	}
 
+	#footer {
+		margin-left:auto;
+		margin-right:auto;
+	}
+
 /* Menu */
 
 	#menu {
