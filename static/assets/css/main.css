@@ -3523,6 +3523,11 @@ input, select, textarea {
 		margin-right:auto;
 	}
 
+	#about {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
 /* Menu */
 
 	#menu {
