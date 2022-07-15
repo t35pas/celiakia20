@@ -3342,11 +3342,12 @@ input, select, textarea {
 			opacity: 0.15;
 		}
 
-		@media screen and (max-width: 1680px) {
+		@media screen and (max-width: 2000px) {
 
 			#wrapper {
 				padding: 3em;
-				display: block;
+				display: flex;
+				flex-direction: column;
 			}
 
 		}
