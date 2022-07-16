@@ -418,5 +418,17 @@ def BuscarPorNombre(nombre):
     current_app.logger.info('Longitud de recetas '+str(len(recetas)))
     return render_template('indexRecetas.html', num_recetas=len(recetas))
 
+
+#Ver receta particular
+@app.route('/recetasNombre/<nombre>')
+def RecetasPorNombre(nombre):
+        recetasPorNombre = Receta.find_like_name(nombre)
+        return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+
+@app.route('/ObtenerImagen/<nombre>')
+def ObtenerImagen(nombre):
+        filename = 'imagenes/'+ nombre
+        return send_file(filename, mimetype='image/jpg')
+
 if __name__ == '__main__':
      app.run(debug=True)

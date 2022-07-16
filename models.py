@@ -3,6 +3,7 @@ from app import db, loginManager
 from datetime import datetime
 from sqlalchemy.orm import defaultload, relationship
 from flask_login import UserMixin
+from flask import send_file
 
 @loginManager.user_loader
 def load_Admin(id_admin):
@@ -273,7 +274,7 @@ class Preparacion(db.Model):
     @classmethod
     def find_by_paso_receta(cls, ordenPaso,idReceta):
         return cls.query.filter_by(id_receta = idReceta, orden_del_paso = ordenPaso).first()
-        
+
     def update_to_db(self,orden,tiempo,descripcion):
         self.orden_del_paso = orden
         self.descripcion = descripcion
@@ -336,8 +337,22 @@ class Receta(db.Model):
         return cls.query.filter_by(titulo=nombre).first()
 
     @classmethod
+    def find_like_name(cls, nombre):
+        nombre = "%{}%".format(nombre)
+        return cls.query.filter(cls.titulo.ilike(nombre)).all()
+
+    @classmethod
     def find_by_file(cls, nombreImagen):
         return cls.query.filter_by(nombre_imagen=nombreImagen).first()
+
+    def tiempoPreparacion(cls, idReceta):
+        receta = cls.query.get(idReceta)
+        tiempoPreparacion = 0
+        for paso in receta.preparacion:
+            tiempoPreparacion = tiempoPreparacion + paso.tiempo_preparacion
+        return tiempoPreparacion
+
+
 
     def save_to_db(self):
         db.session.add(self)
