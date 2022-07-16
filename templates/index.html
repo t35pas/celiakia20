@@ -6,33 +6,35 @@
 	<header>
 		<h2>¿Y ahora qué como?</h2>
 	</header>
-	<ul class="actions fit">
-		<li><a href="#" class="button fit">Buscar por nombre de receta</a></li>
-		<li><a href="#" class="button fit">Buscar por ingredientes</a></li>
-	</ul>
-	<form id="search" method="post" action="{{url_for('RecetasPorNombre')}}">
-		{{ form.hidden_tag() }}
-		{{ form.csrf_token }}
-		<div class="row gtr-uniform">
-			<div class="col-11">
-				{% if form.nombreReceta.errors %}                    
-					{{ form.nombreReceta() }}
-					<div>
-						{% for error in form.nombreReceta.errors %}
-							<span>{{ error }}</span> 
-						{% endfor %}
+	<article class="post">
+			<ul class="actions fit">
+				<li><a href="#" class="button fit">Busqueda por nombre de receta</a></li>
+				<li><a href="#" class="button fit">Busqueda por ingredientes</a></li>
+			</ul>
+			<form id="search" method="post" action="{{url_for('RecetasPorNombre')}}">
+				{{ form.hidden_tag() }}
+				{{ form.csrf_token }}
+				<div class="row gtr-uniform">
+					<div class="col-10">
+						{% if form.nombreReceta.errors %}                    
+							{{ form.nombreReceta() }}
+							<div>
+								{% for error in form.nombreReceta.errors %}
+									<span>{{ error }}</span> 
+								{% endfor %}
+							</div>
+						{% else %}    
+						{{ form.nombreReceta(placeholder="Escriba aqui el nombre de la receta a buscar...") }}
+						{% endif %}
 					</div>
-				{% else %}    
-				{{ form.nombreReceta(placeholder="Escriba aqui el nombre de la receta a buscar...") }}
-				{% endif %}
-			</div>
-			<div>
-				<ul class="actions">
-					<li>{{ form.submit(placeholder="B") }}</li>
-				</ul>
-			</div>
-		</div>
-	</form>
-</section>		
+					<div class="col-2">
+						<ul>
+							{{ form.submit(class="button fit",value="Buscar") }}
+						</ul>
+					</div>
+				</div>
+			</form>
+		</section>		
+	</article>
 
 {% endblock %}
