@@ -3,7 +3,7 @@
 {% block contentIndex %}
 <section id="intro">
     <header>
-        <a onclick="history.back()" class="button fit">Volver</a>
+        <a href="{{url_for('RecetasPorNombre',nombre=busqueda)}}" class="button fit">Volver</a>
     </header>
 </section>
 {% endblock %}

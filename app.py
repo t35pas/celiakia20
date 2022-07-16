@@ -414,9 +414,16 @@ def RecetasPorNombre(nombre=None):
         if form.validate_on_submit():
                 nombre = form.nombreReceta.data
                 recetasPorNombre = Receta.find_like_name(nombre)
+                if 'nombreReceta' in session:
+                        session.pop('nombreReceta', None)
+                        session['nombreReceta'] = nombre
+                else:
+                        session['nombreReceta'] = nombre
                 return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
-        else: 
-                return  url_for('paginaInicio')
+        elif request.method == 'GET':
+                nombre=session.get('nombreReceta')
+                recetasPorNombre = Receta.find_like_name(nombre)
+                return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
@@ -426,11 +433,10 @@ def ObtenerImagen(nombre):
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
 def VerReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
-        print(receta.ingrediente)
-        for ingrediente in receta.ingrediente:
-                print(ingrediente.ingredientes.descripcion)
+        nombre = session.get('nombreReceta')
         return render_template('verReceta.html', 
-                                receta = receta)
+                                receta = receta,
+                                busqueda = nombre)
 
 
 if __name__ == '__main__':
