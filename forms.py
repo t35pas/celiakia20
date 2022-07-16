@@ -33,7 +33,9 @@ class NuevaPreparacion(FlaskForm):
     tiempoPaso = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
     submit = SubmitField('Agregar')
 
-
+class BuscarPorReceta(FlaskForm):
+    nombreReceta = StringField('Buscar por nombre de receta', validators=[Length(min=2, max=20)])
+    submit = SubmitField()
 
 class AgregarIngrediente(FlaskForm):
 

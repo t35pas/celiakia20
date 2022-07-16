@@ -29,7 +29,7 @@ loginManager = LoginManager(app) #Para manejar las sesiones de los administrador
 loginManager.login_view = 'Login'
 
 from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente
+from forms import BuscarPorReceta,AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente
 
 
 
@@ -402,8 +402,8 @@ def Logout():
 recetas = []
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
-    recetas = []
-    return render_template('index.html')
+        recetas = []
+        return render_template('index.html', form=BuscarPorReceta())
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
 def paginaMundoCeliakia(name=None):
@@ -420,8 +420,10 @@ def BuscarPorNombre(nombre):
 
 
 #Ver receta particular
-@app.route('/recetasNombre/<nombre>')
-def RecetasPorNombre(nombre):
+@app.route('/recetasNombre' , methods = ['GET', 'POST'])
+def RecetasPorNombre():
+        form = BuscarPorReceta()
+        nombre = form.nombreReceta.data
         recetasPorNombre = Receta.find_like_name(nombre)
         return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
 
