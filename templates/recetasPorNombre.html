@@ -1,37 +1,38 @@
 {% extends 'indexLayout.html' %}
 
 {% block contentIndex %}
-
-<div id="main">
+<section id="intro">
     <ul class="actions fit">
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Busqueda por nombre de receta</a></li>
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Busqueda por ingredientes</a></li>
+        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por nombre de receta</a></li>
+        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por ingredientes</a></li>
     </ul>
-    <!-- Post -->
-        <article class="post">
-            <header>
-                <div class="title">
-                    <h2><a href="single.html">Resultado de búsqueda: {{ nombre }}</a></h2>
-                </div>
-            </header>
-            <!-- Mini Posts -->
-            <section>
-                <div class="mini-posts">
+</section>
+{% endblock %}
 
-                    {% for receta in recetas %}
+{% block mainIndex %}
+<div id="main">
+    <!-- Posts -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="#">Resultado de búsqueda: {{ nombre }}</a></h2>
+            </div>
+        </header>
+        <!-- Mini Posts -->
+        <section>
+            <div class="mini-posts">
+                {% for receta in recetas %}
                     <article class="mini-post">
                         <header>
-                            <h2><a href="#">{{ receta.titulo}}</a></h2>
-                            <p href="#">Dificultad {{receta.dificultad.descripcion}} <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p></p>
+                            <h2><a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a></h2>
+                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}">Dificultad {{receta.dificultad.descripcion}} <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p></p>
                         </header>
-                        <a href="single.html" class="image"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></a>
-                    </article>
-                    
-                    {% endfor %}
-
-                </div>
-            </section>
-        </article>
+                        <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></a>
+                    </article> 
+                {% endfor %}
+            </div>
+        </section>
+    </article>
 </div>		
 
 {% endblock %}

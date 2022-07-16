@@ -1,0 +1,67 @@
+{% extends 'indexLayout.html' %}
+
+{% block contentIndex %}
+<section id="intro">
+    <header>
+        <a onclick="history.back()" class="button fit">Volver</a>
+    </header>
+</section>
+{% endblock %}
+
+{% block mainIndex %}
+<div id="main">
+    <!-- Post INGREDIENTES -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="#">{{receta.titulo}}</a></h2>
+                <p href="#">Dificultad {{receta.dificultad.descripcion}} </p> <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p>
+            </div>
+        </header>
+        <!-- Mini Posts -->
+        <section>
+            <h3>Ingredientes</h3>
+            <ul class="posts">
+                {% for ixr in receta.ingrediente %}
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="single.html">{{ixr.ingredientes.descripcion}}</a></h3>
+                                <time class="published"> Cantidad necesaria: {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
+                            </header>
+                            <a href="#" class="image">
+                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
+                            </a>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h3>Preparación</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Orden</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for paso in receta.preparacion %}
+                            <tr>
+                                <td> {{ paso.orden_del_paso}}</td>
+                                <td> {{ paso.descripcion}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </article>
+</div>		
+
+{% endblock %}
+
+

@@ -302,6 +302,7 @@ class Receta(db.Model):
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'), nullable = False)
     id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
     preparacion = relationship('Preparacion', backref = 'receta')
+    ingrediente = relationship('Ingrediente_Por_Receta', backref = 'receta')
     favorita = relationship('Favorito', backref = 'receta')
 
     def __init__(self, titulo, calificacion, id_dificultad, nombre_imagen, fecha_modificacion, fecha_creacion, id_administrador):

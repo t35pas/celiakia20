@@ -259,20 +259,6 @@ def PrepPorReceta(idPrep='0'):
         else: 
                 return redirect(url_for('Home'))
 
-@app.route('/receta/<idReceta>', methods = ['GET', 'POST'])
-@login_required
-def VerReceta(idReceta):
-        receta = Receta.query.get(idReceta)
-        ingredientes = receta.ingredientes
-        preparacion = receta.preparacion
-        
-        return render_template('ver_receta.html', 
-                                user = current_user,
-                                receta = receta,
-                                ingredientes = ingredientes,
-                                preparacion = preparacion,
-                                time = formato_fecha(datetime.now()))
-
 @app.route('/ingredientes/eliminar/<idIxR>', methods = ['GET', 'POST'])
 @login_required
 def eliminarIngPorReceta(idIxR):
@@ -421,16 +407,30 @@ def BuscarPorNombre(nombre):
 
 #Ver receta particular
 @app.route('/recetasNombre' , methods = ['GET', 'POST'])
-def RecetasPorNombre():
+@app.route('/recetasNombre/<nombre>' , methods = ['GET', 'POST'])
+def RecetasPorNombre(nombre=None):
         form = BuscarPorReceta()
-        nombre = form.nombreReceta.data
-        recetasPorNombre = Receta.find_like_name(nombre)
-        return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+        if form.validate_on_submit():
+                nombre = form.nombreReceta.data
+                recetasPorNombre = Receta.find_like_name(nombre)
+                return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+        else: 
+                return  url_for('paginaInicio')
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
         filename = 'imagenes/'+ nombre
         return send_file(filename, mimetype='image/jpg')
+
+@app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
+def VerReceta(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        print(receta.ingrediente)
+        for ingrediente in receta.ingrediente:
+                print(ingrediente.ingredientes.descripcion)
+        return render_template('verReceta.html', 
+                                receta = receta)
+
 
 if __name__ == '__main__':
      app.run(debug=True)
