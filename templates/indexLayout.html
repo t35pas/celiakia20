@@ -28,13 +28,6 @@
 				<!-- Menu -->
 					<section id="menu">
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
-
 						<!-- Links -->
 							<section>
 								<ul class="links">
@@ -79,22 +72,18 @@
 							</section>
 
 					</section>
-				
+
+					{% block mainIndex %}   {% endblock %}
  
 				<!-- Sidebar -->
-					<section id="wrapper">
+					<section id="sidebar">
 
 						<!-- Intro -->
-						<section>
-							<div id="content" class="bg-mix"> {% block contentIndex %}   {% endblock %} </div>
-						</section>
-
-						<section>
-							<div id="content" class="bg-mix"> {% block contentIndexRecetas %}   {% endblock %} </div>
-						</section>
+						{% block contentIndex %}   {% endblock %}
+						{% block contentIndexRecetas %}   {% endblock %}
 
 						<!-- Posts List -->
-						<section class="postsMain">
+						<section>
 							<h2>El mundo de la celiaquía </h2>
 							<ul class="posts">
 								<li>

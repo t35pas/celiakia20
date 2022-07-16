@@ -34,8 +34,8 @@ class NuevaPreparacion(FlaskForm):
     submit = SubmitField('Agregar')
 
 class BuscarPorReceta(FlaskForm):
-    nombreReceta = StringField('Buscar por nombre de receta', validators=[Length(min=2, max=20)])
-    submit = SubmitField()
+    nombreReceta = StringField('Busqueda Nombre', validators=[Length(min=2, max=20)])
+    submit = SubmitField('Buscar')
 
 class AgregarIngrediente(FlaskForm):
 
