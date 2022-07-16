@@ -416,7 +416,7 @@ def BuscarPorNombre(nombre):
     recetas = []
     recetas.append(Receta.query.filter_by(titulo=nombre).first())
     current_app.logger.info('Longitud de recetas '+str(len(recetas)))
-    return render_template('index.html', num_recetas=len(recetas))
+    return render_template('indexRecetas.html', num_recetas=len(recetas))
 
 if __name__ == '__main__':
      app.run(debug=True)
