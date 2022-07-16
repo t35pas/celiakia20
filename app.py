@@ -58,7 +58,7 @@ def guardar_imagen(nombreImagen, imagen):
         imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return true 
 
-@app.route('/', methods = ['GET', 'POST'])
+
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
         if current_user.is_authenticated:
@@ -386,6 +386,7 @@ def Logout():
 
 #Aplicación CeliaKIA Web
 recetas = []
+@app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def paginaInicio():
         recetas = []
