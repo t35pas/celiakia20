@@ -424,6 +424,8 @@ def RecetasPorNombre(nombre=None):
                 nombre=session.get('nombreReceta')
                 recetasPorNombre = Receta.find_like_name(nombre)
                 return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+        elif request.method == 'GET' and nombre == None:
+                return  redirect(url_for('paginaInicio'))
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
