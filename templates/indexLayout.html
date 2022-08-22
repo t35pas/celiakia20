@@ -6,6 +6,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../static/assets/css/main.css" />
+
+
 	</head>
 	<body class="is-preload">
 
@@ -160,11 +162,27 @@
 			</div>
 
 		<!-- Scripts -->
+			<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+		
+
 			<script src="../static/assets/js/jquery.min.js"></script>
 			<script src="../static/assets/js/browser.min.js"></script>
 			<script src="../static/assets/js/breakpoints.min.js"></script>
 			<script src="../static/assets/js/util.js"></script>
 			<script src="../static/assets/js/main.js"></script> 
+			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
+			<script>
+				$(function() {
+					$.ajax({
+						url: '{{ url_for("autocomplete") }}'
+						}).done(function (data){
+							$('#ingrediente_autocomplete').autocomplete({
+								source: data,
+								minLength: 2
+							});
+						});
+					});
+			</script>
 
-	</body>
+		</body>
 </html>
