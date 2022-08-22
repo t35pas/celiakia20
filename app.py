@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 import imp
+import json
 import os
 
 from sqlalchemy import true
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, current_app
+from flask import Response,Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, current_app
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
@@ -29,7 +30,7 @@ loginManager = LoginManager(app) #Para manejar las sesiones de los administrador
 loginManager.login_view = 'Login'
 
 from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import BuscarPorReceta,AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente
+from forms import BuscarPorIngrediente, BuscarPorReceta,AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente, SearchForm
 
 
 
@@ -406,7 +407,7 @@ def BuscarPorNombre(nombre):
     return render_template('indexRecetas.html', num_recetas=len(recetas))
 
 
-#Ver receta particular
+#Ver receta por nombre
 @app.route('/recetasNombre' , methods = ['GET', 'POST'])
 @app.route('/recetasNombre/<nombre>' , methods = ['GET', 'POST'])
 def RecetasPorNombre(nombre=None):
@@ -419,13 +420,49 @@ def RecetasPorNombre(nombre=None):
                         session['nombreReceta'] = nombre
                 else:
                         session['nombreReceta'] = nombre
-                return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+                return  render_template('resultadoBusqueda.html', recetas=recetasPorNombre, nombre = nombre)
         elif request.method == 'GET':
                 nombre=session.get('nombreReceta')
                 recetasPorNombre = Receta.find_like_name(nombre)
-                return  render_template('recetasPorNombre.html', recetas=recetasPorNombre, nombre = nombre)
+                return  render_template('resultadoBusqueda.html', recetas=recetasPorNombre, nombre = nombre)
         elif request.method == 'GET' and nombre == None:
                 return  redirect(url_for('paginaInicio'))
+
+#Ver receta por ingrediente
+ingredienteBusqueda = []
+@app.route('/recetasIngrediente/agregar' , methods = ['GET', 'POST'])
+def AgregarIngredienteBusqueda():
+        form = BuscarPorIngrediente()
+        if form.validate_on_submit() and len(ingredienteBusqueda) <= 5:
+                nombre = form.nombreIngrediente.data
+                ingrediente = Ingrediente.find_by_descripcion(nombre)
+                if ingrediente.descripcion not in [i.descripcion for i in ingredienteBusqueda]:
+                        ingredienteBusqueda.append(ingrediente)
+                
+                return  render_template('busquedaIngrediente.html', 
+                                        form = form,
+                                        ingredientes = ingredienteBusqueda)
+        elif request.method == 'GET' :
+                ingredienteBusqueda.clear()
+                return  render_template('busquedaIngrediente.html', 
+                                        form = form)
+
+@app.route('/recetasIngrediente/eliminar/<ingrediente>/<ingredienteBusqueda>' , methods = ['GET'])
+def EliminarIngredienteBusqueda(ingrediente,ingredienteBusqueda):
+        if ingrediente.descripcion in [i.descripcion for i in ingredienteBusqueda]:
+                ingredienteBusqueda.remove(ingrediente)
+                return  render_template('busquedaIngrediente.html', 
+                                        form = BuscarPorIngrediente(),
+                                        ingredientes = ingredienteBusqueda)
+@app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
+def RecetasPorIngrediente():
+        if len(ingredienteBusqueda) > 0:
+                nombre = "prueba"
+                ingredientesPorReceta = Ingrediente_Por_Receta.find_by_ingredientes([i.id for i in ingredienteBusqueda])
+                recetas = []
+                for ixr in ingredientesPorReceta:
+                        recetas.append(Receta.find_by_id(ixr))
+                return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombre)
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
@@ -440,6 +477,11 @@ def VerReceta(idReceta):
                                 receta = receta,
                                 busqueda = nombre)
 
+
+@app.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+        IngredientesExistentes = [i.descripcion for i in Ingrediente.query.all()]
+        return Response(json.dumps(IngredientesExistentes), mimetype='application/json')
 
 if __name__ == '__main__':
      app.run(debug=True)

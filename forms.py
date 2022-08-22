@@ -1,3 +1,4 @@
+from typing import Text
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, TextAreaField, RadioField
 from wtforms.fields.core import BooleanField
@@ -36,6 +37,10 @@ class NuevaPreparacion(FlaskForm):
 class BuscarPorReceta(FlaskForm):
     nombreReceta = StringField('Busqueda Nombre', validators=[Length(min=2, max=20)])
     submit = SubmitField('Buscar')
+
+class BuscarPorIngrediente(FlaskForm):
+    nombreIngrediente = StringField('Busqueda Ingrediente', id='ingrediente_autocomplete', validators=[Length(min=2, max=20)])
+    submit = SubmitField('Agregar')
 
 class AgregarIngrediente(FlaskForm):
 
@@ -105,5 +110,8 @@ class NuevaUnidad(FlaskForm):
         unidad = Unidad.query.filter_by(descripcion = nombreUnidad.data).first()
         if unidad:
             raise ValidationError('Ya existe esa unidad!')
+
+class SearchForm(FlaskForm):
+    autocomp = StringField('Insert City', id='city_autocomplete')
 
 
