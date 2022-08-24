@@ -457,12 +457,15 @@ def EliminarIngredienteBusqueda(ingrediente,ingredienteBusqueda):
 @app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
 def RecetasPorIngrediente():
         if len(ingredienteBusqueda) > 0:
-                nombre = "prueba"
+                nombre = []
+                for i in ingredienteBusqueda:
+                        nombre.append(i.descripcion)
+                nombreBusqueda = ', '.join(nombre)
                 ingredientesPorReceta = Ingrediente_Por_Receta.find_by_ingredientes([i.id for i in ingredienteBusqueda])
                 recetas = []
                 for ixr in ingredientesPorReceta:
-                        recetas.append(Receta.find_by_id(ixr.id_receta))
-                return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombre)
+                        recetas.append(Receta.find_by_id(ixr))
+                return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombreBusqueda)
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):

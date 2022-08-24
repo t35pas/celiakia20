@@ -180,7 +180,10 @@ class Ingrediente_Por_Receta(db.Model):
         cantidad = len(ingredientesBusqueda)
         print(ingredientesBusqueda)
         if cantidad == 1:
-            return cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
+            ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
+            idreceta1 = set([i.id_receta for i in ixr1])
+            receta = list(idreceta1)
+            return receta
 
         if cantidad == 2:
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
