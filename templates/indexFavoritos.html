@@ -1,0 +1,45 @@
+{% extends 'indexLayout.html' %}
+
+{% block contentIndex %}
+<section id="intro">
+	<header>
+		<h2>¿Y ahora qué como?</h2>
+	</header>
+	<ul class="actions fit">
+		<li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por nombre de receta</a></li>
+		<li><a href="#" class="button fit">Búsqueda por ingredientes</a></li>
+	</ul>
+</section>
+{% endblock %}
+
+{% block mainIndex %}
+<div id="main">
+	<article class="post">
+		<div class="title">
+			<h2 style="text-align:center;"><a href="#">Buscar por Receta</a></h2>
+		</div>
+		<form method="post" action="{{url_for('RecetasPorNombre')}}">
+			{{ form.hidden_tag() }}
+			{{ form.csrf_token }}
+			<div class="row gtr-uniform">
+				<div class="col-12">
+					{% if form.nombreReceta.errors %}                    
+						{{ form.nombreReceta() }}
+						<div>
+							{% for error in form.nombreReceta.errors %}
+								<span>{{ error }}</span> 
+							{% endfor %}
+						</div>
+					{% else %}    
+						{{ form.nombreReceta(type="text",placeholder="Escriba aqui el nombre de la receta a buscar...") }}				
+					{% endif %}
+				</div>
+				<div class="col-12">
+					{{ form.submit(class="button fit") }}
+				</div>
+			</div>
+		</form>	
+	</article>
+</div>
+
+{% endblock %}
