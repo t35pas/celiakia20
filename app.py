@@ -461,7 +461,7 @@ def RecetasPorIngrediente():
                 ingredientesPorReceta = Ingrediente_Por_Receta.find_by_ingredientes([i.id for i in ingredienteBusqueda])
                 recetas = []
                 for ixr in ingredientesPorReceta:
-                        recetas.append(Receta.find_by_id(ixr))
+                        recetas.append(Receta.find_by_id(ixr.id_receta))
                 return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombre)
 
 @app.route('/ObtenerImagen/<nombre>')
