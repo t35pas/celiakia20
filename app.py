@@ -472,7 +472,8 @@ def RecetasPorIngrediente():
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
         filename = '/imagenes/'+ nombre
-        return send_file(filename, mimetype='image/jpg')
+        #return send_file(filename, mimetype='image/jpg')
+        return render_template(filename);
 
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
 def VerReceta(idReceta):
