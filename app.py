@@ -482,6 +482,11 @@ def VerReceta(idReceta):
                                 receta = receta,
                                 busqueda = nombre)
 
+@app.route('/verFavorito', methods = ['GET', 'POST'])
+def VerFavoritos():
+        recetas = Favorito.find_favoritas_usuario(current_user.get_id())
+        return render_template('indexFavoritos.html', recetas = recetas)
+
 
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():

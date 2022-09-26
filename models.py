@@ -127,8 +127,12 @@ class Favorito(db.Model):
         return cls.query.filter_by(id_receta=idReceta).first()
 
     @classmethod
-    def find_by_usuario(cls, idUsuario):
-        return cls.query.filter_by(id_usaurio=idUsuario).first()
+    def find_favoritas_usuario(cls, idUsuario):
+        favoritos = cls.query.filter_by(id_usuario=idUsuario).all()
+        recetas = []
+        for favorito in favoritos:
+            recetas.append(Receta.find_by_id(favorito.id_receta))
+        return recetas
 
     def save_to_db(self):
         db.session.add(self)
