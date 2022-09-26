@@ -15,12 +15,24 @@
         <header>
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
-                <p href="#">Dificultad {{receta.dificultad.descripcion}} </p> <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p>
                 {% if favorito %} 
-                    <h3><a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}">ELIMINAR DE FAV</a></h3>
+                    <ul class="stats">
+                        <a href="#">Dificultad {{receta.dificultad.descripcion}}</a><br>
+                        <a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a><br>
+                        <a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}"
+                            class="icon solid fa-heart"></a>
+                    </ul>
                 {% else %} 
-                    <h3><a href="{{url_for('AgregarFavorita', idReceta = receta.id)}}">AGREGAR A FAV</a></h3>
+                <ul class="stats">
+                    <a href="#">Dificultad {{receta.dificultad.descripcion}}</a><br>
+                    <a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a><br>
+                    <a  href="{{url_for('AgregarFavorita', idReceta = receta.id)}}" 
+                        class="icon fa-heart"></a>
+                </ul>
                 {% endif %}
+            </div>
+            <div class="meta">
+                <a href="single.html" class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></a>
             </div>
         </header>
         <!-- Mini Posts -->
@@ -35,7 +47,7 @@
                                 <time class="published"> Cantidad necesaria: {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
                             </header>
                             <a href="#" class="image">
-                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
+                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
                             </a>
                         </article>
                     </li>
@@ -64,6 +76,16 @@
                 </table>
             </div>
         </section>
+
+        <footer>
+            <ul class="actions">
+                <li><a href="single.html" class="button large">Continue Reading</a></li>
+            </ul>
+            <ul class="stats">
+                <li><a href="#">General</a></li>
+                <li><a href="#" class="icon solid fa-heart">28</a></li>
+            </ul>
+        </footer>
     </article>
 
 {% endblock %}
