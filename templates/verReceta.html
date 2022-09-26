@@ -16,6 +16,11 @@
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
                 <p href="#">Dificultad {{receta.dificultad.descripcion}} </p> <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p>
+                {% if favorito %} 
+                    <h3><a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}">ELIMINAR DE FAV</a></h3>
+                {% else %} 
+                    <h3><a href="{{url_for('AgregarFavorita', idReceta = receta.id)}}">AGREGAR A FAV</a></h3>
+                {% endif %}
             </div>
         </header>
         <!-- Mini Posts -->

@@ -127,6 +127,11 @@ class Favorito(db.Model):
         return cls.query.filter_by(id_receta=idReceta).first()
 
     @classmethod
+    def find_by_receta_usuario(cls, idReceta, idUsuario):
+        return cls.query.filter((cls.id_receta==idReceta) & (cls.id_usuario==idUsuario)).first()
+
+
+    @classmethod
     def find_favoritas_usuario(cls, idUsuario):
         favoritos = cls.query.filter_by(id_usuario=idUsuario).all()
         recetas = []

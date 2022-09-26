@@ -478,14 +478,65 @@ def ObtenerImagen(nombre):
 def VerReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
         nombre = session.get('nombreReceta')
+        usuario = current_user.get_id()
+        
+        if  Favorito.find_by_receta_usuario(receta.id,usuario):
+                favorito = True
+        else:
+                favorito = False
         return render_template('verReceta.html', 
                                 receta = receta,
-                                busqueda = nombre)
+                                busqueda = nombre,
+                                favorito = favorito)
 
-@app.route('/verFavorito', methods = ['GET', 'POST'])
-def VerFavoritos():
+@app.route('/misFavoritas', methods = ['GET', 'POST'])
+def MisFavoritas():
         recetas = Favorito.find_favoritas_usuario(current_user.get_id())
         return render_template('indexFavoritos.html', recetas = recetas)
+
+@app.route('/agregarFavorita/<idReceta>', methods = ['GET', 'POST'])
+def AgregarFavorita(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        usuario = current_user.get_id()
+        
+        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
+
+        if favorito:
+                return render_template('verReceta.html', 
+                                receta = receta,
+                                busqueda = session.get('nombreReceta'),
+                                favorito = True)
+        else:
+                favorito = Favorito(id_receta=receta.id,
+                                id_usuario=usuario)
+                favorito.save_to_db()
+                print("Se agrego a favoritos")
+                #AGREGAR ALGUN POP UP MOSTRANDO OK AGREGADO A FAVORITOS O ALGO#
+                return render_template('verReceta.html', 
+                                        receta = receta,
+                                        busqueda = session.get('nombreReceta'),
+                                        favorito = True)
+
+@app.route('/eliminarFavorita/<idReceta>', methods = ['GET', 'POST'])
+def EliminarFavorita(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        usuario = current_user.get_id()
+        
+        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
+
+        if favorito:
+                Favorito.delete_from_db(favorito)
+                print("Se elimino de favoritos")
+                #AGREGAR ALGUN POP UP MOSTRANDO OK ELIMINADO DE FAVORITOS O ALGO#
+                return render_template('verReceta.html', 
+                                receta = receta,
+                                busqueda = session.get('nombreReceta'),
+                                favorito = False)
+        else:
+                return render_template('verReceta.html', 
+                                        receta = receta,
+                                        busqueda = session.get('nombreReceta'),
+                                        favorito = False)
 
 
 @app.route('/_autocomplete', methods=['GET'])
