@@ -1,16 +1,7 @@
 {% extends 'indexLayout.html' %}
 
-{% block contentIndex %}
-<section id="intro">
-    <ul class="actions fit">
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por nombre de receta</a></li>
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por ingredientes</a></li>
-    </ul>
-</section>
-{% endblock %}
+{% block contentMain %}
 
-{% block mainIndex %}
-<div id="main">
     <!-- Posts -->
     <article class="post">
         <header>
@@ -33,7 +24,6 @@
             </div>
         </section>
     </article>
-</div>		
 
 {% endblock %}
 

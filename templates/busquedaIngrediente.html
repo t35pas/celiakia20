@@ -1,17 +1,7 @@
 {% extends 'indexLayout.html' %}
 
-{% block contentIndex %}
-<section id="intro">
-    <ul class="actions fit">
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por nombre de receta</a></li>
-        <li><a href="{{url_for('paginaInicio')}}" class="button fit">Búsqueda por ingredientes</a></li>
-    </ul>
-</section>
-{% endblock %}
+{% block contentMain %}
 
-{% block mainIndex %}
-
-<div id="main">
 	<article class="post">
 		<div class="title">
 			<h2 style="text-align:center;"><a href="#">Buscar por Ingrediente</a></h2>
@@ -28,33 +18,29 @@
 					{% endif %}
 				</div>
 				<div class="col-12">
-					{{ form.submit(class="button fit") }}
+					{{ form.submit(class="button fit", onclick="mostrarIngredientes();") }}
 				</div>
 			</div>
 		</form>	
 	</article>
 
-    <article class="post">
-        <!-- Mini Posts -->
-        <section>
-            <div class="mini-posts">
-                {% for ingre in ingredientes %}
-                    <article class="mini-post">
-                        <header>
-                            <h2><a>{{ ingre.descripcion}}</a></h2>                            
-                        </header>
-                    </article> 
-                {% endfor %}
-            </div>
-        </section>
-    </article>
-    <h2><a href="{{url_for('RecetasPorIngrediente')}}">Buscar</a></h2>	
-
-
-</div>		
-
-
-
+	{% if ingredientes %} 
+		<article class="post">
+			<!-- Mini Posts -->
+			<section>
+				<div class="mini-posts">
+					{% for ingre in ingredientes %}
+						<article class="mini-post">
+							<header>
+								<h2><a>{{ ingre.descripcion}}</a></h2>                            
+							</header>
+						</article> 
+					{% endfor %}
+				</div>
+			</section>
+			<a class="button fit" href="{{url_for('RecetasPorIngrediente')}}">Buscar receta</a>
+		</article>
+	{% endif %}	
 
 {% endblock %}
 

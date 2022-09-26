@@ -1,6 +1,6 @@
 {% extends 'indexLayout.html' %}
 
-{% block contentIndex %}
+{% block contentIntro %}
 <section id="intro">
     <header>
         <a href="{{url_for('RecetasPorNombre',nombre=busqueda)}}" class="button fit">Volver</a>
@@ -8,8 +8,8 @@
 </section>
 {% endblock %}
 
-{% block mainIndex %}
-<div id="main">
+{% block contentMain %}
+
     <!-- Post INGREDIENTES -->
     <article class="post">
         <header>
@@ -65,7 +65,6 @@
             </div>
         </section>
     </article>
-</div>		
 
 {% endblock %}
 

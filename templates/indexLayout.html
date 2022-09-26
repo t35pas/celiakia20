@@ -34,17 +34,17 @@
 							<section>
 								<ul class="links">
 									<li>
-										<a href="/index">
+										<a href="{{url_for('PaginaInicio')}}">
 											<h3>¿Y ahora qué como?</h3>
 										</a>
 									</li>
 									<li>
-										<a href="/favoritos">
+										<a href="{{url_for('MisFavoritas')}}">
 											<h3>Mis Favoritos</h3>
 										</a>
 									</li>
 									<li>
-										<a href="/indexMundoCeliakia">
+										<a href="#">
 											<h3>El mundo de la celiaquía</h3>
 										</a>
 									</li>
@@ -75,16 +75,27 @@
 
 					</section>
 
-					{% block mainIndex %}   {% endblock %}
- 
-				<!-- Sidebar -->
+					<div id="main">
+						{% block contentMain %}   {% endblock %}
+					</div>
 					<section id="sidebar">
-
 						<!-- Intro -->
-						{% block contentIndex %}   {% endblock %}
-						{% block contentIndexRecetas %}   {% endblock %}
+						<section id="intro">
+							<header>
+								<h2>¿Y ahora qué como?</h2>
+							</header>
+								<a 	href="{{url_for('PaginaInicio')}}" 
+									class="button" 
+									style="margin-top: 10px;">
+									Búsqueda por nombre de receta
+								</a>
+								<a 	href="#" 
+									class="button" 
+									style="padding-left: 42px; padding-right: 42px; margin-top: 10px;">
+									Búsqueda por ingredientes
+								</a>
+						</section>
 
-						<!-- Posts List -->
 						<section>
 							<h2>El mundo de la celiaquía </h2>
 							<ul class="posts">
@@ -183,16 +194,5 @@
 						});
 					});
 			</script>
-			<script>
-				function esFavorito(){
-					document.getElementById('es_favorito').style.display = 'block';
-					document.getElementById('no_favorito').style.display = 'none';
-				};
-				function noFavorito(){
-					document.getElementById('no_favorito').style.display = 'block';
-					document.getElementById('es_favorito').style.display = 'none';
-				};
-			</script>
-
 		</body>
 </html>

@@ -63,7 +63,7 @@ def guardar_imagen(nombreImagen, imagen):
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
         if current_user.is_authenticated:
-                return redirect(url_for('Home'))
+                return redirect(url_for('PaginaInicio'))
         form = LoginForm()
         if form.validate_on_submit():
                 pasw = form.contrasenia.data
@@ -73,7 +73,7 @@ def Login():
                 #bcrypt.check_password_hash(admin.contrasenia, pasw):
                         login_user(admin)
                         print(current_user.nombre_usuario)
-                        return redirect(url_for('Home'))
+                        return redirect(url_for('PaginaInicio'))
                 else:
                         flash('Inicio incorrecto')
         return render_template('login.html', form = form)
@@ -389,27 +389,14 @@ def Logout():
 recetas = []
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
-def paginaInicio():
-        recetas = []
+@login_required
+def PaginaInicio():
         return render_template('index.html', form=BuscarPorReceta())
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
-def paginaMundoCeliakia(name=None):
+@login_required
+def MundoCeliakia(name=None):
     return render_template('indexMundoCeliakia.html', name=name)
-
-@app.route('/favoritos', methods = ['GET', 'POST'])
-def paginaFavoritos(name=None):
-    return render_template('indexFavoritos.html', name=name)
-
-#Buscar Por Nombre de Receta
-@app.route('/buscarPorNombre/<string:nombre>', methods = ['GET', 'POST'])
-def BuscarPorNombre(nombre):
-    current_app.logger.info('BuscarPorNombre')
-    recetas = []
-    recetas.append(Receta.query.filter_by(titulo=nombre).first())
-    current_app.logger.info('Longitud de recetas '+str(len(recetas)))
-    return render_template('indexRecetas.html', num_recetas=len(recetas))
-
 
 #Ver receta por nombre
 @app.route('/recetasNombre' , methods = ['GET', 'POST'])
@@ -434,7 +421,9 @@ def RecetasPorNombre(nombre=None):
 
 #Ver receta por ingrediente
 ingredienteBusqueda = []
+@app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
 @app.route('/recetasIngrediente/agregar' , methods = ['GET', 'POST'])
+@login_required
 def AgregarIngredienteBusqueda():
         form = BuscarPorIngrediente()
         if form.validate_on_submit() and len(ingredienteBusqueda) <= 5:
@@ -452,13 +441,16 @@ def AgregarIngredienteBusqueda():
                                         form = form)
 
 @app.route('/recetasIngrediente/eliminar/<ingrediente>/<ingredienteBusqueda>' , methods = ['GET'])
+@login_required
 def EliminarIngredienteBusqueda(ingrediente,ingredienteBusqueda):
         if ingrediente.descripcion in [i.descripcion for i in ingredienteBusqueda]:
                 ingredienteBusqueda.remove(ingrediente)
                 return  render_template('busquedaIngrediente.html', 
                                         form = BuscarPorIngrediente(),
                                         ingredientes = ingredienteBusqueda)
-@app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
+
+@app.route('/recetasIngrediente/buscar' , methods = ['GET', 'POST'])
+@login_required
 def RecetasPorIngrediente():
         if len(ingredienteBusqueda) > 0:
                 nombre = []
@@ -470,11 +462,13 @@ def RecetasPorIngrediente():
                 return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombreBusqueda)
 
 @app.route('/ObtenerImagen/<nombre>')
+@login_required
 def ObtenerImagen(nombre):
         filename = '/app/static/'+ nombre
         return send_file(filename, mimetype='image/jpg')
 
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
+@login_required
 def VerReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
         nombre = session.get('nombreReceta')
@@ -490,11 +484,13 @@ def VerReceta(idReceta):
                                 favorito = favorito)
 
 @app.route('/misFavoritas', methods = ['GET', 'POST'])
+@login_required
 def MisFavoritas():
         recetas = Favorito.find_favoritas_usuario(current_user.get_id())
         return render_template('indexFavoritos.html', recetas = recetas)
 
 @app.route('/agregarFavorita/<idReceta>', methods = ['GET', 'POST'])
+@login_required
 def AgregarFavorita(idReceta):
         receta = Receta.find_by_id(idReceta)
         usuario = current_user.get_id()
@@ -518,6 +514,7 @@ def AgregarFavorita(idReceta):
                                         favorito = True)
 
 @app.route('/eliminarFavorita/<idReceta>', methods = ['GET', 'POST'])
+@login_required
 def EliminarFavorita(idReceta):
         receta = Receta.find_by_id(idReceta)
         usuario = current_user.get_id()
@@ -540,6 +537,7 @@ def EliminarFavorita(idReceta):
 
 
 @app.route('/_autocomplete', methods=['GET'])
+@login_required
 def autocomplete():
         IngredientesExistentes = [i.descripcion for i in Ingrediente.query.all()]
         return Response(json.dumps(IngredientesExistentes), mimetype='application/json')
