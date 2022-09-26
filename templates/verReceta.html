@@ -69,8 +69,8 @@
                     <tbody>
                         {% for paso in receta.preparacion %}
                             <tr>
-                                <td> {{ paso.orden_del_paso}}</td>
-                                <td> {{ paso.descripcion}}</td>
+                                <td lang="es"> {{ paso.orden_del_paso}}</td>
+                                <td lang="es"> {{ paso.descripcion}}</td>
                                 <td>
                                     <button onclick="responsiveVoice.speak('{{paso.descripcion}}');"
                                         type="button" value="Reproducir">
