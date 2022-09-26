@@ -62,6 +62,7 @@
                         <tr>
                             <th>Orden</th>
                             <th>Descripción</th>
+                            <th></th>
                         </tr>
                     </thead>
                     
@@ -70,6 +71,11 @@
                             <tr>
                                 <td> {{ paso.orden_del_paso}}</td>
                                 <td> {{ paso.descripcion}}</td>
+                                <td>
+                                    <button onclick="responsiveVoice.speak('{{paso.descripcion}}');"
+                                        type="button" value="Reproducir">
+                                    </button>  
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -79,7 +85,7 @@
 
         <footer>
             <ul class="actions">
-                <li><a href="single.html" class="button large">Continue Reading</a></li>
+                <li><a href="#" class="button large">Escucha tu receta</a></li>
             </ul>
             <ul class="stats">
                 <li><a href="#">General</a></li>
