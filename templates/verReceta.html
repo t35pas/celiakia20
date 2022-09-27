@@ -70,11 +70,11 @@
                         {% for paso in receta.preparacion %}
                             <tr>
                                 <td lang="es"> {{ paso.orden_del_paso}}</td>
-                                <td lang="es"> {{ paso.descripcion}}</td>
+                                <td id="reproducirDescripcion" lang="es"> {{ paso.descripcion}}</td>
                                 <td>
-                                    <button onclick="responsiveVoice.speak('{{paso.descripcion}}');"
-                                        type="button" value="Reproducir">
-                                    </button>  
+                                    <a onclick="responsiveVoice.speak('{{paso.descripcion}}','Spanish Latin American Female');"
+                                    class="icon solid fa-play" value="Reproducir">
+                                    </a>  
                                 </td>
                             </tr>
                         {% endfor %}
