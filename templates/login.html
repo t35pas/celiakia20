@@ -24,36 +24,18 @@
 
 							<section>
 									<form method="post" action="/login">
+										{{ form.hidden_tag() }}
 										<div class="row gtr-uniform">
 											<div class="col-6 col-12-xsmall">
-												{{ form.hidden_tag() }}
-                                                {% if form.nombreUsuario.errors %}
-                                                    {{ form.nombreUsuario(type="text", placeholder="Nombre de usuario") }}
-                                                    <div>
-                                                        {% for error in form.nombreUsuario.errors %}
-                                                            <span>{{ error }}</span> 
-                                                        {% endfor %}
-                                                    </div>
-                                                {% else %}
-                                                    {{ form.nombreUsuario(type="text",  id="demo-name", value="", placeholder="Nombre de usuario") }}                   
-                                                    
-                                                {% endif %}
-                                                </div>
-											<div class="col-6 col-12-xsmall">
-                                                {% if form.contrasenia.errors %}
-                                                    {{ form.contrasenia(type="text", placeholder="Contraseña") }}
-                                                    <div class="invalid-feedback">
-                                                        {% for error in form.contrasenia.errors %}
-                                                            <span>{{ error }}</span> 
-                                                        {% endfor %}
-                                                    </div>
-                                                {% else %}
-                                                    {{ form.contrasenia(type="password", id="demo-password", value="", placeholder="Contraseña") }}
-                                                {% endif %}
+												{{ form.nombreUsuario(type="text",  id="demo-email", value="", placeholder="Nombre de usuario") }}
 											</div>
+											<div class="col-6 col-12-xsmall">
+												{{ form.contrasenia(type="password", id="demo-password", value="", placeholder="Contraseña") }}
+											</div>
+										
 											<div class="col-12">
 												<ul class="actions">
-                                                        {{ form.submit( type="submit", value="Ingresar") }} 
+													<li>{{ form.submit( type="submit", value="Ingresar") }}</li>
 												</ul>
 											</div>
 										</div>

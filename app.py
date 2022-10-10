@@ -80,9 +80,7 @@ def Login():
                         iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
                         usuario = Usuario.find_by_email(email)
                         login_user(usuario)
-                        print(current_user.nombre)
-                        print(current_user)
-                        print(iniciar_sesion)
+
                         if Administrador.find_by_email(email):
                                 session["administrador"] = True
                                 return redirect(url_for('PaginaInicio'))
@@ -397,6 +395,7 @@ def EditarReceta(idReceta, idIxR=0, idPrep=0):
 @login_required
 def Logout():
         logout_user()
+        session.pop('Administrador')
         return redirect(url_for('Login'))
 
 #Aplicación CeliaKIA Web
