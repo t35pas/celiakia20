@@ -18,7 +18,7 @@
 							{% endfor %}
 						</div>
 					{% else %}    
-						{{ form.nombreReceta(type="text",placeholder="Escriba aqui el nombre de la receta a buscar...") }}				
+						{{ form.nombreReceta(type="text",placeholder="Nombre de la receta a buscar...") }}				
 					{% endif %}
 				</div>
 				<div class="col-12">
@@ -31,6 +31,7 @@
 	{% if random %}
 		<section>
 			<div class="mini-posts">
+				<h3>Recomendación del día</h3>
 				{% for r in random %}
 					<article class="mini-post">
                         <header>
