@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 import imp
 import json
 import os
+from traceback import print_tb
+import numpy
 
 from sqlalchemy import true
 
@@ -59,12 +61,13 @@ def guardar_imagen(nombreImagen, imagen):
         imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return true 
 
+def selectRandom():
+        recetas = Receta.query.all()
+        return numpy.random.choice(recetas, 1,False)
+
 @app.route('/prueba')
 def prueba():
-        emailprueba = 'esacks@prueba1.com'
-        passswordprueba = '1234567'
-        user = auth.create_user_with_email_and_password(emailprueba,passswordprueba)
-        return print(user)
+        return  print()
 
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
@@ -90,13 +93,126 @@ def Login():
                         return flash('Inicio incorrecto')
         return render_template('login.html', form = form)
 
-@app.route('/inicio', methods = ['GET', 'POST'])
+#El login te redirige a la aplicación de recetas en perfil usuario.
+#Por default se carga buscar por nombre de receta
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/recetasNombre', methods = ['GET', 'POST'])
 @login_required
-def Home():        
-        return render_template('admin_home.html', 
-                                user = current_user,
-                                time = formato_fecha(datetime.now()))
+def PaginaInicio():
+        session.pop('ingredientes_id',None)
+        return render_template('index.html', 
+                                form = BuscarPorReceta(),
+                                random = selectRandom())
 
+#Ver receta por nombre
+@app.route('/recetasNombre/buscar' , methods = ['GET', 'POST'])
+def RecetasPorNombre():
+        form = BuscarPorReceta()
+        
+        if form.validate_on_submit():
+                nombre = form.nombreReceta.data
+                #Obtengo el ID de las recetas con nombre "Parecido"
+                recetas_id = [i.id for i in Receta.find_like_name(nombre)]
+                session['busqueda'] = nombre
+                session['recetas_id'] = recetas_id
+                return  redirect(url_for('ResultadoBusqueda'))
+
+#Ver receta por ingrediente
+@app.route('/recetasIngrediente/buscar' , methods = ['GET', 'POST'])
+@login_required
+def RecetasPorIngrediente():
+        if 'ingredientes_id' in session:
+                #Obtengo de la session los ingredientes agregados a la busqueda
+                ingredientes_id = session.get('ingredientes_id')
+                listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
+
+                if listadoIngredientes:
+
+                        busqueda = ', '.join([i.descripcion for i in listadoIngredientes])
+                        session['busqueda'] = busqueda
+
+                        recetas_id = Ingrediente_Por_Receta.find_recetas_by_ingredientes(ingredientes_id)
+                        session['recetas_id'] = recetas_id
+                session.pop('ingredientes_id',None)
+                return  redirect(url_for('ResultadoBusqueda'))
+        else:
+                return  redirect(url_for('IngredienteBusqueda'))
+
+#Ver receta por ingrediente
+@app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
+@login_required
+def IngredienteBusqueda():
+
+        form = BuscarPorIngrediente()
+        if 'ingredientes_id' in session:
+                #Obtengo de la session los ingredientes agregados a la busqueda
+                ingredientes_id = session.get('ingredientes_id')
+                listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
+                
+                if form.validate_on_submit():
+                        #Recupero del Form la descripcion ingresada
+                        nombre = form.nombreIngrediente.data
+                        ingrediente = Ingrediente.find_by_descripcion(nombre)
+                        
+                        if ingrediente.descripcion not in [i.descripcion for i in listadoIngredientes]:
+                                session['ingredientes_id'] = session['ingredientes_id'].extend([ingrediente.id])
+                                return  redirect(url_for('IngredienteBusqueda'))
+                        else:
+                                #Error ingrediente ya existe en la busqueda
+                                return  redirect(url_for('IngredienteBusqueda'))
+                return render_template('busquedaIngrediente.html',form = form, ingredientes = listadoIngredientes)
+        else:
+                if form.validate_on_submit():
+                        #Recupero del Form la descripcion ingresada
+                        nombre = form.nombreIngrediente.data
+                        ingrediente = Ingrediente.find_by_descripcion(nombre)
+
+                        session['ingredientes_id'] = [ingrediente.id]
+                        return  redirect(url_for('IngredienteBusqueda'))
+                return render_template('busquedaIngrediente.html',form = form)
+
+#Descartar listado de ingredientes actual e ingresar uno nuevo
+@app.route('/recetasIngrediente/descartarBusqueda' , methods = ['GET'])
+@login_required
+def NuevaBusquedaPorIngredientes():
+        if 'ingredientes_id' in session:
+                session.pop('ingredientes_id',None)
+                return redirect(url_for('IngredienteBusqueda'))
+        else:
+                return redirect(url_for('IngredienteBusqueda'))
+#Eliminar un ingrediente del listado actual a buscar
+@app.route('/recetasIngrediente/eliminarIngrediente/<id_ingrediente>' , methods = ['GET'])
+@login_required
+def EliminarIngredienteBusqueda(ingrediente):
+        if 'ingredientes_id' in session:
+                #Obtengo de la session los ingredientes agregados a la busqueda
+                ingredientes_id = session.get('ingredientes_id')
+                listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
+        
+                if ingrediente.descripcion in [i.descripcion for i in listadoIngredientes]:
+                        listadoIngredientes.remove(ingrediente)
+                        session['ingredientes_id'] = [i.id for i in listadoIngredientes]
+
+                return redirect(url_for('IngredienteBusqueda'))
+        else:
+                return redirect(url_for('IngredienteBusqueda'))
+
+#Muestra los resultados tanto de Busqueda por ingredientes como por recetas
+@app.route('/resultadoBusqueda' , methods = ['GET', 'POST'])
+def ResultadoBusqueda():
+        recetas_id = session.get('recetas_id')
+        recetas = [Receta.find_by_id(id) for id in recetas_id]
+        return  render_template('resultadoBusqueda.html', 
+                                 recetas = recetas)
+
+
+
+
+@app.route('/inicioAdmin', methods = ['GET', 'POST'])
+@login_required
+def IndexAdmin():        
+        return render_template('admin_home.html', 
+                                time = formato_fecha(datetime.now()))
 
 @app.route('/recetas', methods = ['GET', 'POST'])
 @login_required
@@ -106,7 +222,6 @@ def Listado():
                                 recetas = recetas, 
                                 user = current_user,
                                 time = formato_fecha(datetime.now()))
-
 
 @app.route('/nuevo/receta', methods = ['GET', 'POST'])
 @login_required
@@ -395,84 +510,20 @@ def EditarReceta(idReceta, idIxR=0, idPrep=0):
 @login_required
 def Logout():
         logout_user()
-        session.pop('Administrador')
+        session.pop('Administrador',None)
         return redirect(url_for('Login'))
 
-#Aplicación CeliaKIA Web
-recetas = []
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/index', methods = ['GET', 'POST'])
-@login_required
-def PaginaInicio():
-        return render_template('index.html', form=BuscarPorReceta())
+
 
 @app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
 @login_required
 def MundoCeliakia(name=None):
     return render_template('indexMundoCeliakia.html', name=name)
 
-#Ver receta por nombre
-@app.route('/recetasNombre' , methods = ['GET', 'POST'])
-@app.route('/recetasNombre/<nombre>' , methods = ['GET', 'POST'])
-def RecetasPorNombre(nombre=None):
-        form = BuscarPorReceta()
-        if form.validate_on_submit():
-                nombre = form.nombreReceta.data
-                recetasPorNombre = Receta.find_like_name(nombre)
-                if 'nombreReceta' in session:
-                        session.pop('nombreReceta', None)
-                        session['nombreReceta'] = nombre
-                else:
-                        session['nombreReceta'] = nombre
-                return  render_template('resultadoBusqueda.html', recetas=recetasPorNombre, nombre = nombre)
-        elif request.method == 'GET':
-                nombre=session.get('nombreReceta')
-                recetasPorNombre = Receta.find_like_name(nombre)
-                return  render_template('resultadoBusqueda.html', recetas=recetasPorNombre, nombre = nombre)
-        elif request.method == 'GET' and nombre == None:
-                return  redirect(url_for('paginaInicio'))
 
-#Ver receta por ingrediente
-ingredienteBusqueda = []
-@app.route('/recetasIngrediente' , methods = ['GET', 'POST'])
-@app.route('/recetasIngrediente/agregar' , methods = ['GET', 'POST'])
-@login_required
-def AgregarIngredienteBusqueda():
-        form = BuscarPorIngrediente()
-        if form.validate_on_submit() and len(ingredienteBusqueda) <= 5:
-                nombre = form.nombreIngrediente.data
-                ingrediente = Ingrediente.find_by_descripcion(nombre)
-                if ingrediente.descripcion not in [i.descripcion for i in ingredienteBusqueda]:
-                        ingredienteBusqueda.append(ingrediente)
-                
-                return  render_template('busquedaIngrediente.html', 
-                                        form = form,
-                                        ingredientes = ingredienteBusqueda)
-        elif request.method == 'GET' :
-                ingredienteBusqueda.clear()
-                return  render_template('busquedaIngrediente.html', 
-                                        form = form)
 
-@app.route('/recetasIngrediente/eliminar/<ingrediente>/<ingredienteBusqueda>' , methods = ['GET'])
-@login_required
-def EliminarIngredienteBusqueda(ingrediente,ingredienteBusqueda):
-        if ingrediente.descripcion in [i.descripcion for i in ingredienteBusqueda]:
-                ingredienteBusqueda.remove(ingrediente)
-                return  render_template('busquedaIngrediente.html', 
-                                        form = BuscarPorIngrediente(),
-                                        ingredientes = ingredienteBusqueda)
 
-@app.route('/recetasIngrediente/buscar' , methods = ['GET', 'POST'])
-@login_required
-def RecetasPorIngrediente():
-        if len(ingredienteBusqueda) > 0:
-                nombre = []
-                for i in ingredienteBusqueda:
-                        nombre.append(i.descripcion)
-                nombreBusqueda = ', '.join(nombre)
-                recetas = Ingrediente_Por_Receta.find_recetas_by_ingredientes([i.id for i in ingredienteBusqueda])
 
-                return  render_template('resultadoBusqueda.html', recetas=recetas, nombre = nombreBusqueda)
 
 @app.route('/ObtenerImagen/<nombre>')
 @login_required

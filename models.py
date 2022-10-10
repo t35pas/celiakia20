@@ -190,29 +190,20 @@ class Ingrediente_Por_Receta(db.Model):
         print(ingredientesBusqueda)
         if cantidad == 1:
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
-            idreceta1 = set([i.id_receta for i in ixr1])
-            recetas = list(idreceta1)
-            
-            recetasBusqueda = []
-            for idReceta in recetas:
-                        recetasBusqueda.append(Receta.find_by_id(idReceta))
-            
-            return recetasBusqueda
+            recetas_id = list(set([i.id_receta for i in ixr1]))        
+            return recetas_id
 
         if cantidad == 2:
+            
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
             ixr2 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[1]).all()
             
             idreceta1 = set([i.id_receta for i in ixr1])
             idreceta2 = set([i.id_receta for i in ixr2])
             
-            recetas = list(idreceta1 & idreceta2)
-
-            recetasBusqueda = []
-            for idReceta in recetas:
-                        recetasBusqueda.append(Receta.find_by_id(idReceta))
+            recetas_id = list(idreceta1 & idreceta2)
             
-            return recetasBusqueda
+            return recetas_id
         
         if cantidad == 3:
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
@@ -223,13 +214,9 @@ class Ingrediente_Por_Receta(db.Model):
             idreceta2 = set([i.id_receta for i in ixr2])
             idreceta3 = set([i.id_receta for i in ixr3])
             
-            recetas = list(idreceta1 & idreceta2 & idreceta3)
-            recetasBusqueda = []
+            recetas_id = list(idreceta1 & idreceta2 & idreceta3)
             
-            for idReceta in recetas:
-                        recetasBusqueda.append(Receta.find_by_id(idReceta))
-            
-            return recetasBusqueda
+            return recetas_id
 
         if cantidad == 4:
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
@@ -242,13 +229,9 @@ class Ingrediente_Por_Receta(db.Model):
             idreceta3 = set([i.id_receta for i in ixr3])
             idreceta4 = set([i.id_receta for i in ixr4])            
             
-            recetas = list(idreceta1 & idreceta2 & idreceta3 & idreceta4)
+            recetas_id = list(idreceta1 & idreceta2 & idreceta3 & idreceta4)
             
-            recetasBusqueda = []
-            for idReceta in recetas:
-                        recetasBusqueda.append(Receta.find_by_id(idReceta))
-            
-            return recetasBusqueda
+            return recetas_id
         
         if cantidad == 5:
             ixr1 = cls.query.filter_by(id_ingrediente=ingredientesBusqueda[0]).all()
@@ -263,13 +246,9 @@ class Ingrediente_Por_Receta(db.Model):
             idreceta4 = set([i.id_receta for i in ixr4])            
             idreceta5 = set([i.id_receta for i in ixr5])            
             
-            recetas = list(idreceta1 & idreceta2 & idreceta3 & idreceta4 & idreceta5)
+            recetas_id = list(idreceta1 & idreceta2 & idreceta3 & idreceta4 & idreceta5)
             
-            recetasBusqueda = []
-            for idReceta in recetas:
-                        recetasBusqueda.append(Receta.find_by_id(idReceta))
-            
-            return recetasBusqueda
+            return recetas_id
     
     def update_to_db(self,ingrediente,unidad,cantidad):
         self.id_ingrediente = ingrediente

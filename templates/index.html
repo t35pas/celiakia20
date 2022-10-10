@@ -27,4 +27,20 @@
 			</div>
 		</form>	
 	</article>
+
+	{% if random %}
+		<section>
+			<div class="mini-posts">
+				{% for r in random %}
+					<article class="mini-post">
+                        <header>
+                            <h3><a href="{{url_for('VerReceta', idReceta=r.id)}}">{{ r.titulo}}</a></h3>
+                            <p href="{{url_for('VerReceta', idReceta=r.id)}}">Dificultad {{r.dificultad.descripcion}} <p href="#" class="icon solid fa-clock">{{ r.tiempoPreparacion(r.id)}} minutos</p></p>
+                        </header>
+                        <a href="{{url_for('VerReceta', idReceta=r.id)}}" class="image"><img src="{{url_for('ObtenerImagen', nombre=r.nombre_imagen)}}" alt="" /></a>
+                    </article> 
+				{% endfor %}
+			</div>
+		</section>
+	{% endif %}
 {% endblock %}
