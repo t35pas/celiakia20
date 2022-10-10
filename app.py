@@ -32,7 +32,7 @@ loginManager.login_view = 'Login'
 from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 from forms import BuscarPorIngrediente, BuscarPorReceta,AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente, SearchForm
 
-
+from authentication import auth
 
 
 @app.route('/gen/<passw>', methods = ['GET', 'POST'])
@@ -59,23 +59,37 @@ def guardar_imagen(nombreImagen, imagen):
         imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return true 
 
+@app.route('/prueba')
+def prueba():
+        emailprueba = 'esacks@prueba1.com'
+        passswordprueba = '1234567'
+        user = auth.create_user_with_email_and_password(emailprueba,passswordprueba)
+        return print(user)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
         if current_user.is_authenticated:
                 return redirect(url_for('PaginaInicio'))
+        
         form = LoginForm()
         if form.validate_on_submit():
-                pasw = form.contrasenia.data
-                nombreUsuario = form.nombreUsuario.data
-                admin = Administrador.find_by_usuario(nombreUsuario)
-                if admin and (admin.contrasenia == pasw) :
-                #bcrypt.check_password_hash(admin.contrasenia, pasw):
-                        login_user(admin)
-                        print(current_user.nombre_usuario)
-                        return redirect(url_for('PaginaInicio'))
-                else:
-                        flash('Inicio incorrecto')
+                passw = form.contrasenia.data
+                email = form.nombreUsuario.data
+                
+                try:
+                        iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
+                        usuario = Usuario.find_by_email(email)
+                        login_user(usuario)
+                        print(current_user.nombre)
+                        print(current_user)
+                        print(iniciar_sesion)
+                        if Administrador.find_by_email(email):
+                                session["administrador"] = True
+                                return redirect(url_for('PaginaInicio'))
+                        else: 
+                                return redirect(url_for('PaginaInicio'))
+                except:
+                        return flash('Inicio incorrecto')
         return render_template('login.html', form = form)
 
 @app.route('/inicio', methods = ['GET', 'POST'])

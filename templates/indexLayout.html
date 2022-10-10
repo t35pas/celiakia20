@@ -65,9 +65,12 @@
 
 						<!-- Actions -->
 							<section>
-								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Configuración</a></li>
-								</ul>
+								{% if session.administrador %}
+									<ul class="actions stacked">
+										<li><a href="#" class="button large fit">Administrador</a></li>
+									</ul>
+								{% endif %}
+
 								<ul class="actions stacked">
 									<li><a href="#" class="button large fit">Salir</a></li>
 								</ul>

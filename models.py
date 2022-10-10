@@ -6,10 +6,10 @@ from flask_login import UserMixin
 from flask import send_file
 
 @loginManager.user_loader
-def load_Admin(id_admin):
-    return Administrador.query.get(int(id_admin))
+def load_User(id_user):
+    return Usuario.query.get(int(id_user))
 
-class Administrador(db.Model, UserMixin):
+class Administrador(db.Model):
     __tablename__ = 'administrador'
     __table_args__ = {'extend_existing': True} 
 
@@ -50,8 +50,8 @@ class Administrador(db.Model, UserMixin):
         return cls.query.filter_by(id=idAdmin).first()
 
     @classmethod
-    def find_by_usuario(cls, nombreUsuario):
-        return cls.query.filter_by(nombre_usuario=nombreUsuario).first()
+    def find_by_email(cls, mail):
+        return cls.query.filter_by(email=mail).first()
 
     def save_to_db(self):
         db.session.add(self)
@@ -495,7 +495,7 @@ class Unidad(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-class Usuario(db.Model):
+class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
     __table_args__ = {'extend_existing': True} 
 
@@ -527,6 +527,10 @@ class Usuario(db.Model):
     @classmethod
     def find_by_id(cls, idUsuario):
         return cls.query.filter_by(id=idUsuario).first()
+
+    @classmethod
+    def find_by_email(cls, mail):
+        return cls.query.filter_by(email=mail).first()
 
     def save_to_db(self):
         db.session.add(self)
