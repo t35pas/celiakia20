@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "032d1e90896828c1ad3c59db44a09c06256189d79d663b3dd70c770909d52b1c"
+            "sha256": "87aa4f94bb4fd983f0463f643fa685a5be29d6ca6bbbb80c87eaead64ce35f55"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -295,11 +295,11 @@
         },
         "jinja2": {
             "hashes": [
-                "sha256:89aab215427ef59c34ad58735269eb58b1a5808103067f7bb9d5836c651b3bb0",
-                "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"
+                "sha256:03e47ad063331dd6a3f04a43eddca8a966a26ba0c5b7207a9a9e4e08f1b29419",
+                "sha256:a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"
             ],
             "index": "pypi",
-            "version": "==2.11.2"
+            "version": "==2.11.3"
         },
         "jwcrypto": {
             "hashes": [
@@ -788,14 +788,6 @@
             ],
             "markers": "python_full_version >= '3.6.2'",
             "version": "==2.11.7"
-        },
-        "colorama": {
-            "hashes": [
-                "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da",
-                "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==0.4.5"
         },
         "dill": {
             "hashes": [
