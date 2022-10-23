@@ -1,40 +1,30 @@
-{% extends 'indexLayout.html' %}
-
-{% block contentIntro %}
-<section id="intro">
-    <header>
-        <a href="{{url_for('RecetasPorNombre',nombre=busqueda)}}" class="button fit">Volver</a>
-    </header>
-</section>
-{% endblock %}
+{% extends 'indexVistaReceta.html' %}
 
 {% block contentMain %}
 
-    <!-- Post INGREDIENTES -->
+    <!-- Post -->
     <article class="post">
         <header>
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
                 {% if favorito %} 
                     <ul class="stats">
-                        <a href="#">Dificultad {{receta.dificultad.descripcion}}</a><br>
-                        <a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a><br>
-                        <a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}"
-                            class="icon solid fa-heart"></a>
+                        <li><a href="#">Dificultad {{receta.dificultad.descripcion}}</a></li>
+                        <li><a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a></li>
+                        <li><a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}"
+                            class="icon solid fa-heart">Favorito</a></li>
                     </ul>
                 {% else %} 
-                <ul class="stats">
-                    <a href="#">Dificultad {{receta.dificultad.descripcion}}</a><br>
-                    <a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a><br>
-                    <a  href="{{url_for('AgregarFavorita', idReceta = receta.id)}}" 
-                        class="icon fa-heart"></a>
-                </ul>
+                    <ul class="stats">
+                        <li><a href="#">Dificultad {{receta.dificultad.descripcion}}</a></li>
+                        <li><a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a></li>
+                        <li><a  href="{{url_for('AgregarFavorita', idReceta = receta.id)}}" 
+                            class="icon fa-heart">Agregar a Favoritos</a></li>
+                    </ul>
                 {% endif %}
             </div>
-            <div class="meta">
-                <a href="single.html" class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></a>
-            </div>
         </header>
+        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
         <!-- Mini Posts -->
         <section>
             <h3>Ingredientes</h3>
@@ -84,9 +74,6 @@
         </section>
 
         <footer>
-            <ul class="actions">
-                <li><a href="#" class="button large">Escucha tu receta</a></li>
-            </ul>
             <ul class="stats">
                 <li><a href="#">General</a></li>
                 <li><a href="#" class="icon solid fa-heart">28</a></li>
