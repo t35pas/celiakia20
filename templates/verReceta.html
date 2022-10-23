@@ -31,7 +31,7 @@
             </div>
         </header>
         <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
-        <p>Aca vamos a incluir alguna descripcion de la receta. Hay que agregarlo a la base de datos XD</p>
+        <p>{{ receta.descripcion }}</p>
        
         <!-- Mini Posts -->
         <section>
