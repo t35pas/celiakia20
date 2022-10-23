@@ -1,0 +1,26 @@
+{% extends 'indexLayout.html' %}
+
+{% block contentLayoutMain %}
+<div id="main">
+	{% block contentMain %}   {% endblock %}
+
+</div>
+{% endblock %}
+
+{% block contentLayoutIntro %}
+<section id="intro">
+	<header>
+		<h2>¿Y ahora qué como?</h2>
+	</header>
+		<a 	href="{{url_for('PaginaInicio')}}" 
+			class="button" 
+			style="margin-top: 10px;">
+			Búsqueda por nombre de receta
+		</a>
+		<a 	href="{{url_for('IngredienteBusqueda')}}" 
+			class="button" 
+			style="padding-left: 42px; padding-right: 42px; margin-top: 10px;">
+			Búsqueda por ingredientes
+		</a>
+</section>
+{% endblock %}

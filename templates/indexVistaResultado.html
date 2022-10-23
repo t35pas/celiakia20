@@ -1,0 +1,17 @@
+{% extends 'indexLayout.html' %}
+
+{% block contentLayoutMain %}
+<div id="main">
+	{% block contentMain %}   {% endblock %}
+
+</div>
+{% endblock %}
+
+{% block contentLayoutIntro %}
+<section id="intro" style="padding-top: 0px;">
+	<a onclick="history.back()" class="icon solid fa-arrow-left" style="display: flex;"></a>
+	<header>
+        <h2>Resultado de búsqueda: {{ session.busqueda }} </h2>
+	</header>
+</section>
+{% endblock %}
