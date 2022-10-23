@@ -4,7 +4,7 @@
 
     <!-- Post -->
     <article class="post">
-        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
+        
         <header>
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
@@ -25,9 +25,14 @@
                 {% endif %}
             </div>
         </header>
-        
+        <div class="box alt">
+            <div class="row gtr-uniform">
+                <div class="col-12"><span class="image fit"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span></div>
+                <div class="col-4"><span class="image fit"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span></div>
+            </div>
+        </div>
         <!-- Mini Posts -->
-        <section>
+        <span class="image left"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span><section>
             <h3>Ingredientes</h3>
             <ul class="posts">
                 {% for ixr in receta.ingrediente %}
