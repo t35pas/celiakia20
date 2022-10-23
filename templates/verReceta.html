@@ -4,6 +4,7 @@
 
     <!-- Post -->
     <article class="post">
+        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
         <header>
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
@@ -24,7 +25,7 @@
                 {% endif %}
             </div>
         </header>
-        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
+        
         <!-- Mini Posts -->
         <section>
             <h3>Ingredientes</h3>
