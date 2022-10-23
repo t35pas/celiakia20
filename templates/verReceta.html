@@ -6,9 +6,11 @@
     <article class="post">
         
         <header>
-            <span class="image fit" style="width: 300px; margin-top: 0px; margin-left: 20px;">
-                <img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
-            </span>
+            <!-- 
+                <span class="image fit" style="width: 300px; margin-top: 0px; margin-left: 20px;">
+                    <img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
+                </span>
+            -->
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
                 {% if favorito %} 
@@ -28,7 +30,9 @@
                 {% endif %}
             </div>
         </header>
-
+        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
+        <p>Aca vamos a incluir alguna descripcion de la receta. Hay que agregarlo a la base de datos XD</p>
+       
         <!-- Mini Posts -->
         <section>
             <h3>Ingredientes</h3>
@@ -49,7 +53,7 @@
             </ul>
         </section>
         <section>
-            <h3>Preparación</h3>
+            <h3>Paso a paso</h3>
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -76,13 +80,6 @@
                 </table>
             </div>
         </section>
-
-        <footer>
-            <ul class="stats">
-                <li><a href="#">General</a></li>
-                <li><a href="#" class="icon solid fa-heart">28</a></li>
-            </ul>
-        </footer>
     </article>
 
 {% endblock %}
