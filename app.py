@@ -180,6 +180,7 @@ def NuevaBusquedaPorIngredientes():
                 return redirect(url_for('IngredienteBusqueda'))
         else:
                 return redirect(url_for('IngredienteBusqueda'))
+
 #Eliminar un ingrediente del listado actual a buscar
 @app.route('/recetasIngrediente/eliminarIngrediente/<id_ingrediente>' , methods = ['GET'])
 @login_required
@@ -519,11 +520,6 @@ def Logout():
 @login_required
 def MundoCeliakia(name=None):
     return render_template('indexMundoCeliakia.html', name=name)
-
-
-
-
-
 
 @app.route('/ObtenerImagen/<nombre>')
 @login_required
