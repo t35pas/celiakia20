@@ -6,7 +6,9 @@
     <article class="post">
         
         <header>
-            <span class="image fit"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
+            <span class="image fit" style="width: 300px; margin-top: 0px; margin-left: 20px;">
+                <img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
+            </span>
             <div class="title">
                 <h2><a href="#">{{receta.titulo}}</a></h2>
                 {% if favorito %} 
