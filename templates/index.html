@@ -28,10 +28,10 @@
 		</form>	
 	</article>
 
-	{% if random %}
+	{% if random.all() %}
 		<section>
+			<h3>Recomendación del día</h3>
 			<div class="mini-posts">
-				<h3>Recomendación del día</h3>
 				{% for r in random %}
 					<article class="mini-post">
                         <header>

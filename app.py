@@ -63,7 +63,7 @@ def guardar_imagen(nombreImagen, imagen):
 
 def selectRandom():
         recetas = Receta.query.all()
-        return numpy.random.choice(recetas, 1,False)
+        return numpy.random.choice(recetas, 2,False)
 
 @app.route('/prueba')
 def prueba():
