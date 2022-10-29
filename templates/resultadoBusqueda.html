@@ -19,6 +19,20 @@
             </div>
         </section>
     </article>
+    <section>
+        <ul class="posts">
+            <li>
+                <article>
+                    <header>
+                        <h3><a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a></h3>
+                        <time class="published">Dificultad {{receta.dificultad.descripcion}} <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</time>
+                    </header>
+                    <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="aca" /></a>
+                </article>
+            </li>
+        </ul>
+    </section>
+    
 
 {% endblock %}
 
