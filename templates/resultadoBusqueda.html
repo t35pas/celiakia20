@@ -4,6 +4,24 @@
 
     <!-- Posts -->
     <article class="post">
+        <section>
+            <ul class="posts">
+                {% for receta in recetas %}
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="single.html">{{ receta.titulo}}</a></h3>
+                                <time class="published"> Dificultad {{receta.dificultad.descripcion}}</time>
+                                <time class="published"> <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p></time>
+                            </header>
+                            <a href="#" class="image">
+                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
+                            </a>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
         <!-- Mini Posts -->
         <section>
             <div class="mini-posts">
@@ -19,21 +37,11 @@
             </div>
         </section>
     </article>
-    <article class="post">
-        <ul class="posts">
-            {% for receta in recetas %}
-            <li>
-                <article>
-                    <header>
-                        <h3><a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a></h3>
-                        <time class="published">Dificultad {{receta.dificultad.descripcion}} <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</time>
-                    </header>
-                    <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="aca" /></a>
-                </article>
-            </li>
-            {% endfor %}
-        </ul>
-    </article>
+    <!-- Pagination -->
+    <ul class="actions pagination">
+        <li><a href="" class="disabled button large previous">Siguiente</a></li>
+        <li><a href="#" class="button large next">Anterior</a></li>
+    </ul>
     
 
 {% endblock %}
