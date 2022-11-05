@@ -23,7 +23,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = './imagenes'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
-
+ROWS_PER_PAGE = 5
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -77,8 +77,8 @@ def Login():
         form = LoginForm()
         if form.validate_on_submit():
                 passw = form.contrasenia.data
-                email = form.nombreUsuario.data
-                
+                email = form.nombreUsuario.data.strip()
+
                 try:
                         iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
                         usuario = Usuario.find_by_email(email)
@@ -99,6 +99,7 @@ def Login():
 @app.route('/recetasNombre', methods = ['GET', 'POST'])
 @login_required
 def PaginaInicio():
+        #Cada vez que ingreso a busqueda por receta elimino session de ingredientes
         session.pop('ingredientes_id',None)
         return render_template('index.html', 
                                 form = BuscarPorReceta(),
@@ -127,10 +128,10 @@ def RecetasPorIngrediente():
                 listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
 
                 if listadoIngredientes:
-
+                        #Concateno los ingredientes buscados para mostrarlo en el HTML
                         busqueda = ', '.join([i.descripcion for i in listadoIngredientes])
                         session['busqueda'] = busqueda
-
+                        #Recetas que coinciden con ingredientes seleccionados
                         recetas_id = Ingrediente_Por_Receta.find_recetas_by_ingredientes(ingredientes_id)
                         session['recetas_id'] = recetas_id
                 session.pop('ingredientes_id',None)
@@ -201,8 +202,13 @@ def EliminarIngredienteBusqueda(ingrediente):
 #Muestra los resultados tanto de Busqueda por ingredientes como por recetas
 @app.route('/resultadoBusqueda' , methods = ['GET', 'POST'])
 def ResultadoBusqueda():
+        # Configuracion de paginado, toma la pagina.
+        page = request.args.get('page', 1, type=int)
+        
         recetas_id = session.get('recetas_id')
         recetas = [Receta.find_by_id(id) for id in recetas_id]
+
+        recetas = Receta.query.paginate(page=page, per_page=ROWS_PER_PAGE)
         return  render_template('resultadoBusqueda.html', 
                                  recetas = recetas)
 

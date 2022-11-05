@@ -4,28 +4,10 @@
 
     <!-- Posts -->
     <article class="post">
-        <section>
-            <ul class="posts">
-                {% for receta in recetas %}
-                    <li>
-                        <article>
-                            <header>
-                                <h3><a href="single.html">{{ receta.titulo}}</a></h3>
-                                <time class="published"> Dificultad {{receta.dificultad.descripcion}}</time>
-                                <time class="published"> <p href="#" class="icon solid fa-clock">{{ receta.tiempoPreparacion(receta.id)}} minutos</p></time>
-                            </header>
-                            <a href="#" class="image">
-                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
-                            </a>
-                        </article>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
         <!-- Mini Posts -->
         <section>
             <div class="mini-posts">
-                {% for receta in recetas %}
+                {% for receta in recetas.items %}
                     <article class="mini-post">
                         <header>
                             <h2><a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a></h2>
@@ -39,8 +21,24 @@
     </article>
     <!-- Pagination -->
     <ul class="actions pagination">
-        <li><a href="" class="disabled button large previous">Siguiente</a></li>
-        <li><a href="#" class="button large next">Anterior</a></li>
+        <li>
+            <a  href="{{ url_for('ResultadoBusqueda', page=recetas.prev_num) }}" 
+                class=" {% if recetas.page == 1 %}
+                            disabled button large previous
+                        {% else %}
+                            button large previous
+                        {% endif %}">Anterior
+            </a>
+        </li>
+        <li>
+            <a  href="{{ url_for('ResultadoBusqueda', page=recetas.next_num) }}" 
+                class=" {% if recetas.page == recetas.pages %}
+                            disabled button large next
+                        {% else %}
+                            button large next
+                        {% endif %}">Siguiente
+            </a>
+        </li>    
     </ul>
     
 
