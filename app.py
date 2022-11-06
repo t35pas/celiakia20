@@ -238,8 +238,6 @@ def ResultadoBusqueda():
         recetas_id = session.get('recetas_id')
         recetas_obj = Receta.find_by_list_id(recetas_id)
         recetas = paginado(recetas_obj, page, ROWS_PER_PAGE)
-        print(recetas.items)
-        print(recetas.pages)
         return  render_template('resultadoBusqueda.html', 
                                  recetas = recetas)
 
