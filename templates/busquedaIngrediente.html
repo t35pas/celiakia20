@@ -28,18 +28,27 @@
 		<article class="post">
 			<!-- Mini Posts -->
 			<section>
-				<div class="mini-posts">
+				<h3>Buscaremos recetas que contengan:</h3>
+				<ul class="posts">
 					{% for i in ingredientes %}
-						<article class="mini-post">
-							<header>
-								<h2><a>{{ i.descripcion}}</a></h2>                            
-							</header>
-						</article> 
+						<li>
+							<article>
+								<a href="{{url_for('EliminarIngredienteBusqueda', desc_ingrediente = i.descripcion)}}" class="icon solid fa-clock"></a>
+								<header>
+									<h3><a href="single.html">{{ i.descripcion}}</a></h3>
+								</header>
+								<a href="#" class="image">
+									<img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=i.nombre_imagen)}}" alt="" />
+								</a>
+							</article>
+						</li>
 					{% endfor %}
-				</div>
+				</ul>
 			</section>
-			<a class="button fit" href="{{url_for('RecetasPorIngrediente')}}">Finalizar y buscar</a>
-			<a class="button fit" href="{{url_for('NuevaBusquedaPorIngredientes')}}">Descartar y comenzar de nuevo</a>
+			<ul class="actions fit">
+				<li><a href="{{url_for('RecetasPorIngrediente')}}" class="button fit">Finalizar y buscar</a></li>
+				<li><a href="{{url_for('NuevaBusquedaPorIngredientes')}}" class="button fit">Descartar todo</a></li>
+			</ul>
 		</article>
 	{% endif %}	
 

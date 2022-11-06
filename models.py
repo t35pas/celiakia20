@@ -299,6 +299,10 @@ class Ingrediente(db.Model):
         return cls.query.filter_by(id=idIngrediente).first()
 
     @classmethod
+    def find_by_list_id(cls, ingredientes_id):
+        return [cls.find_by_id(id) for id in ingredientes_id]
+
+    @classmethod
     def find_by_descripcion(cls, ingrediente_descripcion):
         return cls.query.filter_by(descripcion = ingrediente_descripcion).first()
 
@@ -408,6 +412,10 @@ class Receta(db.Model):
     @classmethod
     def find_by_id(cls, idReceta):
         return cls.query.filter_by(id=idReceta).first()
+
+    @classmethod
+    def find_by_list_id(cls, recetas_id):
+        return [cls.find_by_id(id) for id in recetas_id]
 
     @classmethod
     def find_by_name(cls, nombre):

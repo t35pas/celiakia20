@@ -14,7 +14,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import CombinedMultiDict
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, Pagination
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = './imagenes'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
-ROWS_PER_PAGE = 5
+ROWS_PER_PAGE = 2
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -65,9 +65,35 @@ def selectRandom():
         recetas = Receta.query.all()
         return numpy.random.choice(recetas, 2,False)
 
-@app.route('/prueba')
-def prueba():
-        return  print()
+def ingredientes_en_receta(ingredientes):
+        todas_recetas = Receta.query.all()
+        # Lista de tuplas (receta, [descripcion de ingredientes de la receta])
+        ingredientes_recetas = [(r.id, [i.ingredientes.descripcion for i in r.ingrediente]) for r in todas_recetas]
+        print(ingredientes_recetas)
+        recetas_elegidas = []
+        en_receta = []
+
+        for ir in ingredientes_recetas:
+                en_receta.clear()
+                for i in ingredientes:
+                        if i in ir[1]:
+                                en_receta.append(True)
+                        else:
+                                en_receta.append(False)
+                if all(en_receta): 
+                        recetas_elegidas.append(ir[0])
+        #Devuelve el id de las recetas que contienen todos los ingredientes
+        return  recetas_elegidas
+
+def paginado(lista,pagina,cant_por_pagina):
+        # obtener indice inicio e indice fin basado en el numero de pagina
+        start = ((pagina - 1) * cant_por_pagina)
+        end = start + cant_por_pagina
+        # pagina 1 es [0:5], pagina 2 es [5:10]
+        items = lista[:end]
+        print(items)
+        lista_paginada = Pagination(None, pagina, cant_por_pagina, len(lista), items)
+        return lista_paginada
 
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
@@ -128,11 +154,14 @@ def RecetasPorIngrediente():
                 listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
 
                 if listadoIngredientes:
+                        #Descripcion de ingredienetes a buscar
+                        descr_ingredienetes = [i.descripcion for i in listadoIngredientes] 
                         #Concateno los ingredientes buscados para mostrarlo en el HTML
-                        busqueda = ', '.join([i.descripcion for i in listadoIngredientes])
+                        busqueda = ', '.join(descr_ingredienetes)
                         session['busqueda'] = busqueda
                         #Recetas que coinciden con ingredientes seleccionados
-                        recetas_id = Ingrediente_Por_Receta.find_recetas_by_ingredientes(ingredientes_id)
+                        recetas_id = ingredientes_en_receta(descr_ingredienetes)
+                        print(recetas_id)
                         session['recetas_id'] = recetas_id
                 session.pop('ingredientes_id',None)
                 return  redirect(url_for('ResultadoBusqueda'))
@@ -149,14 +178,15 @@ def IngredienteBusqueda():
                 #Obtengo de la session los ingredientes agregados a la busqueda
                 ingredientes_id = session.get('ingredientes_id')
                 listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
-                
+                print(listadoIngredientes)
                 if form.validate_on_submit():
                         #Recupero del Form la descripcion ingresada
                         nombre = form.nombreIngrediente.data
-                        ingrediente = Ingrediente.find_by_descripcion(nombre)
-                        
-                        if ingrediente.descripcion not in [i.descripcion for i in listadoIngredientes]:
-                                session['ingredientes_id'] = session['ingredientes_id'].extend([ingrediente.id])
+        
+                        if nombre not in [i.descripcion for i in listadoIngredientes]:
+                                ingrediente = Ingrediente.find_by_descripcion(nombre)
+                                listadoIngredientes.append(ingrediente)
+                                session['ingredientes_id'] = [i.id for i in listadoIngredientes]
                                 return  redirect(url_for('IngredienteBusqueda'))
                         else:
                                 #Error ingrediente ya existe en la busqueda
@@ -183,15 +213,16 @@ def NuevaBusquedaPorIngredientes():
                 return redirect(url_for('IngredienteBusqueda'))
 
 #Eliminar un ingrediente del listado actual a buscar
-@app.route('/recetasIngrediente/eliminarIngrediente/<id_ingrediente>' , methods = ['GET'])
+@app.route('/recetasIngrediente/eliminarIngrediente/<desc_ingrediente>' , methods = ['GET'])
 @login_required
-def EliminarIngredienteBusqueda(ingrediente):
+def EliminarIngredienteBusqueda(desc_ingrediente):
         if 'ingredientes_id' in session:
                 #Obtengo de la session los ingredientes agregados a la busqueda
                 ingredientes_id = session.get('ingredientes_id')
-                listadoIngredientes = [Ingrediente.find_by_id(id) for id in ingredientes_id]
-        
-                if ingrediente.descripcion in [i.descripcion for i in listadoIngredientes]:
+                listadoIngredientes = Ingrediente.find_by_list_id(ingredientes_id)
+
+                if desc_ingrediente in [i.descripcion for i in listadoIngredientes]:
+                        ingrediente = Ingrediente.find_by_descripcion(desc_ingrediente)
                         listadoIngredientes.remove(ingrediente)
                         session['ingredientes_id'] = [i.id for i in listadoIngredientes]
 
@@ -204,11 +235,11 @@ def EliminarIngredienteBusqueda(ingrediente):
 def ResultadoBusqueda():
         # Configuracion de paginado, toma la pagina.
         page = request.args.get('page', 1, type=int)
-        
         recetas_id = session.get('recetas_id')
-        recetas = [Receta.find_by_id(id) for id in recetas_id]
-
-        recetas = Receta.query.paginate(page=page, per_page=ROWS_PER_PAGE)
+        recetas_obj = Receta.find_by_list_id(recetas_id)
+        recetas = paginado(recetas_obj, page, ROWS_PER_PAGE)
+        print(recetas.items)
+        print(recetas.pages)
         return  render_template('resultadoBusqueda.html', 
                                  recetas = recetas)
 
