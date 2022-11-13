@@ -12,22 +12,35 @@
                 </span>
             -->
             <div class="title">
-                <h2><a href="#">{{receta.titulo}}</a></h2>
-                {% if favorito %} 
+                <h2>
+                    {% if favorito %} 
+                        <a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}"
+                            class="icon solid fa-heart" style="color: green;">
+                        </a>
+                    {% else %}
+                        <a href="{{url_for('AgregarFavorita', idReceta = receta.id)}}"
+                        class="icon fa-heart" >
+                        </a>
+                    {% endif %}    
+                    <a>{{receta.titulo}}</a> 
+                </h2>
                     <ul class="stats">
-                        <li><a href="#">Dificultad {{receta.dificultad.descripcion}}</a></li>
-                        <li><a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a></li>
-                        <li><a href="{{url_for('EliminarFavorita', idReceta = receta.id)}}"
-                            class="icon solid fa-heart">Favorito</a></li>
+                        <li>
+                            <a>
+                                Dificultad {{receta.dificultad.descripcion}}
+                            </a>      
+                        </li>
+                        <li>
+                            <a class="icon solid fa-clock"> 
+                                {{ receta.tiempoPreparacion(receta.id)}} minutos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="icon solid fa-bowl-food"> 
+                                Ingredientes necesarios: {{ receta.ingrediente|length}}
+                            </a>
+                        </li>
                     </ul>
-                {% else %} 
-                    <ul class="stats">
-                        <li><a href="#">Dificultad {{receta.dificultad.descripcion}}</a></li>
-                        <li><a href="#" class="icon solid fa-clock"> {{ receta.tiempoPreparacion(receta.id)}} minutos</a></li>
-                        <li><a  href="{{url_for('AgregarFavorita', idReceta = receta.id)}}" 
-                            class="icon fa-heart">Agregar a Favoritos</a></li>
-                    </ul>
-                {% endif %}
             </div>
         </header>
         <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
@@ -73,6 +86,7 @@
                                     <a onclick="responsiveVoice.speak('{{paso.descripcion}}','Spanish Latin American Female');"
                                     class="icon solid fa-play" value="Reproducir">
                                     </a>  
+                                    
                                 </td>
                             </tr>
                         {% endfor %}

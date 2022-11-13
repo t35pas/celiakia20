@@ -192,7 +192,10 @@ def IngredienteBusqueda():
                         else:
                                 #Error ingrediente ya existe en la busqueda
                                 return  redirect(url_for('IngredienteBusqueda'))
-                return render_template('busquedaIngrediente.html',form = form, ingredientes = listadoIngredientes)
+                return render_template('busquedaIngrediente.html',
+                                        form = form, 
+                                        random = selectRandom(),
+                                        ingredientes = listadoIngredientes)
         else:
                 if form.validate_on_submit():
                         #Recupero del Form la descripcion ingresada
@@ -201,7 +204,9 @@ def IngredienteBusqueda():
 
                         session['ingredientes_id'] = [ingrediente.id]
                         return  redirect(url_for('IngredienteBusqueda'))
-                return render_template('busquedaIngrediente.html',form = form)
+                return render_template('busquedaIngrediente.html',
+                                        form = form,
+                                        random = selectRandom())
 
 #Descartar listado de ingredientes actual e ingresar uno nuevo
 @app.route('/recetasIngrediente/descartarBusqueda' , methods = ['GET'])
@@ -260,21 +265,24 @@ def ObtenerImagen(nombre):
 def VerReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
         usuario = current_user.get_id()
-        
+        print(receta.favorita)
         if  Favorito.find_by_receta_usuario(receta.id,usuario):
                 favorito = True
         else:
                 favorito = False
         return render_template('verReceta.html', 
                                 receta = receta,
-                                favorito = favorito)
+                                favorito = favorito,
+                                random = selectRandom())
 
 @app.route('/misFavoritas', methods = ['GET', 'POST'])
 @login_required
 def MisFavoritas():
         recetas = Favorito.find_favoritas_usuario(current_user.get_id())
         print(recetas)
-        return render_template('indexFavoritos.html', recetas = recetas)
+        return render_template('indexFavoritos.html', 
+                                recetas = recetas, 
+                                random = selectRandom())
 
 @app.route('/agregarFavorita/<idReceta>', methods = ['GET', 'POST'])
 @login_required
@@ -287,8 +295,8 @@ def AgregarFavorita(idReceta):
         if favorito:
                 return render_template('verReceta.html', 
                                 receta = receta,
-                                busqueda = session.get('nombreReceta'),
-                                favorito = True)
+                                favorito = True,
+                                random = selectRandom())
         else:
                 favorito = Favorito(id_receta=receta.id,
                                 id_usuario=usuario)
@@ -297,8 +305,8 @@ def AgregarFavorita(idReceta):
                 #AGREGAR ALGUN POP UP MOSTRANDO OK AGREGADO A FAVORITOS O ALGO#
                 return render_template('verReceta.html', 
                                         receta = receta,
-                                        busqueda = session.get('nombreReceta'),
-                                        favorito = True)
+                                        favorito = True,
+                                        random = selectRandom())
 
 @app.route('/eliminarFavorita/<idReceta>', methods = ['GET', 'POST'])
 @login_required
@@ -314,13 +322,13 @@ def EliminarFavorita(idReceta):
                 #AGREGAR ALGUN POP UP MOSTRANDO OK ELIMINADO DE FAVORITOS O ALGO#
                 return render_template('verReceta.html', 
                                 receta = receta,
-                                busqueda = session.get('nombreReceta'),
-                                favorito = False)
+                                favorito = False,
+                                random = selectRandom())
         else:
                 return render_template('verReceta.html', 
                                         receta = receta,
-                                        busqueda = session.get('nombreReceta'),
-                                        favorito = False)
+                                        favorito = False,
+                                        random = selectRandom())
 
 
 @app.route('/_autocomplete', methods=['GET'])
