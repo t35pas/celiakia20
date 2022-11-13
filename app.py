@@ -23,7 +23,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = './imagenes'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
-ROWS_PER_PAGE = 2
+ROWS_PER_PAGE = 5
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -90,7 +90,7 @@ def paginado(lista,pagina,cant_por_pagina):
         start = ((pagina - 1) * cant_por_pagina)
         end = start + cant_por_pagina
         # pagina 1 es [0:5], pagina 2 es [5:10]
-        items = lista[:end]
+        items = lista[start:end]
         print(items)
         lista_paginada = Pagination(None, pagina, cant_por_pagina, len(lista), items)
         return lista_paginada
@@ -140,7 +140,9 @@ def RecetasPorNombre():
                 nombre = form.nombreReceta.data
                 #Obtengo el ID de las recetas con nombre "Parecido"
                 recetas_id = [i.id for i in Receta.find_like_name(nombre)]
+                #Guardo la busqueda para usarla en el template html
                 session['busqueda'] = nombre
+                #Guardo los ids de las recetas que coinciden con la busqueda
                 session['recetas_id'] = recetas_id
                 return  redirect(url_for('ResultadoBusqueda'))
 
@@ -161,7 +163,6 @@ def RecetasPorIngrediente():
                         session['busqueda'] = busqueda
                         #Recetas que coinciden con ingredientes seleccionados
                         recetas_id = ingredientes_en_receta(descr_ingredienetes)
-                        print(recetas_id)
                         session['recetas_id'] = recetas_id
                 session.pop('ingredientes_id',None)
                 return  redirect(url_for('ResultadoBusqueda'))
@@ -232,6 +233,7 @@ def EliminarIngredienteBusqueda(desc_ingrediente):
 
 #Muestra los resultados tanto de Busqueda por ingredientes como por recetas
 @app.route('/resultadoBusqueda' , methods = ['GET', 'POST'])
+@login_required
 def ResultadoBusqueda():
         # Configuracion de paginado, toma la pagina.
         page = request.args.get('page', 1, type=int)
@@ -240,6 +242,95 @@ def ResultadoBusqueda():
         recetas = paginado(recetas_obj, page, ROWS_PER_PAGE)
         return  render_template('resultadoBusqueda.html', 
                                  recetas = recetas)
+
+
+@app.route('/MundoCeliakia', methods = ['GET', 'POST'])
+@login_required
+def MundoCeliakia():
+    return render_template('indexMundoCeliakia.html')
+
+@app.route('/ObtenerImagen/<nombre>')
+@login_required
+def ObtenerImagen(nombre):
+        filename = '/app/static/'+ nombre
+        return send_file(filename, mimetype='image/jpg')
+
+@app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
+@login_required
+def VerReceta(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        usuario = current_user.get_id()
+        
+        if  Favorito.find_by_receta_usuario(receta.id,usuario):
+                favorito = True
+        else:
+                favorito = False
+        return render_template('verReceta.html', 
+                                receta = receta,
+                                favorito = favorito)
+
+@app.route('/misFavoritas', methods = ['GET', 'POST'])
+@login_required
+def MisFavoritas():
+        recetas = Favorito.find_favoritas_usuario(current_user.get_id())
+        print(recetas)
+        return render_template('indexFavoritos.html', recetas = recetas)
+
+@app.route('/agregarFavorita/<idReceta>', methods = ['GET', 'POST'])
+@login_required
+def AgregarFavorita(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        usuario = current_user.get_id()
+        
+        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
+
+        if favorito:
+                return render_template('verReceta.html', 
+                                receta = receta,
+                                busqueda = session.get('nombreReceta'),
+                                favorito = True)
+        else:
+                favorito = Favorito(id_receta=receta.id,
+                                id_usuario=usuario)
+                favorito.save_to_db()
+                print("Se agrego a favoritos")
+                #AGREGAR ALGUN POP UP MOSTRANDO OK AGREGADO A FAVORITOS O ALGO#
+                return render_template('verReceta.html', 
+                                        receta = receta,
+                                        busqueda = session.get('nombreReceta'),
+                                        favorito = True)
+
+@app.route('/eliminarFavorita/<idReceta>', methods = ['GET', 'POST'])
+@login_required
+def EliminarFavorita(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        usuario = current_user.get_id()
+        
+        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
+
+        if favorito:
+                Favorito.delete_from_db(favorito)
+                print("Se elimino de favoritos")
+                #AGREGAR ALGUN POP UP MOSTRANDO OK ELIMINADO DE FAVORITOS O ALGO#
+                return render_template('verReceta.html', 
+                                receta = receta,
+                                busqueda = session.get('nombreReceta'),
+                                favorito = False)
+        else:
+                return render_template('verReceta.html', 
+                                        receta = receta,
+                                        busqueda = session.get('nombreReceta'),
+                                        favorito = False)
+
+
+@app.route('/_autocomplete', methods=['GET'])
+@login_required
+def autocomplete():
+        IngredientesExistentes = [i.descripcion for i in Ingrediente.query.all()]
+        return Response(json.dumps(IngredientesExistentes), mimetype='application/json')
+
+
+
 
 
 
@@ -551,91 +642,8 @@ def Logout():
 
 
 
-@app.route('/indexMundoCeliakia', methods = ['GET', 'POST'])
-@login_required
-def MundoCeliakia(name=None):
-    return render_template('indexMundoCeliakia.html', name=name)
-
-@app.route('/ObtenerImagen/<nombre>')
-@login_required
-def ObtenerImagen(nombre):
-        filename = '/app/static/'+ nombre
-        return send_file(filename, mimetype='image/jpg')
-
-@app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
-@login_required
-def VerReceta(idReceta):
-        receta = Receta.find_by_id(idReceta)
-        nombre = session.get('nombreReceta')
-        usuario = current_user.get_id()
-        
-        if  Favorito.find_by_receta_usuario(receta.id,usuario):
-                favorito = True
-        else:
-                favorito = False
-        return render_template('verReceta.html', 
-                                receta = receta,
-                                busqueda = nombre,
-                                favorito = favorito)
-
-@app.route('/misFavoritas', methods = ['GET', 'POST'])
-@login_required
-def MisFavoritas():
-        recetas = Favorito.find_favoritas_usuario(current_user.get_id())
-        return render_template('indexFavoritos.html', recetas = recetas)
-
-@app.route('/agregarFavorita/<idReceta>', methods = ['GET', 'POST'])
-@login_required
-def AgregarFavorita(idReceta):
-        receta = Receta.find_by_id(idReceta)
-        usuario = current_user.get_id()
-        
-        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
-
-        if favorito:
-                return render_template('verReceta.html', 
-                                receta = receta,
-                                busqueda = session.get('nombreReceta'),
-                                favorito = True)
-        else:
-                favorito = Favorito(id_receta=receta.id,
-                                id_usuario=usuario)
-                favorito.save_to_db()
-                print("Se agrego a favoritos")
-                #AGREGAR ALGUN POP UP MOSTRANDO OK AGREGADO A FAVORITOS O ALGO#
-                return render_template('verReceta.html', 
-                                        receta = receta,
-                                        busqueda = session.get('nombreReceta'),
-                                        favorito = True)
-
-@app.route('/eliminarFavorita/<idReceta>', methods = ['GET', 'POST'])
-@login_required
-def EliminarFavorita(idReceta):
-        receta = Receta.find_by_id(idReceta)
-        usuario = current_user.get_id()
-        
-        favorito = Favorito.find_by_receta_usuario(receta.id,usuario)
-
-        if favorito:
-                Favorito.delete_from_db(favorito)
-                print("Se elimino de favoritos")
-                #AGREGAR ALGUN POP UP MOSTRANDO OK ELIMINADO DE FAVORITOS O ALGO#
-                return render_template('verReceta.html', 
-                                receta = receta,
-                                busqueda = session.get('nombreReceta'),
-                                favorito = False)
-        else:
-                return render_template('verReceta.html', 
-                                        receta = receta,
-                                        busqueda = session.get('nombreReceta'),
-                                        favorito = False)
 
 
-@app.route('/_autocomplete', methods=['GET'])
-@login_required
-def autocomplete():
-        IngredientesExistentes = [i.descripcion for i in Ingrediente.query.all()]
-        return Response(json.dumps(IngredientesExistentes), mimetype='application/json')
 
 if __name__ == '__main__':
      app.run(debug=True)

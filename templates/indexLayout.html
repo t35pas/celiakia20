@@ -17,7 +17,8 @@
 				<!-- Header -->
 					<header id="header">
 						<!--<img class="logo" src="../static/kiasf2.png"/>-->
-						<h1><a href="{{url_for('PaginaInicio')}}">CeliaKIA</a></h1>
+						<h1><a href="{{url_for('PaginaInicio')}}"> CeliaKIA</a></h1>
+
 						<nav class="main">
 							<ul>
 								<li class="menu">
@@ -32,7 +33,12 @@
 
 						<!-- Links -->
 							<section>
+								
 								<ul class="links">
+									<li>
+										<img class="logo" src="../static/kiasf2.png" style="width: 70px;"/>
+										<h1>Hola, {{current_user.nombre}}</h1>
+									</li>
 									<li>
 										<a href="{{url_for('PaginaInicio')}}">
 											<h3>¿Y ahora qué como?</h3>
