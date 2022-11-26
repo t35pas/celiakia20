@@ -8,10 +8,9 @@ import numpy
 from sqlalchemy import true
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-from flask import Response,Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, current_app
+from flask import Response,Flask, request, jsonify, send_file, render_template, redirect, url_for, flash, send_from_directory, session, send_from_directory
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
-from werkzeug.datastructures import CombinedMultiDict
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy, Pagination
@@ -24,6 +23,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = './imagenes'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
 ROWS_PER_PAGE = 5
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -56,9 +56,18 @@ def formato_fecha(date):
 
     return messsage
 
-def guardar_imagen(nombreImagen, imagen):
-        filename = secure_filename(nombreImagen)
-        imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+def extension_permitida(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def guardar_imagen(nombre, imagen):
+
+        if extension_permitida(imagen.filename):
+                nombre, extension = os.path.splitext(imagen.filename)
+                nombreImagen = nombre + extension
+                print(nombreImagen)
+                filename = secure_filename(nombreImagen)
+                imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return true 
 
 def selectRandom():
@@ -112,6 +121,7 @@ def Login():
 
                         if Administrador.find_by_email(email):
                                 session["administrador"] = True
+                                session["fecha"] = formato_fecha(datetime.now())
                                 return redirect(url_for('PaginaInicio'))
                         else: 
                                 return redirect(url_for('PaginaInicio'))
@@ -255,10 +265,8 @@ def MundoCeliakia():
     return render_template('indexMundoCeliakia.html')
 
 @app.route('/ObtenerImagen/<nombre>')
-@login_required
 def ObtenerImagen(nombre):
-        filename = '/app/static/'+ nombre
-        return send_file(filename, mimetype='image/jpg')
+    return send_from_directory(app.config["UPLOAD_FOLDER"], nombre)
 
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
 @login_required
@@ -341,22 +349,19 @@ def autocomplete():
 
 
 
-
+######### ADMINISTRADOR #########
 
 @app.route('/inicioAdmin', methods = ['GET', 'POST'])
 @login_required
 def IndexAdmin():        
-        return render_template('admin_home.html', 
-                                time = formato_fecha(datetime.now()))
+        return render_template('admin_home.html')
 
 @app.route('/recetas', methods = ['GET', 'POST'])
 @login_required
 def Listado():
         recetas = Receta.query.all()
-        return render_template('admin_recetas.html', 
-                                recetas = recetas, 
-                                user = current_user,
-                                time = formato_fecha(datetime.now()))
+        return render_template('admin_recetas.html',
+                                recetas = recetas)
 
 @app.route('/nuevo/receta', methods = ['GET', 'POST'])
 @login_required
@@ -365,36 +370,33 @@ def InfoGeneral():
         receta.dificultad.choices = [(dif.id, dif.descripcion) for dif in Dificultad.query.all()]
         print( "Estoy en info gral")
         if receta.validate_on_submit():
-                print("ejecute un post")
-                nombreImagen = receta.nombreImagen.data
-                imagen = receta.imagenReceta.data
-                guardarImagen = guardar_imagen(nombreImagen,imagen)
-                
-                if guardarImagen:
-                
+                print("Quiero crear una receta")
+
+                if receta.imagenReceta: 
+                        nombreImagen = receta.tituloReceta.data.replace(' ', '').lower()
+                        imagen = receta.imagenReceta.data
+
+                        guardar_imagen(nombreImagen,imagen)
+
                         nuevaReceta = Receta(
-                                        titulo = receta.tituloReceta.data, 
-                                        fecha_creacion = datetime.now(),
-                                        fecha_modificacion = datetime.now(),
-                                        calificacion = 5,
-                                        nombre_imagen = nombreImagen,
-                                        id_dificultad = receta.dificultad.data,
-                                        id_administrador = current_user.id 
-                                )
+                                                titulo = receta.tituloReceta.data, 
+                                                fecha_creacion = datetime.now(),
+                                                fecha_modificacion = datetime.now(),
+                                                nombre_imagen = nombreImagen,
+                                                id_dificultad = receta.dificultad.data,
+                                                id_administrador = current_user.id,
+                                                descripcion = receta.descripcion.data
+                                        )
+
                         Receta.save_to_db(nuevaReceta)
-                        
-                        if 'idReceta' in session:
-                                session.pop('idReceta', None)
-                                session['idReceta'] = nuevaReceta.id
-                        else:
-                                session['idReceta'] = nuevaReceta.id
+
+                        session['nuevaReceta_id'] = nuevaReceta.id
+
                         return redirect(url_for('IngPorReceta'))
-                else:
-                        return redirect(url_for('InfoGeneral'))
+
         return render_template('admin_nr_info_gral.html', 
-                                form = receta, 
-                                user = current_user,
-                                time = formato_fecha(datetime.now()))
+                                form = receta)
+
 
 @app.route('/nuevo/ingredientes', methods = ['GET', 'POST'])
 @app.route('/nuevo/ingredientes/<idIXR>', methods = ['GET', 'POST'])

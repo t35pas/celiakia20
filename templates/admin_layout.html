@@ -3,21 +3,27 @@
 <html>
 	<head>
 		<title>CeliaKIA</title>
-		<meta charset="utf-8" />
+		<meta  charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../static/assets/css/main.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"/>
-		
+		<script src="https://kit.fontawesome.com/228c5469ee.js" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
     </head>
+
 	<body class="cambio-bg">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<h1><a href="index.html">CeliaKIA Administrador</a></h1>
+				<header id="header">
+					<!--<img class="logo" src="../static/kiasf2.png"/>-->
+						<h1><a href="#"> CeliaKIA</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="#">ADMINISTRADOR</a></li>
+							</ul>
+						</nav>
 						<nav class="main">
 							<ul>
 								<li class="menu">
@@ -71,30 +77,59 @@
 
 						<!-- Actions -->
 							<section>
+								{% if session.administrador %}
+									<ul class="actions stacked">
+										<li><a href="{{url_for('PaginaInicio')}}" class="button large fit">Usuario</a></li>
+									</ul>
+								{% endif %}
+
 								<ul class="actions stacked">
-									<li><a href="{{url_for('Logout')}}" class="button large fit">Salir</a></li>
+									<li><a href="#" class="button large fit">Salir</a></li>
 								</ul>
 							</section>
-
 					</section>
-					{% block content %}   {% endblock %}
+					<div id="main">
+						<!-- Main-->
+						{% block contentLayoutMain %}   {% endblock %}
+					</div>
+
 			</div>
 
 	</body>
 
 		<!-- Scripts -->
-		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-		
 
 		<script src="../static/assets/js/jquery.min.js"></script>
 		<script src="../static/assets/js/browser.min.js"></script>
 		<script src="../static/assets/js/breakpoints.min.js"></script>
 		<script src="../static/assets/js/util.js"></script>
 		<script src="../static/assets/js/main.js"></script> 
-		
-			<!-- DataTables -->
-			<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-			<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+	    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
+		<script>
+			$(document).ready(function () {
+			  $('#table_listadoRecetas').DataTable({
+				"autoWidth": true,
+				"language": {
+					"lengthMenu": "Mostrar _MENU_ Recetas por página",
+					"zeroRecords": "¡No existen recetas!",
+					"info": "Mostrando página _PAGE_ de _PAGES_",
+					"infoEmpty": "No se encontraron resultados",
+					"search":"Buscar:",
+					"loadingRecords": "Cargando...",
+					"processing":"Procesando...",
+					"paginate": {
+						"first":"Primero",
+						"last":"Último",
+						"next":"Siguiente",
+						"previous":"Anterior"
+					},
+					"infoFiltered": "(Filtrado de _MAX_ recetas totales)"
+				}
+			  });
 
+			});
+		  </script>
 </html>

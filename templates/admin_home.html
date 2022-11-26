@@ -1,20 +1,17 @@
 {% extends 'admin_layout.html' %}
 
-{% block content %}
+{% block contentLayoutMain %}
 
-<!-- Main -->
-<div id="main">
-    <article class="post">
-        <header>
-            <div class="title">
-                <h2><a href="#">Bienvenid@ Administrador</a></h2>	
-            </div>
-            <div class="meta">
-                <time class="published" datetime="2015-11-01">{{time}}</time>
-                <a href="#" class="author"><span class="name">Eve</span>
-                    <img src="{{url_for('static', filename='images/avatar.jpg')}}" alt="" />
-                </a>                
-            </div>
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>
+                <a href="#">Bienvenid@ {{ current_user.nombre }}</a>
+            </h2>
+        </div>
+        <div class="meta">
+            <time class="published" datetime="2015-11-01">{{ session.fecha }}</time>
+        </div>
         </header>
         
         <ul class="actions fit">

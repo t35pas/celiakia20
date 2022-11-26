@@ -1,8 +1,8 @@
 {% extends 'admin_layout.html' %}
 
-{% block content %}
+{% block contentLayoutMain %}
 
-<div id="main">
+
     <!-- Post -->
     <article class="post">
             
@@ -17,15 +17,13 @@
                 </ul>
             </div>
             <div class="meta">
-                <time class="published" datetime="2015-11-01">November 1, 2015</time>
-                <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
-                <a href="#" class="button fit">Cancelar</a>
+                <a href="#" class="button fit" style="margin-top: 37px;">Cancelar</a>
             </div>
         </header>
         <div>
             <section>
                 <h3>Información general</h3>
-                <form id="formInfoGeneral" method="POST" action="/nuevo/receta" enctype="multipart/form-data">
+                <form method="POST" action="{{url_for('InfoGeneral')}}" enctype="multipart/form-data">
                     <div class="row gtr-uniform">
                         {{ form.hidden_tag() }}
                         <div class="col-6 col-12-xsmall">
@@ -61,22 +59,6 @@
                         </div>
 
                         <div class="col-6 col-12-xsmall">
-                            {{ form.nombreImagen.label() }}
-								<div>
-									{% if form.nombreImagen.errors %}
-										{{ form.nombreImagen() }}
-										<div>
-											{% for error in form.nombreImagen.errors %}
-												<span>{{ error }}</span> 
-											{% endfor %}
-										</div>
-									{% else %}
-										{{ form.nombreImagen(placeholder="Nombre de la Imagen") }}
-									{% endif %}
-								</div>                            
-                        </div>
-
-                        <div class="col-6 col-12-xsmall">
                             {{ form.imagenReceta.label() }}
 								<div>
 									{% if form.imagenReceta.errors %}										
@@ -91,6 +73,21 @@
 									{% endif %}
 								</div>
                         </div>
+                        <div class="col-12-xsmall">
+                            {{ form.descripcion.label() }}
+								<div>
+									{% if form.descripcion.errors %}										
+										{{ form.descripcion }}
+										<div>
+											{% for error in form.descripcion.errors %}
+												<span>{{ error }}</span> 
+											{% endfor %}
+										</div>
+									{% else %}
+										{{ form.descripcion }}
+									{% endif %}
+								</div>
+                        </div>
 
                         <div class="col-12">
                             <ul class="actions">
@@ -102,7 +99,7 @@
             </section>
         </div>
     </article>
-</div>
+
 
 
 

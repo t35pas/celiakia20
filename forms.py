@@ -15,18 +15,13 @@ class NuevaReceta(FlaskForm):
     tituloReceta = StringField('Titulo de la receta', validators=[DataRequired(), Length(min=2, max=50)])
     dificultad = SelectField('Dificultad',choices=[], coerce=int)
     imagenReceta = FileField('Imagen de la receta',validators=[FileAllowed(['jpg', 'png'])])
-    nombreImagen = StringField('Nombre de la imagen', validators=[DataRequired(), Length(min=2, max=20),])
+    descripcion = StringField('Descripcion de receta', validators=[DataRequired(), Length(min=2)])
     submit = SubmitField('Siguiente')
-
-    #def validate_nombreImagen(self, nombreImagen):
-    #    receta = Receta.find_by_file(nombreImagen.data)
-    #    if receta:
-    #        raise ValidationError('Ya existe ese nombre de imagen!')
     
-    #def validate_tituloReceta(self, tituloReceta):
-    #    receta = Receta.find_by_name(tituloReceta.data)
-    #    if receta:
-    #        raise ValidationError('Ya existe ese Título!')
+    def validate_tituloReceta(self, tituloReceta):
+        receta = Receta.find_by_name(tituloReceta.data)
+        if receta:
+            raise ValidationError('Ya existe ese Título!')
 
 class NuevaPreparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', validators=[DataRequired()])
