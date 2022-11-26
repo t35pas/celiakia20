@@ -20,7 +20,7 @@ class Administrador(db.Model):
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
     nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
     recetas = relationship('Receta', backref = 'autor', lazy = True)
-    consejos = relationship('MundoCeliakia', backref = 'autor', lazy = True)
+    consejos = relationship('ConsejosCeliakia', backref = 'autor', lazy = True)
 
     def __init__(self, nombre_usuario, contrasenia, email, fecha_creacion, fecha_modificacion, nombre_imagen):
         self.nombre_usuario = nombre_usuario
@@ -457,7 +457,6 @@ class Usuario(db.Model, UserMixin):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
-
 
 class ConsejosCeliakia(db.Model):
     __tablename__ = 'ConsejosCeliakia'
