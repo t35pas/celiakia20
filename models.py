@@ -9,55 +9,6 @@ from flask import send_file
 def load_User(id_user):
     return Usuario.query.get(int(id_user))
 
-class Administrador(db.Model):
-    __tablename__ = 'administrador'
-    __table_args__ = {'extend_existing': True} 
-
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre_usuario = db.Column(db.String(), unique = True, nullable = False)
-    fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
-    fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
-    nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
-    recetas = relationship('Receta', backref = 'autor', lazy = True)
-    consejos = relationship('ConsejosCeliakia', backref = 'autor', lazy = True)
-
-    def __init__(self, nombre_usuario, contrasenia, email, fecha_creacion, fecha_modificacion, nombre_imagen):
-        self.nombre_usuario = nombre_usuario
-        self.contrasenia = contrasenia
-        self.email = email
-        self.fecha_creacion = fecha_creacion
-        self.fecha_modificacion = fecha_modificacion
-        self.nombre_imagen = nombre_imagen
-
-    def __repr__(self):
-        return '<id {}>'.format(self.id)
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'nombre_usuario': self.nombre_usuario,
-            'fecha_creacion':self.fecha_creacion,
-            'fecha_modificacion':self.fecha_modificacion,
-            'nombre_imagen':self.nombre_imagen
-    }
-
-    @classmethod
-    def find_by_id(cls, idAdmin):
-        return cls.query.filter_by(id=idAdmin).first()
-
-    @classmethod
-    def find_by_email(cls, mail):
-        return cls.query.filter_by(nombre_usuario=mail).first()
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
 class Dificultad(db.Model):
     __tablename__ = 'dificultad'
     __table_args__ = {'extend_existing': True} 
@@ -423,6 +374,10 @@ class Usuario(db.Model, UserMixin):
     email = db.Column(db.String())
     id_token = db.Column(db.String())
     favoritos = relationship('Favorito', backref = 'usuario')
+    administrador = db.Boolean()
+    recetas = relationship('Receta', backref = 'autor', lazy = True)
+    consejos = relationship('ConsejosCeliakia', backref = 'autor', lazy = True)
+    
     
     def __init__(self, nombre, apellido, email, id_token):
         self.nombre = nombre
