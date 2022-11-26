@@ -373,8 +373,8 @@ class Usuario(db.Model, UserMixin):
     id_token = db.Column(db.String())
     favoritos = relationship('Favorito', backref = 'usuario')
     administrador = db.Boolean()
-    recetas = relationship('Receta', backref = 'autor', lazy = True)
-    consejos = relationship('ConsejosCeliakia', backref = 'autor', lazy = True)
+    recetas = relationship('Receta', backref = 'receta_autor', lazy = True)
+    consejos = relationship('ConsejosCeliakia', backref = 'consejo_autor', lazy = True)
     
     
     def __init__(self, nombre, apellido, email, id_token):
