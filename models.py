@@ -259,21 +259,21 @@ class Receta(db.Model):
     fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
     nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
+    descripcion = db.Column(db.Text(), nullable = False)
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'), nullable = False)
-    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
+    id_autor = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = False)
     preparacion = relationship('Preparacion', backref = 'receta')
     ingrediente = relationship('Ingrediente_Por_Receta', backref = 'receta')
     favorita = relationship('Favorito', backref = 'receta')
-    descripcion = db.Column(db.String(), nullable = False)
+    
 
-    def __init__(self, titulo, calificacion, id_dificultad, nombre_imagen, fecha_modificacion, fecha_creacion, id_administrador):
+    def __init__(self, titulo, id_dificultad, nombre_imagen, fecha_modificacion, fecha_creacion, id_autor):
         self.titulo = titulo
-        self.calificacion = calificacion
         self.id_dificultad = id_dificultad
         self.nombre_imagen = nombre_imagen
         self.fecha_modificacion = fecha_modificacion
         self.fecha_creacion = fecha_creacion
-        self.id_administrador = id_administrador
+        self.id_autor = id_autor
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -284,7 +284,7 @@ class Receta(db.Model):
             'titulo': self.titulo,
             'id_dificultad':self.id_dificultad,
             'nombre_imagen':self.nombre_imagen,
-            'id_administrador':self.id_administrador,
+            'id_autor':self.id_autor,
             'fecha_creacion':self.fecha_creacion,
             'fecha_modificacion':self.fecha_modificacion
     }
@@ -316,8 +316,6 @@ class Receta(db.Model):
         for paso in receta.preparacion:
             tiempoPreparacion = tiempoPreparacion + paso.tiempo_preparacion
         return tiempoPreparacion
-
-
 
     def save_to_db(self):
         db.session.add(self)
@@ -420,7 +418,7 @@ class ConsejosCeliakia(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     titulo = db.Column(db.String(), nullable = False)
     descripcion = db.Column(db.Text(), nullable = False)
-    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
+    id_autor = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = False)
 
     def __init__(self, descripcion):
         self.descripcion = descripcion
