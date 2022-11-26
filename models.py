@@ -16,12 +16,11 @@ class Administrador(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre_usuario = db.Column(db.String(), unique = True, nullable = False)
-    contrasenia = db.Column(db.String(), nullable = False)
-    email = db.Column(db.String(), unique = True, nullable = False)
     fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
     nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
     recetas = relationship('Receta', backref = 'autor', lazy = True)
+    consejos = relationship('MundoCeliakia', backref = 'autor', lazy = True)
 
     def __init__(self, nombre_usuario, contrasenia, email, fecha_creacion, fecha_modificacion, nombre_imagen):
         self.nombre_usuario = nombre_usuario
@@ -38,8 +37,6 @@ class Administrador(db.Model):
         return {
             'id': self.id,
             'nombre_usuario': self.nombre_usuario,
-            'contrasenia': self.contrasenia,
-            'email': self.email,
             'fecha_creacion':self.fecha_creacion,
             'fecha_modificacion':self.fecha_modificacion,
             'nombre_imagen':self.nombre_imagen
@@ -51,7 +48,7 @@ class Administrador(db.Model):
 
     @classmethod
     def find_by_email(cls, mail):
-        return cls.query.filter_by(email=mail).first()
+        return cls.query.filter_by(nombre_usuario=mail).first()
 
     def save_to_db(self):
         db.session.add(self)
@@ -310,7 +307,6 @@ class Receta(db.Model):
     titulo = db.Column(db.String(), nullable = False)
     fecha_creacion = db.Column(db.DateTime, default = datetime.utcnow)
     fecha_modificacion = db.Column(db.DateTime, default = datetime.utcnow)
-    calificacion = db.Column(db.Integer, default = 0)
     nombre_imagen = db.Column(db.String(), nullable = False, default = 'sin_imagen')
     id_dificultad = db.Column(db.Integer, db.ForeignKey('dificultad.id'), nullable = False)
     id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
@@ -335,7 +331,6 @@ class Receta(db.Model):
         return {
             'id': self.id,
             'titulo': self.titulo,
-            'calificacion': self.calificacion,
             'id_dificultad':self.id_dificultad,
             'nombre_imagen':self.nombre_imagen,
             'id_administrador':self.id_administrador,
@@ -418,6 +413,7 @@ class Unidad(db.Model):
         db.session.commit()
 
 class Usuario(db.Model, UserMixin):
+
     __tablename__ = 'usuario'
     __table_args__ = {'extend_existing': True} 
 
@@ -453,6 +449,37 @@ class Usuario(db.Model, UserMixin):
     @classmethod
     def find_by_email(cls, mail):
         return cls.query.filter_by(email=mail).first()
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+class ConsejosCeliakia(db.Model):
+    __tablename__ = 'ConsejosCeliakia'
+    __table_args__ = {'extend_existing': True} 
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    titulo = db.Column(db.String(), nullable = False)
+    descripcion = db.Column(db.Text(), nullable = False)
+    id_administrador = db.Column(db.Integer, db.ForeignKey('administrador.id'), nullable = False)
+
+    def __init__(self, descripcion):
+        self.descripcion = descripcion
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'titulo': self.titulo,
+            'descripcion': self.descripcion
+    }
 
     def save_to_db(self):
         db.session.add(self)
