@@ -373,7 +373,7 @@ def InfoGeneral():
                 print("Quiero crear una receta")
 
                 if receta.imagenReceta: 
-                        nombreImagen = receta.tituloReceta.data.replace(' ', '').lower()
+                        nombreImagen = "rec_" + receta.tituloReceta.data.replace(' ', '').lower()
                         imagen = receta.imagenReceta.data
 
                         guardar_imagen(nombreImagen,imagen)

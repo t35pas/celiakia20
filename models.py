@@ -374,7 +374,7 @@ class Usuario(db.Model, UserMixin):
     email = db.Column(db.String())
     id_token = db.Column(db.String())
     favoritos = relationship('Favorito', backref = 'usuario')
-    administrador = db.Boolean()
+    administrador = db.Column(db.Boolean())
     recetas = relationship('Receta', backref = 'receta_autor', lazy = True)
     consejos = relationship('ConsejosCeliakia', backref = 'consejo_autor', lazy = True)
     
