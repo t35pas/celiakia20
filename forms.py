@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField, Selec
 from wtforms.fields.core import BooleanField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
-from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 class LoginForm(FlaskForm):
     nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=20)])
@@ -84,18 +84,10 @@ class NuevoAdmin(FlaskForm):
     email = StringField('E-mail', validators=[DataRequired(),Email()])
     contrasenia = PasswordField('Contraseña', validators=[DataRequired()])
     repetirContrasenia = PasswordField('Repetir contraseña', validators=[DataRequired(),EqualTo('contraseniaNueva')])
-    superAdmin = BooleanField('Super Administrador')
+    #superAdmin = BooleanField('Super Administrador')
     submit = SubmitField('Cambiar contraseña')
     
-    def validate_nombreUsuario(self, nombreUsuario):
-        administrador = Administrador.query.filter_by(nombre_usuario = nombreUsuario.data).first()
-        if administrador:
-            raise ValidationError('Ya existe ese nombre de usuario!')
     
-    def validate_email(self, email):
-        administrador = Administrador.query.filter_by(email = email.data).first()
-        if administrador:
-            raise ValidationError('Ese E-mail ya esta registrado!')
         
 class NuevaUnidad(FlaskForm):
     nombreUnidad = StringField('Nombre de la unidad', validators=[DataRequired(), Length(min=2, max=50)])
