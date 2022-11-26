@@ -459,7 +459,7 @@ class Usuario(db.Model, UserMixin):
         db.session.commit()
 
 class ConsejosCeliakia(db.Model):
-    __tablename__ = 'ConsejosCeliakia'
+    __tablename__ = 'consejos_celiakia'
     __table_args__ = {'extend_existing': True} 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
