@@ -31,7 +31,7 @@ bcrypt = Bcrypt(app) #Para encriptar las contrasenas
 loginManager = LoginManager(app) #Para manejar las sesiones de los administradores
 loginManager.login_view = 'Login'
 
-from models import Administrador,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 from forms import BuscarPorIngrediente, BuscarPorReceta,AgregarIngrediente, LoginForm, NuevaReceta, NuevaPreparacion, EditarPreparacion, EditarInfoGral, EditarIngrediente, SearchForm
 
 from authentication import auth
@@ -119,7 +119,7 @@ def Login():
                         usuario = Usuario.find_by_email(email)
                         login_user(usuario)
 
-                        if Administrador.find_by_email(email):
+                        if usuario.administrador == True:
                                 session["administrador"] = True
                                 session["fecha"] = formato_fecha(datetime.now())
                                 return redirect(url_for('PaginaInicio'))
@@ -384,7 +384,7 @@ def InfoGeneral():
                                                 fecha_modificacion = datetime.now(),
                                                 nombre_imagen = nombreImagen,
                                                 id_dificultad = receta.dificultad.data,
-                                                id_administrador = current_user.id,
+                                                id_autor = current_user.id,
                                                 descripcion = receta.descripcion.data
                                         )
 
