@@ -267,9 +267,10 @@ class Receta(db.Model):
     favorita = relationship('Favorito', backref = 'receta')
     
 
-    def __init__(self, titulo, id_dificultad, nombre_imagen, fecha_modificacion, fecha_creacion, id_autor):
+    def __init__(self, titulo, id_dificultad, descripcion, nombre_imagen, fecha_modificacion, fecha_creacion, id_autor):
         self.titulo = titulo
         self.id_dificultad = id_dificultad
+        self.descripcion = descripcion
         self.nombre_imagen = nombre_imagen
         self.fecha_modificacion = fecha_modificacion
         self.fecha_creacion = fecha_creacion
@@ -283,6 +284,7 @@ class Receta(db.Model):
             'id': self.id,
             'titulo': self.titulo,
             'id_dificultad':self.id_dificultad,
+            'descripcion':self.descripcion,
             'nombre_imagen':self.nombre_imagen,
             'id_autor':self.id_autor,
             'fecha_creacion':self.fecha_creacion,
