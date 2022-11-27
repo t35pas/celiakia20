@@ -37,9 +37,9 @@
                                 <td> {{ receta.titulo}}</td>
                                 <td> {{ receta.dificultad.descripcion}}</td>
                                 <td>
-                                    <a href="{{url_for('EditarReceta', idReceta = receta.id)}}" class="icon solid fa-eye" style="color:lightseagreen"></a>
-                                    <a href="/receta/{{receta.id}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
-                                    <a href="{{url_for('EliminarRecetaListado',idReceta = receta.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                    <a href="#" class="icon solid fa-eye" style="color:lightseagreen"></a>
+                                    <a href="{{url_for('EditarReceta', idReceta = receta.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
+                                    <a href="{{url_for('EliminarReceta',idReceta = receta.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
                                 </td>
                             </tr>
                         {% endfor %}

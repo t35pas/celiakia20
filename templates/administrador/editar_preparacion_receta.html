@@ -1,0 +1,52 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+<article class="post">
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a>Editar receta - {{ receta.titulo }}</a></h2>
+            <h4 style="margin-top: 30px;"> Editar Preparación</h4>
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('EditarReceta',idReceta = receta.id)}}" class="button fit">Volver</a></li>
+            </ul>
+            <ul class="actions fit">
+                <li><a href="{{url_for('PrepPorReceta',idReceta = receta.id)}}" class="button fit">Nuevo Paso</a></li>
+            </ul>
+        </div>
+    </header>
+    <div>
+        <section>
+            <div class="table-wrapper">
+                <div class="dataTable" style="width: 98%;">
+                        <table id="listadoPreparacion" class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Orden</th>
+                                    <th>Descripción</th>
+                                    <th>Tiempo Preparación</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for paso in preparacion %}
+                                    <tr>
+                                        <td> {{ paso.orden_del_paso}}</td>
+                                        <td> {{ paso.descripcion}}</td>
+                                        <td> {{ paso.tiempo_preparacion}}</td>
+                                        <td>
+                                            <a href="{{url_for('EditarPasoReceta',idPaso = paso.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
+                                            <a href="#" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </section>
+    </div>
+</article>
+{% endblock %}

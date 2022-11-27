@@ -1,0 +1,41 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+
+<article class="post">
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a href="#">Editar Imagen</a></h2>
+        </div>
+    </header>
+    <div>
+        <h4> Cambiar Imagen de {{receta.titulo}}</h4>
+        <section>                
+            <form id="formCambiarImagen" method="POST" action="{{url_for('EditarImagenReceta',idReceta = receta.id)}}" enctype="multipart/form-data">
+                <div class="row gtr-uniform">
+                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
+                    <div class="col-6 col-12-xsmall">
+                        {{ form.imagenReceta.label() }}
+                            <div>
+                                {% if form.imagenReceta.errors %}										
+                                    {{ form.imagenReceta }}
+                                    <div>
+                                        {% for error in form.imagenReceta.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.imagenReceta }}
+                                {% endif %}
+                            </div>
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        {{ form.submit(type="submit", value="Agregar") }}
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</article>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+<article class="post">
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a>Editar receta - {{ receta.titulo }}</a></h2>
+            <h4 style="margin-top: 30px;"> Editar Ingrediente</h4>
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('EditarReceta',idReceta = receta.id)}}" class="button fit">Volver</a></li>
+            </ul>
+            <ul class="actions fit">
+                <li><a href="{{url_for('IngPorReceta',idReceta = receta.id)}}" class="button fit">Nuevo Ingrediente</a></li>
+            </ul>
+        </div>
+    </header>
+    <div>
+        
+        <section>                
+            <div class="table-wrapper">
+                <div class="dataTable" style="width: 98%;">
+                    <table class="display table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Unidad</th>
+                                <th scope="col">Descripción</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                                    
+                        <tbody>
+                            {% for ixr in ingredientesXreceta %}
+                                <tr>
+                                    <td>{{ ixr.cantidad }}</td>
+                                    <td>{{ ixr.unidad.descripcion }}</td>
+                                    <td>{{ ixr.ingredientes.descripcion }}</td>
+                                    <td>
+                                        <a href="{{url_for('EditarIngDeReceta',idIxr = ixr.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
+                                        <a href="#" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</article>
+    
+{% endblock %}

@@ -1,9 +1,17 @@
 {% extends 'administrador/admin_layout.html' %}
 
 {% block contentLayoutMain %}
-    {% block template_info_gral_header %}   {% endblock %}
+
+<article class="post">  
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a href="#">Editar receta - {{ receta.titulo }}</a></h2>
+        </div>
+    </header>
+    <div>
+        <h3>Información general</h3>
         <section>
-            <form method="POST" action="{{url_for('InfoGeneral')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{url_for('EditarInfoGeneral',idReceta = receta.id)}}" enctype="multipart/form-data">
                 <div class="row gtr-uniform">
                     {{ form.hidden_tag() }}
                     <div class="col-6 col-12-xsmall">
@@ -37,7 +45,7 @@
                             {% endif %}
                         </div>
                     </div>
-
+                    {% if not receta %}  
                     <div class="col-6 col-12-xsmall">
                         {{ form.imagenReceta.label() }}
                             <div>
@@ -53,6 +61,7 @@
                                 {% endif %}
                             </div>
                     </div>
+                    {% endif %}
                     <div class="col-12-xsmall">
                         {{ form.descripcion.label() }}
                             <div>
@@ -71,12 +80,15 @@
 
                     <div class="col-12">
                         <ul class="actions">
-                            <li>{{ form.submit(type="submit", value="Continuar") }}</li>
+                            <li>{{ form.submit(type="submit") }}</li>
                         </ul>
                     </div>
                 </div>
             </form>
         </section>
-    {% block template_info_gral_footer %}   {% endblock %}
-
+    </div>
+</article>
 {% endblock %}
+
+
+

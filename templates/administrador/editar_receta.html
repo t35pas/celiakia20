@@ -14,10 +14,10 @@
         </header>
         
         <ul class="actions fit">
-            <li><a href="#" class="button fit">Imagen</a></li>
-            <li><a href="#" class="button fit">Informacion General</a></li>
-            <li><a href="#" class="button fit">Ingrdientes</a></li>
-            <li><a href="#" class="button fit">Preparacion</a></li>
+            <li><a href="{{url_for('EditarImagenReceta',idReceta = receta.id)}}" class="button fit">Imagen</a></li>
+            <li><a href="{{url_for('EditarInfoGeneral',idReceta = receta.id)}}" class="button fit">Informacion General</a></li>
+            <li><a href="{{url_for('EditarIngPorReceta',idReceta = receta.id)}}" class="button fit">Ingrdientes</a></li>
+            <li><a href="{{url_for('EditarPrepPorReceta',idReceta = receta.id)}}" class="button fit">Preparacion</a></li>
         </ul>
     </article>
 </div>

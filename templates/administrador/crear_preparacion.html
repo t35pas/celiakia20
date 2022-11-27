@@ -1,0 +1,124 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+<article class="post">
+    {% if session.creando %} 
+        <header>
+            <div class="title" style="margin-bottom: 0px;">
+                <h2><a>Nueva receta - {{ receta.titulo }}</a></h2>		
+                <p style="margin-top: 10px;">
+                    Completa los pasos para preparar la receta.
+                    <br>
+                    No olvides presionar FINALIZAR una vez que estén todos los pasos.</p>								
+            </div>
+            <div class="meta">
+                <ul class="actions fit">
+                    <li><a href="{{url_for('Listado')}}" class="button fit">Finalizar</a></li>
+                </ul>
+                <ul class="actions fit">
+                    <li><a href="{{url_for('EliminarReceta',idReceta = receta.id)}}" class="button fit">Cancelar</a></li>
+                </ul>
+            </div>
+        </header>
+    {% else %}
+        <header>
+            <div class="title" style="margin-bottom: 0px;">
+                <h2><a>Editar receta - {{ receta.titulo }}</a></h2>									
+            </div>
+            <div class="meta">
+                <ul class="actions fit">
+                    <li><a href="{{url_for('EditarPrepPorReceta',idReceta = receta.id)}}" class="button fit">Volver</a></li>
+                </ul>
+            </div>
+        </header>
+    {% endif %}
+    <div>
+        <h4 style="margin-bottom: 30px;">Nuevo Paso</h4>
+        <section>
+            <form id="nuevaPreparacion" method="POST" action="{{url_for('PrepPorReceta',idReceta = receta.id)}}" enctype="multipart/form-data">
+                <div class="row gtr-uniform">
+                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
+
+                    <div class="col-6 col-12-xsmall">
+                        {% if form.ordenPaso.errors %}
+                            {{ form.ordenPaso() }}
+                            <div>
+                                {% for error in form.ordenPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.ordenPaso(placeholder="Paso N°") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        {% if form.tiempoPaso.errors %}
+                            {{ form.tiempoPaso() }}
+                            <div>
+                                {% for error in form.tiempoPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.tiempoPaso(placeholder="Tiempo en realizar el paso") }}
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        {% if form.descripcionPaso.errors %}
+                            {{ form.descripcionPaso() }}
+                            <div>
+                                {% for error in form.descripcionPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.descripcionPaso(placeholder="Paso a paso", class="inputTextArea", rows="3") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li>{{ form.submit(type="submit", value="Agregar") }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        {% if session.creando %}
+            <section>
+                <div class="table-wrapper">
+                    <div class="dataTable" style="width: 98%;">
+                            <table id="listadoPreparacion" class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Orden</th>
+                                        <th>Descripción</th>
+                                        <th>Tiempo Preparacion</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for paso in receta.preparacion %}
+                                        <tr>
+                                            <td> {{ paso.orden_del_paso}}</td>
+                                            <td> {{ paso.descripcion}}</td>
+                                            <td> {{ paso.tiempo_preparacion}}</td>
+                                            <td>
+                                                <a href="{{url_for('EditarPasoReceta',idPaso = paso.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
+                                                <a href="{{url_for('EliminarPrepPorReceta',idPaso = paso.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

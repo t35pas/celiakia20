@@ -1,0 +1,124 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+<article class="post">
+    {% if session.creando %} 
+        <header>
+            <div class="title" style="margin-bottom: 0px;">
+                <h2><a href="#">Nueva receta - {{ receta.titulo }}</a></h2>
+                <p style="margin-top: 10px;">
+                    Agregá todos los ingredientes necesarios para preparar la receta. <br>
+                    Tené en cuenta que el ingrediente debió ser creado previamente desde ABM INGREDIENTES</p>
+            </div>
+            <div class="meta">
+                <ul class="actions fit">
+                    <li><a href="{{url_for('PrepPorReceta',idReceta = receta.id)}}" class="button fit">Avanzar</a></li>
+                </ul>
+                <ul class="actions fit">
+                    <li><a href="{{url_for('EliminarReceta',idReceta = receta.id)}}" class="button fit">Cancelar</a></li>
+                </ul>
+            </div>
+        </header>
+    {% else %} 
+        <header>
+            <div class="title" style="margin-bottom: 0px;">
+                <h2><a href="#">Editar receta - {{ receta.titulo }}</a></h2>
+                <p style="margin-top: 10px;">
+                    Agregá todos los ingredientes necesarios para preparar la receta. <br>
+                    Tené en cuenta que el ingrediente debió ser creado previamente desde ABM INGREDIENTES</p>
+            </div>
+            <div class="meta">
+                <ul class="actions fit">
+                    <li><a href="{{url_for('EditarIngPorReceta', idReceta = receta.id)}}" class="button fit">Avanzar</a></li>
+                </ul>
+            </div>
+        </header>
+    {% endif %} 
+    <div>
+        <h4> Agregar Ingrediente</h4>
+        <section>                
+            <form id="formIngredientes" method="POST" action="{{url_for('IngPorReceta',idReceta = receta.id)}}" enctype="multipart/form-data">
+                <div class="row gtr-uniform">
+                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
+                    <div class="col-3 col-12-xsmall">
+                        {% if form.descripcionIngrediente.errors %}                    
+                            {{ form.descripcionIngrediente() }}
+                            <div class="invalid-feedback">
+                                {% for error in form.descripcionIngrediente.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                        </div>
+                        {% else %}    
+                            {{ form.descripcionIngrediente(placeholder="Elige el ingrediente")}}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-3 col-12-xsmall">
+                        {% if form.cantidad.errors %}                
+                            {{ form.cantidad() }}
+                            <div>
+                                {% for error in form.cantidad.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}            
+                            {{ form.cantidad(placeholder="cantidad")}}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-3 col-12-xsmall">
+                        {% if form.unidad.errors %}                            
+                            {{ form.unidad() }}
+                            <div>
+                                {% for error in form.unidad.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}    
+                            {{ form.unidad(placeholder="Elige la unidad") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-3 col-12-xsmall">
+                        {{ form.submit(type="submit", value="Agregar") }}
+                    </div>
+                </div>
+            </form>
+        </section>
+        {% if session.creando %} 
+            <section>                
+                <div class="table-wrapper">
+                    <div class="dataTable" style="width: 98%;">
+                        <table class="display table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Unidad</th>
+                                    <th scope="col">Descripción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                                        
+                            <tbody>
+                                {% for ixr in receta.ingrediente %}
+                                    <tr>
+                                        <td>{{ ixr.cantidad }}</td>
+                                        <td>{{ ixr.unidad.descripcion }}</td>
+                                        <td>{{ ixr.ingredientes.descripcion }}</td>
+                                        <td>
+                                            <a href="{{url_for('EditarIngDeReceta',idIxr = ixr.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
+                                            <a href="{{url_for('EliminarIngPorReceta',idIxr = ixr.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+</article>
+    
+{% endblock %}
