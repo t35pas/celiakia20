@@ -1,0 +1,85 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+    {% block template_preparacion_header %}   {% endblock %}
+        <section>
+            <form id="nuevaPreparacion" method="POST" action="{{url_for('PrepPorReceta')}}" enctype="multipart/form-data">
+                <div class="row gtr-uniform">
+                    {{ form.hidden_tag() }}
+                    {{ form.csrf_token }}
+
+                    <div class="col-6 col-12-xsmall">
+                        {% if form.ordenPaso.errors %}
+                            {{ form.ordenPaso() }}
+                            <div>
+                                {% for error in form.ordenPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.ordenPaso(placeholder="Paso N°") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-6 col-12-xsmall">
+                        {% if form.tiempoPaso.errors %}
+                            {{ form.tiempoPaso() }}
+                            <div>
+                                {% for error in form.tiempoPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.tiempoPaso(placeholder="Tiempo en realizar el paso") }}
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        {% if form.descripcionPaso.errors %}
+                            {{ form.descripcionPaso() }}
+                            <div>
+                                {% for error in form.descripcionPaso.errors %}
+                                    <span>{{ error }}</span> 
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.descripcionPaso(placeholder="Paso a paso", class="inputTextArea", rows="3") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li>{{ form.submit(type="submit", value="Agregar") }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <section>
+            <div class="table-wrapper">
+                <div class="dataTable" style="width: 98%;">
+                        <table id="listadoPreparacion" class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Orden</th>
+                                    <th>Descripción</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for paso in preparacion %}
+                                    <tr>
+                                        <td> {{ paso.orden_del_paso}}</td>
+                                        <td> {{ paso.descripcion}}</td>
+                                        <td>
+                                            <a href="#" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </section>
+    {% block template_preparacion_footer %}   {% endblock %}
+{% endblock %}

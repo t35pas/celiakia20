@@ -1,0 +1,30 @@
+{% extends 'administrador/admin_template_ingrediente.html' %}
+
+{% block template_ingrediente_header %}
+<article class="post">
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a href="#">Nueva receta - INGREDIENTES</a></h2>
+            <p style="margin-top: 10px;">
+                Agregá todos los ingredientes necesarios para preparar la receta. <br>
+                Tené en cuenta que el ingrediente debió ser creado previamente desde ABM INGREDIENTES</p>
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('PrepPorReceta')}}" class="button fit">Avanzar</a></li>
+            </ul>
+            <ul class="actions fit">
+                <li><a href="#" class="button fit">Cancelar</a></li>
+            </ul>
+        </div>
+    </header>
+    <div>
+        <h4> Agregar Ingrediente</h4>
+
+{% endblock %}
+
+{% block template_ingrediente_footer %}
+    </div>
+</article>
+
+{% endblock %}

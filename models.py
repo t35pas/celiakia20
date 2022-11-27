@@ -1,9 +1,9 @@
 from enum import unique
 from app import db, loginManager
 from datetime import datetime
-from sqlalchemy.orm import defaultload, relationship
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
-from flask import send_file
+
 
 @loginManager.user_loader
 def load_User(id_user):
@@ -132,6 +132,13 @@ class Ingrediente_Por_Receta(db.Model):
     def find_by_receta(cls, idReceta):
         return cls.query.filter_by(id_receta=idReceta).all()
     
+    @classmethod
+    def any_ingrediente_receta(cls,idIngrediente,idReceta):
+        for ixr in cls.find_by_receta(idReceta):    
+            if idIngrediente == ixr.id_ingrediente:
+                return True
+        return False
+
     def update_to_db(self,ingrediente,unidad,cantidad):
         self.id_ingrediente = ingrediente
         self.id_unidad = unidad
@@ -230,7 +237,7 @@ class Preparacion(db.Model):
 
     @classmethod
     def find_by_receta(cls, idReceta):
-        return cls.query.filter_by(id_receta=idReceta)
+        return cls.query.filter_by(id_receta=idReceta).all()
 
     @classmethod
     def find_by_paso_receta(cls, ordenPaso,idReceta):

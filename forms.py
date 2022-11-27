@@ -11,23 +11,29 @@ class LoginForm(FlaskForm):
     contrasenia = PasswordField('Contrasenia',validators=[DataRequired()])
     submit = SubmitField('Ingresar')
 
-class NuevaReceta(FlaskForm):
+class Form_InformacionGeneral(FlaskForm):
     tituloReceta = StringField('Titulo de la receta', validators=[DataRequired(), Length(min=2, max=50)])
     dificultad = SelectField('Dificultad',choices=[], coerce=int)
     imagenReceta = FileField('Imagen de la receta',validators=[FileAllowed(['jpg', 'png'])])
     descripcion = StringField('Descripcion de receta', validators=[DataRequired(), Length(min=2)])
-    submit = SubmitField('Siguiente')
+    submit = SubmitField('Actualizar')
     
     def validate_tituloReceta(self, tituloReceta):
         receta = Receta.find_by_name(tituloReceta.data)
         if receta:
             raise ValidationError('Ya existe ese Título!')
 
-class NuevaPreparacion(FlaskForm):
+class Form_Preparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', validators=[DataRequired()])
     descripcionPaso = TextAreaField('Descripción',validators=[DataRequired()])
     tiempoPaso = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
-    submit = SubmitField('Agregar')
+    submit = SubmitField('Actualizar')
+
+class Form_Ingrediente(FlaskForm):
+    descripcionIngrediente = SelectField('Nombre del ingrediente',id = 'descripcionIngrediente',choices=[],coerce=int)
+    unidad = SelectField('Unidad',choices=[],coerce=int)
+    cantidad = IntegerField('Cantidad',validators=[DataRequired()])
+    submit = SubmitField('Actualizar')
 
 class BuscarPorReceta(FlaskForm):
     nombreReceta = StringField('Busqueda Nombre', validators=[Length(min=2, max=20)])
@@ -37,12 +43,7 @@ class BuscarPorIngrediente(FlaskForm):
     nombreIngrediente = StringField('Busqueda Ingrediente', id='ingrediente_autocomplete', validators=[Length(min=2, max=20)])
     submit = SubmitField('Agregar')
 
-class AgregarIngrediente(FlaskForm):
 
-    descripcionIngrediente = SelectField('Nombre del ingrediente',id = 'descripcionIngrediente',choices=[],coerce=int)
-    unidad = SelectField('Unidad',choices=[],coerce=int)
-    cantidad = IntegerField('Cantidad',validators=[DataRequired()])
-    submit = SubmitField('Guardar')
 
 
 class EditarIngrediente(FlaskForm):

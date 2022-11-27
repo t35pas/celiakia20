@@ -1,4 +1,4 @@
-{% extends 'admin_layout.html' %}
+{% extends 'administrador/admin_layout.html' %}
 
 {% block contentLayoutMain %}
 
@@ -34,14 +34,12 @@
                     <tbody>
                         {% for receta in recetas %}
                             <tr>
-                                <td> {{ receta.id}}</td>
                                 <td> {{ receta.titulo}}</td>
                                 <td> {{ receta.dificultad.descripcion}}</td>
-                                <td> {{ receta.calificacion}}</td>
                                 <td>
-                                    <a href="/receta/editar/{{receta.id}}" class="icon solid fa-eye" style="color:lightseagreen"></a>
+                                    <a href="{{url_for('EditarReceta', idReceta = receta.id)}}" class="icon solid fa-eye" style="color:lightseagreen"></a>
                                     <a href="/receta/{{receta.id}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
-                                    <a href="/recetas/eliminar/{{receta.id}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                    <a href="{{url_for('EliminarRecetaListado',idReceta = receta.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
                                 </td>
                             </tr>
                         {% endfor %}

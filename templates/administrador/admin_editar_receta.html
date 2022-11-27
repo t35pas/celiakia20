@@ -1,0 +1,26 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>
+                <a href="#">Editar {{receta.titulo}}</a>
+            </h2>
+        </div>
+        <div class="meta">
+            <time class="published" datetime="2015-11-01">{{ session.fecha }}</time>
+        </div>
+        </header>
+        
+        <ul class="actions fit">
+            <li><a href="#" class="button fit">Imagen</a></li>
+            <li><a href="#" class="button fit">Informacion General</a></li>
+            <li><a href="#" class="button fit">Ingrdientes</a></li>
+            <li><a href="#" class="button fit">Preparacion</a></li>
+        </ul>
+    </article>
+</div>
+
+{% endblock %}

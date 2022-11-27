@@ -1,0 +1,30 @@
+{% extends 'administrador/admin_template_preparacion.html' %}
+
+{% block template_preparacion_header %}
+<!-- Post -->
+<article class="post">
+        
+    <header>
+        <div class="title" style="margin-bottom: 0px;">
+            <h2><a href="#">Nueva receta - Preparación</a></h2>		
+            <p style="margin-top: 10px;">
+                Completa los pasos para preparar la receta.
+                <br>
+                No olvides presionar FINALIZAR una vez que estén todos los pasos.</p>								
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('Listado')}}" class="button fit">Finalizar</a></li>
+            </ul>
+            <ul class="actions fit">
+                <li><a href="#" class="button fit">Cancelar</a></li>
+            </ul>
+        </div>
+    </header>
+    <div>
+{% endblock %}
+
+{% block template_preparacion_footer %}
+    </div>
+</article>
+{% endblock %}

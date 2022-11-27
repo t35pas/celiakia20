@@ -40,12 +40,12 @@
 							<section>
 								<ul class="links">
 									<li>
-										<a href="{{url_for('Listado')}}">
+										<a href="{{url_for('PaginaInicioAdmin')}}">
 											<h3>Home</h3>
 										</a>
 									</li>
 									<li>
-										<a href="{{url_for('InfoGeneral')}}">
+										<a href="{{url_for('Listado')}}">
 											<h3>Recetas</h3>
 											<p>Listado de Recetas</p>
 											<p>Creación de Recetas</p>
@@ -84,7 +84,7 @@
 								{% endif %}
 
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Salir</a></li>
+									<li><a href="{{url_for('Logout')}}" class="button large fit">Salir</a></li>
 								</ul>
 							</section>
 					</section>

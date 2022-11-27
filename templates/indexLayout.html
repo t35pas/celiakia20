@@ -76,12 +76,12 @@
 							<section>
 								{% if session.administrador %}
 									<ul class="actions stacked">
-										<li><a href="{{url_for('IndexAdmin')}}" class="button large fit">Administrador</a></li>
+										<li><a href="{{url_for('PaginaInicioAdmin')}}" class="button large fit">Administrador</a></li>
 									</ul>
 								{% endif %}
 
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Salir</a></li>
+									<li><a href="{{url_for('Logout')}}" class="button large fit">Salir</a></li>
 								</ul>
 							</section>
 
