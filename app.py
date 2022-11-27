@@ -544,10 +544,17 @@ def EliminarRecetaListado(idReceta):
         return redirect(url_for('Listado'))
 
 
-@app.route('/editar/receta/<idReceta>', methods = ['GET', 'POST'])
+@app.route('/editarReceta/<idReceta>', methods = ['GET'])
 @login_required
 def EditarReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
+        return render_template('administrador/admin_editar_receta.html', receta = receta)
+
+@app.route('/editarReceta/<idReceta>/imagen', methods = ['GET'])
+@login_required
+def EditarReceta(idReceta):
+        form = CambiarImagen()
+        
         return render_template('administrador/admin_editar_receta.html', receta = receta)
 
 @app.route('/editar/receta/informacionGeneral', methods = ['GET', 'POST'])
