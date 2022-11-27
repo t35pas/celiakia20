@@ -32,7 +32,7 @@ loginManager = LoginManager(app) #Para manejar las sesiones de los administrador
 loginManager.login_view = 'Login'
 
 from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
+from forms import CambiarImagen,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
 
 from authentication import auth
 
@@ -554,7 +554,7 @@ def EditarReceta(idReceta):
 @login_required
 def EditarReceta(idReceta):
         form = CambiarImagen()
-        
+
         return render_template('administrador/admin_editar_receta.html', receta = receta)
 
 @app.route('/editar/receta/informacionGeneral', methods = ['GET', 'POST'])
