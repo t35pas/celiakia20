@@ -28,7 +28,7 @@ db = SQLAlchemy(app)
 api = Api(app)
 
 bcrypt = Bcrypt(app) #Para encriptar las contrasenas
-loginManager = LoginManager(app) #Para manejar las sesiones de los administradores
+loginManager = LoginManager(app) #Para manejar las sesiones
 loginManager.login_view = 'Login'
 
 from models import ConsejosCeliakia,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
