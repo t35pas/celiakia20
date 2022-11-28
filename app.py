@@ -118,6 +118,10 @@ def paginado(lista,pagina,cant_por_pagina):
         lista_paginada = Pagination(None, pagina, cant_por_pagina, len(lista), items)
         return lista_paginada
 
+##############################################################################
+##                            LOG IN - LOG OUT                              ##
+##############################################################################
+
 @app.route('/login', methods = ['GET', 'POST'])
 def Login():
         if current_user.is_authenticated:
@@ -142,6 +146,18 @@ def Login():
                 except:
                         return flash('Inicio incorrecto')
         return render_template('login.html', form = form)
+
+@app.route('/logout', methods = ['GET', 'POST'])
+@login_required
+def Logout():
+        session.pop('Administrador',None)
+        logout_user()
+        return redirect(url_for('Login'))
+
+
+##############################################################################
+##                            INICIO APP USUARIO                            ##
+##############################################################################
 
 #El login te redirige a la aplicación de recetas en perfil usuario.
 #Por default se carga buscar por nombre de receta
@@ -362,15 +378,16 @@ def autocomplete():
 
 
 
+##############################################################################
+##                            INICIO APP ADMIN                              ##
+##############################################################################
 
-######### ADMINISTRADOR #########
-
-@app.route('/inicioAdmin', methods = ['GET', 'POST'])
+@app.route('/admin/inicio', methods = ['GET', 'POST'])
 @login_required
 def PaginaInicioAdmin():        
         return render_template('administrador/pagina_inicio_admin.html')
 
-@app.route('/recetas', methods = ['GET', 'POST'])
+@app.route('/admin/recetas', methods = ['GET', 'POST'])
 @login_required
 def Listado():
         recetas = Receta.query.all()
@@ -383,7 +400,7 @@ def Listado():
 ##                              ABM RECETAS                                 ##
 ##############################################################################
 
-@app.route('/receta/crear/informacionGeneral', methods = ['GET', 'POST'])
+@app.route('/admin/receta/crear/informacionGeneral', methods = ['GET', 'POST'])
 @login_required
 def InfoGeneral():
        
@@ -423,7 +440,7 @@ def InfoGeneral():
         return render_template('administrador/crear_info_gral.html', 
                                 form = receta)
 
-@app.route('/receta/<idReceta>/crear/ingredientes', methods = ['GET', 'POST'])
+@app.route('/admin/receta/<idReceta>/crear/ingredientes', methods = ['GET', 'POST'])
 @login_required
 def IngPorReceta(idReceta):
 
@@ -459,7 +476,7 @@ def IngPorReceta(idReceta):
                                         form = ingrediente, 
                                         receta = receta)
 
-@app.route('/receta/<idReceta>/crear/preparacion', methods = ['GET', 'POST']) 
+@app.route('/admin/receta/<idReceta>/crear/preparacion', methods = ['GET', 'POST']) 
 @login_required
 def PrepPorReceta(idReceta):
 
@@ -493,7 +510,7 @@ def PrepPorReceta(idReceta):
                                         form = preparacion, 
                                         receta = receta)
 
-@app.route('/receta/ingrediente/eliminar/<idIxr>', methods = ['GET', 'POST'])
+@app.route('/admin/receta/ingrediente/eliminar/<idIxr>', methods = ['GET', 'POST'])
 @login_required
 def EliminarIngPorReceta(idIxr):
         ingrediente = Ingrediente_Por_Receta.find_by_id(idIxr)
@@ -501,7 +518,7 @@ def EliminarIngPorReceta(idIxr):
         #flash('Ingrediente eliminado correctamente de la receta!')
         return redirect(url_for('IngPorReceta'))
 
-@app.route('/receta/preparacion/eliminar/<idPaso>', methods = ['GET', 'POST'])
+@app.route('/admin/receta/preparacion/eliminar/<idPaso>', methods = ['GET', 'POST'])
 @login_required
 def EliminarPrepPorReceta(idPaso):
         paso = Preparacion.find_by_id(idPaso)
@@ -509,7 +526,7 @@ def EliminarPrepPorReceta(idPaso):
         #flash('Paso eliminado correctamente de la receta!')
         return redirect(url_for('PrepPorReceta'))
 
-@app.route('/receta/<idReceta>/eliminar', methods = ['GET'])
+@app.route('/admin/receta/<idReceta>/eliminar', methods = ['GET'])
 @login_required
 def EliminarReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
@@ -525,13 +542,13 @@ def EliminarReceta(idReceta):
         Receta.delete_from_db(receta)
         return redirect(url_for('Listado'))
 
-@app.route('/receta/editar/<idReceta>', methods = ['GET'])
+@app.route('/admin/receta/editar/<idReceta>', methods = ['GET'])
 @login_required
 def EditarReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
         return render_template('administrador/editar_receta.html', receta = receta)
 
-@app.route('/receta/editar/imagen/<idReceta>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/imagen/<idReceta>', methods = ['GET','POST'])
 @login_required
 def EditarImagenReceta(idReceta):
         cambiarImagen = CambiarImagen()
@@ -551,7 +568,7 @@ def EditarImagenReceta(idReceta):
                                 form = cambiarImagen,
                                 receta = receta)
 
-@app.route('/receta/editar/informacionGeneral/<idReceta>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/informacionGeneral/<idReceta>', methods = ['GET','POST'])
 @login_required
 def EditarInfoGeneral(idReceta):
         infoGeneral = Form_InformacionGeneral()
@@ -587,7 +604,7 @@ def EditarInfoGeneral(idReceta):
                                 form = infoGeneral,
                                 receta = receta)
 
-@app.route('/receta/editar/ingredientes/<idReceta>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/ingredientes/<idReceta>', methods = ['GET','POST'])
 @login_required
 def EditarIngPorReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
@@ -596,7 +613,7 @@ def EditarIngPorReceta(idReceta):
                                 receta = receta,
                                 ingredientesXreceta = ingredientesXreceta)
 
-@app.route('/receta/editar/ingrediente/<idIxr>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/ingrediente/<idIxr>', methods = ['GET','POST'])
 @login_required
 def EditarIngDeReceta(idIxr):
         ingrediente = Form_Editar_Ing_Por_Receta()
@@ -628,7 +645,7 @@ def EditarIngDeReceta(idIxr):
                                         receta = receta,
                                         ixr = ingXreceta)
 
-@app.route('/receta/editar/preparacion/<idReceta>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/preparacion/<idReceta>', methods = ['GET','POST'])
 @login_required
 def EditarPrepPorReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
@@ -637,7 +654,7 @@ def EditarPrepPorReceta(idReceta):
                                 receta = receta,
                                 preparacion = preparacion)
 
-@app.route('/receta/editar/paso/<idPaso>', methods = ['GET','POST'])
+@app.route('/admin/receta/editar/paso/<idPaso>', methods = ['GET','POST'])
 @login_required
 def EditarPasoReceta(idPaso):
         preparacion = Form_Preparacion()
@@ -691,7 +708,7 @@ def EditarPasoReceta(idPaso):
                                         paso = paso,
                                         receta = receta)
 
-@app.route('/receta/<idReceta>/ver', methods = ['GET','POST'])
+@app.route('/admin/receta/<idReceta>/ver', methods = ['GET','POST'])
 @login_required
 def VerRecetaAdmin(idReceta):
         receta = Receta.find_by_id(idReceta)
@@ -703,7 +720,7 @@ def VerRecetaAdmin(idReceta):
 ##                             ABM INGREDIENTES                             ##
 ##############################################################################
 
-@app.route('/ingredientes/ABM', methods = ['GET', 'POST'])
+@app.route('/admin/ingredientes/ABM', methods = ['GET', 'POST'])
 @login_required
 def ListadoIngredientes():
         form = CrearIngrediente()
@@ -743,7 +760,7 @@ def ListadoIngredientes():
                                 form = form)
 
 
-@app.route('/ingrediente/eliminar/<idIng>', methods = ['GET', 'POST'])
+@app.route('/admin/ingrediente/eliminar/<idIng>', methods = ['GET', 'POST'])
 @login_required
 def EliminarIngrediente(idIng):
         ingrediente = Ingrediente.find_by_id(idIng)
@@ -759,7 +776,7 @@ def EliminarIngrediente(idIng):
 ##                               ABM UNIDADES                               ##
 ##############################################################################
 
-@app.route('/unidades', methods = ['GET', 'POST'])
+@app.route('/admin/unidades', methods = ['GET', 'POST'])
 @login_required
 def ListadoUnidades():
         form = CrearUnidad()
@@ -781,7 +798,7 @@ def ListadoUnidades():
                                         form = form)
 
 
-@app.route('/unidad/eliminar/<idUni>', methods = ['GET', 'POST'])
+@app.route('/admin/unidad/eliminar/<idUni>', methods = ['GET', 'POST'])
 @login_required
 def EliminarUnidad(idUni):
         
@@ -798,7 +815,7 @@ def EliminarUnidad(idUni):
 ##                               ABM DIFICULTAD                             ##
 ##############################################################################
 
-@app.route('/dificultad', methods = ['GET', 'POST'])
+@app.route('/admin/dificultad', methods = ['GET', 'POST'])
 @login_required
 def ListadoNivelDificultad():
         form = CrearDificultad()
@@ -820,7 +837,7 @@ def ListadoNivelDificultad():
                                         form = form)
 
 
-@app.route('/dificultad/eliminar/<idDif>', methods = ['GET', 'POST'])
+@app.route('/admin/dificultad/eliminar/<idDif>', methods = ['GET', 'POST'])
 @login_required
 def EliminarDificultad(idDif):
         dificultad = Dificultad.find_by_id(idDif)
@@ -837,7 +854,7 @@ def EliminarDificultad(idDif):
 ##                               ABM CONSEJOS                               ##
 ##############################################################################
 
-@app.route('/consejos', methods = ['GET', 'POST'])
+@app.route('/admin/consejos', methods = ['GET', 'POST'])
 @login_required
 def ListadoConsejos():
         form = CrearConsejo()
@@ -862,7 +879,7 @@ def ListadoConsejos():
                                         consejos = consejos,
                                         form = form)
 
-@app.route('/consejo/<idCons>/editar', methods = ['GET', 'POST'])
+@app.route('/admin/consejo/<idCons>/editar', methods = ['GET', 'POST'])
 @login_required
 def EditarConsejo(idCons):
         form = CrearConsejo()
@@ -886,7 +903,7 @@ def EditarConsejo(idCons):
                                         consejos = consejos,
                                         form = form)
 
-@app.route('/consejo/<idCons>/eliminar', methods = ['GET', 'POST'])
+@app.route('/admin/consejo/<idCons>/eliminar', methods = ['GET', 'POST'])
 @login_required
 def EliminarConsejo(idCons):
         consejo = ConsejosCeliakia.find_by_id(idCons)
@@ -898,7 +915,7 @@ def EliminarConsejo(idCons):
 ##                               ABM DIFICULTAD                             ##
 ##############################################################################
 
-@app.route('/administrador', methods = ['GET', 'POST'])
+@app.route('/admin/usuarios', methods = ['GET', 'POST'])
 @login_required
 def ListadoAdmin():
         form = CrearAdmin()
@@ -922,7 +939,7 @@ def ListadoAdmin():
                                         form = form)
 
 
-@app.route('/administrador/<idAdmin>/eliminar', methods = ['GET', 'POST'])
+@app.route('/admin/usuarios/<idAdmin>/eliminar', methods = ['GET', 'POST'])
 @login_required
 def EliminarAdmin(idAdmin):
         usuario = Usuario.find_by_id(idAdmin)
@@ -930,14 +947,6 @@ def EliminarAdmin(idAdmin):
         db.session.commit()
         
         return redirect(url_for('ListadoAdmin'))
-
-
-@app.route('/logout', methods = ['GET', 'POST'])
-@login_required
-def Logout():
-        logout_user()
-        session.pop('Administrador',None)
-        return redirect(url_for('Login'))
 
 
 
