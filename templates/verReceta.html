@@ -6,11 +6,6 @@
     <article class="post">
         
         <header>
-            <!-- 
-                <span class="image fit" style="width: 300px; margin-top: 0px; margin-left: 20px;">
-                    <img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" />
-                </span>
-            -->
             <div class="title">
                 <h2>
                     {% if favorito %} 
@@ -51,17 +46,19 @@
             <h3>Ingredientes</h3>
             <ul class="posts">
                 {% for ixr in receta.ingrediente %}
-                    <li>
-                        <article>
-                            <header>
-                                <h3><a href="single.html">{{ixr.ingredientes.descripcion}}</a></h3>
-                                <time class="published"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
-                            </header>
-                            <a href="#" class="image">
-                                <img style="width:64px; height:64px;" src="{{url_for('ObtenerImagen', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
-                            </a>
-                        </article>
-                    </li>
+                <li style="padding-top: 10px;
+                            margin-bottom: -10;
+                            margin-top: 10px;">
+                    <article>
+                        <header>
+                            <h3><a><b>{{ixr.ingredientes.descripcion}}</b></a></h3>
+                            <time class="published" style="margin-top: 5px;"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
+                        </header>
+                        <a href="#" class="image">
+                            <img style="width:35px; height:35px;" src="{{url_for('ObtenerImagen', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
+                        </a>
+                    </article>
+                </li>
                 {% endfor %}
             </ul>
         </section>

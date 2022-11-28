@@ -26,7 +26,8 @@
                         <tr>
                             <th scope="col">Título</th>
                             <th scope="col">Dificultad</th>
-                            
+                            <th scope="col"># Ingredientes</th>
+                            <th scope="col">Tiempo</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -36,8 +37,10 @@
                             <tr>
                                 <td> {{ receta.titulo}}</td>
                                 <td> {{ receta.dificultad.descripcion}}</td>
+                                <td> {{ receta.ingrediente|length}}</td>
+                                <td> {{ receta.tiempoPreparacion(receta.id)}}</td>
                                 <td>
-                                    <a href="#" class="icon solid fa-eye" style="color:lightseagreen"></a>
+                                    <a href="{{url_for('VerRecetaAdmin', idReceta = receta.id)}}" class="icon solid fa-eye" style="color:lightseagreen"></a>
                                     <a href="{{url_for('EditarReceta', idReceta = receta.id)}}" class="icon solid fa-pen-to-square" style="color:burlywood"></a>
                                     <a href="{{url_for('EliminarReceta',idReceta = receta.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
                                 </td>

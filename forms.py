@@ -47,15 +47,42 @@ class CambiarImagen(FlaskForm):
     imagenReceta = FileField('Imagen de la receta',validators=[FileAllowed(['jpg', 'png','jpeg'])])
     submit = SubmitField('Guardar')
 
-        
-class NuevaUnidad(FlaskForm):
-    nombreUnidad = StringField('Nombre de la unidad', validators=[DataRequired(), Length(min=2, max=50)])
+class CrearIngrediente(FlaskForm):
+    descripcionIngrediente = StringField('Nombre del ingrediente', validators=[DataRequired(), Length(min=2, max=50)])
+    imagenIngrediente = FileField('Imagen de la receta',validators=[FileAllowed(['jpg', 'png','jpeg'])])
+    submit = SubmitField('Agregar')
+
+    def validate_nombreIngrediente(self, nombreIngrediente):
+        ingrediente = Ingrediente.query.filter_by(descripcion = nombreIngrediente.data).first()
+        if ingrediente:
+            raise ValidationError('Ya existe ese ingrediente!')
+
+class CrearUnidad(FlaskForm):
+    descripcionUnidad = StringField('Nombre de la unidad', validators=[DataRequired(), Length(min=2, max=50)])
     submit = SubmitField('Agregar')
 
     def validate_nombreUnidad(self, nombreUnidad):
         unidad = Unidad.query.filter_by(descripcion = nombreUnidad.data).first()
         if unidad:
             raise ValidationError('Ya existe esa unidad!')
+
+class CrearDificultad(FlaskForm):
+    descripcionDificultad = StringField('Nombre nivel dificultad', validators=[DataRequired(), Length(min=2, max=50)])
+    submit = SubmitField('Agregar')
+
+    def validate_nombreDificultad(self, nombreDificultad):
+        dificultad = Dificultad.query.filter_by(descripcion = nombreDificultad.data).first()
+        if dificultad:
+            raise ValidationError('Ya existe esa unidad!')
+
+class CrearConsejo(FlaskForm):
+    tituloConsejo = StringField('Título del consejo', validators=[DataRequired(), Length(min=2, max=50)])
+    descripcionConsejo = TextAreaField('Descripcion detallada', validators=[DataRequired()])
+    submit = SubmitField('Agregar')
+
+class CrearAdmin(FlaskForm):
+    usuario = SelectField('Usuario',choices=[], coerce=int)
+    submit = SubmitField('Agregar')
 
 class SearchForm(FlaskForm):
     autocomp = StringField('Insert City', id='city_autocomplete')

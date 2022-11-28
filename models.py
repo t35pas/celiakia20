@@ -412,6 +412,14 @@ class Usuario(db.Model, UserMixin):
     def find_by_email(cls, mail):
         return cls.query.filter_by(email=mail).first()
 
+    @classmethod
+    def find_admin(cls):
+        return cls.query.filter_by(administrador=True).all()
+
+    @classmethod
+    def find_users(cls):
+        return cls.query.filter_by(administrador=False).all()
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
@@ -429,8 +437,10 @@ class ConsejosCeliakia(db.Model):
     descripcion = db.Column(db.Text(), nullable = False)
     id_autor = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = False)
 
-    def __init__(self, descripcion):
+    def __init__(self,titulo, descripcion, id_autor):
+        self.titulo = titulo
         self.descripcion = descripcion
+        self.id_autor = id_autor
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -441,6 +451,10 @@ class ConsejosCeliakia(db.Model):
             'titulo': self.titulo,
             'descripcion': self.descripcion
     }
+
+    @classmethod
+    def find_by_id(cls, idConsejo):
+        return cls.query.filter_by(id=idConsejo).first()
 
     def save_to_db(self):
         db.session.add(self)

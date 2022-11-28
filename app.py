@@ -31,8 +31,8 @@ bcrypt = Bcrypt(app) #Para encriptar las contrasenas
 loginManager = LoginManager(app) #Para manejar las sesiones de los administradores
 loginManager.login_view = 'Login'
 
-from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
+from models import ConsejosCeliakia,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from forms import CrearAdmin,CrearConsejo,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
 
 from authentication import auth
 
@@ -379,7 +379,10 @@ def Listado():
         return render_template('administrador/listado_recetas.html',
                                 recetas = recetas)
 
-#AMB RECETAS
+##############################################################################
+##                              ABM RECETAS                                 ##
+##############################################################################
+
 @app.route('/receta/crear/informacionGeneral', methods = ['GET', 'POST'])
 @login_required
 def InfoGeneral():
@@ -687,6 +690,247 @@ def EditarPasoReceta(idPaso):
                                         form = preparacion, 
                                         paso = paso,
                                         receta = receta)
+
+@app.route('/receta/<idReceta>/ver', methods = ['GET','POST'])
+@login_required
+def VerRecetaAdmin(idReceta):
+        receta = Receta.find_by_id(idReceta)
+        return render_template('administrador/ver_receta.html',
+                                        receta = receta)
+
+
+##############################################################################
+##                             ABM INGREDIENTES                             ##
+##############################################################################
+
+@app.route('/ingredientes/ABM', methods = ['GET', 'POST'])
+@login_required
+def ListadoIngredientes():
+        form = CrearIngrediente()
+
+        if form.validate_on_submit():
+                
+                descripcion = form.descripcionIngrediente.data
+                imagen = form.imagenIngrediente.data
+
+                if imagen: 
+                        nombreImagen = "ing_" + descripcion.replace(' ', '').lower()
+                        imagenIngrediente = guardar_imagen(nombreImagen,imagen)
+                        
+                        if imagenIngrediente:
+                                #si la imagen fue cargada con éxito
+                                nuevoIngrediente = Ingrediente(
+                                                        descripcion = descripcion,
+                                                        fecha_creacion = datetime.now(),
+                                                        fecha_modificacion = datetime.now(),
+                                                        nombre_imagen = imagenIngrediente,
+                                )
+                                #Guardamos en db
+                                Ingrediente.save_to_db(nuevoIngrediente)
+
+                                return redirect(url_for('ListadoIngredientes'))
+
+                        else:
+                                #No se guardo ok la imagen
+                                return redirect(url_for('ListadoIngredientes'))
+                else:
+                        #No se cargo imagen
+                        return redirect(url_for('ListadoIngredientes'))
+        else:
+                ingredientes = Ingrediente.query.all()
+                return render_template('administrador/listado_ingredientes.html',
+                                ingredientes = ingredientes,
+                                form = form)
+
+
+@app.route('/ingrediente/eliminar/<idIng>', methods = ['GET', 'POST'])
+@login_required
+def EliminarIngrediente(idIng):
+        ingrediente = Ingrediente.find_by_id(idIng)
+        if ingrediente.por_receta:
+                #Existe en una receta, no lo puedo eliminar
+                return redirect(url_for('ListadoIngredientes'))
+        else:
+                Ingrediente.delete_from_db(ingrediente)
+                #flash('Ingrediente eliminado correctamente de la receta!')
+                return redirect(url_for('ListadoIngredientes'))
+
+##############################################################################
+##                               ABM UNIDADES                               ##
+##############################################################################
+
+@app.route('/unidades', methods = ['GET', 'POST'])
+@login_required
+def ListadoUnidades():
+        form = CrearUnidad()
+
+        if form.validate_on_submit():
+                
+                descripcion = form.descripcionUnidad.data
+
+                nuevaUnidad = Unidad(descripcion = descripcion)
+                #Guardamos en db
+                Unidad.save_to_db(nuevaUnidad)
+
+                return redirect(url_for('ListadoUnidades'))
+
+        else:
+                unidades = Unidad.query.all()
+                return render_template('administrador/listado_unidades.html',
+                                        unidades = unidades,
+                                        form = form)
+
+
+@app.route('/unidad/eliminar/<idUni>', methods = ['GET', 'POST'])
+@login_required
+def EliminarUnidad(idUni):
+        
+        unidad = Unidad.find_by_id(idUni)
+        
+        if unidad.ingredientes:
+                return redirect(url_for('ListadoUnidades'))
+        else:        
+                Unidad.delete_from_db(unidad)
+                #flash('Unidad eliminada correctamente de la receta!')
+                return redirect(url_for('ListadoUnidades'))
+
+##############################################################################
+##                               ABM DIFICULTAD                             ##
+##############################################################################
+
+@app.route('/dificultad', methods = ['GET', 'POST'])
+@login_required
+def ListadoNivelDificultad():
+        form = CrearDificultad()
+
+        if form.validate_on_submit():
+                
+                descripcion = form.descripcionDificultad.data
+
+                nuevaDificultad = Dificultad(descripcion = descripcion)
+                #Guardamos en db
+                Dificultad.save_to_db(nuevaDificultad)
+
+                return redirect(url_for('ListadoNivelDificultad'))
+
+        else:
+                dificultad = Dificultad.query.all()
+                return render_template('administrador/listado_nivel_dificultad.html',
+                                        dificultades = dificultad,
+                                        form = form)
+
+
+@app.route('/dificultad/eliminar/<idDif>', methods = ['GET', 'POST'])
+@login_required
+def EliminarDificultad(idDif):
+        dificultad = Dificultad.find_by_id(idDif)
+        if dificultad.recetas:
+                #Esta asociado a una receta, no lo puedo eliminar
+                return redirect(url_for('ListadoNivelDificultad'))
+        else:
+                Dificultad.delete_from_db(dificultad)
+                #flash('Nivel de dificultad eliminado correctamente de la receta!')
+                return redirect(url_for('ListadoNivelDificultad'))
+
+
+##############################################################################
+##                               ABM CONSEJOS                               ##
+##############################################################################
+
+@app.route('/consejos', methods = ['GET', 'POST'])
+@login_required
+def ListadoConsejos():
+        form = CrearConsejo()
+
+        if form.validate_on_submit():
+                
+                titulo = form.tituloConsejo.data
+                descripcion = form.descripcionConsejo.data
+
+                nuevoConsejo = ConsejosCeliakia(
+                                                titulo = titulo,
+                                                descripcion = descripcion,
+                                                id_autor = current_user.id)
+                #Guardamos en db
+                ConsejosCeliakia.save_to_db(nuevoConsejo)
+
+                return redirect(url_for('ListadoConsejos'))
+
+        else:
+                consejos = ConsejosCeliakia.query.all()
+                return render_template('administrador/listado_consejos.html',
+                                        consejos = consejos,
+                                        form = form)
+
+@app.route('/consejo/<idCons>/editar', methods = ['GET', 'POST'])
+@login_required
+def EditarConsejo(idCons):
+        form = CrearConsejo()
+        consejo = ConsejosCeliakia.find_by_id(idCons)
+
+        if form.validate_on_submit():
+                
+                consejo.titulo = form.tituloConsejo.data
+                consejo.descripcion = form.descripcionConsejo.data
+
+                db.session.commit()
+
+                return redirect(url_for('ListadoConsejos'))
+
+        else:
+                form.tituloConsejo.data = consejo.titulo
+                form.descripcionConsejo.data = consejo.descripcion
+
+                consejos = ConsejosCeliakia.query.all()
+                return render_template('administrador/listado_consejos.html',
+                                        consejos = consejos,
+                                        form = form)
+
+@app.route('/consejo/<idCons>/eliminar', methods = ['GET', 'POST'])
+@login_required
+def EliminarConsejo(idCons):
+        consejo = ConsejosCeliakia.find_by_id(idCons)
+        ConsejosCeliakia.delete_from_db(consejo)
+        #flash('Nivel de dificultad eliminado correctamente de la receta!')
+        return redirect(url_for('ListadoConsejos'))
+
+##############################################################################
+##                               ABM DIFICULTAD                             ##
+##############################################################################
+
+@app.route('/administrador', methods = ['GET', 'POST'])
+@login_required
+def ListadoAdmin():
+        form = CrearAdmin()
+        form.usuario.choices = [(i.id, i.email) for i in Usuario.find_users()]
+
+        if form.validate_on_submit():
+                
+                nombreUsuario = form.usuario.data
+
+                usuario = Usuario.find_by_id(nombreUsuario)
+
+                usuario.administrador = True
+                db.session.commit()
+
+                return redirect(url_for('ListadoAdmin'))
+
+        else:
+                administradores = Usuario.find_admin()
+                return render_template('administrador/listado_administradores.html',
+                                        administradores = administradores,
+                                        form = form)
+
+
+@app.route('/administrador/<idAdmin>/eliminar', methods = ['GET', 'POST'])
+@login_required
+def EliminarAdmin(idAdmin):
+        usuario = Usuario.find_by_id(idAdmin)
+        usuario.administrador = False
+        db.session.commit()
+        
+        return redirect(url_for('ListadoAdmin'))
+
 
 @app.route('/logout', methods = ['GET', 'POST'])
 @login_required

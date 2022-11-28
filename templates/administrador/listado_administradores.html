@@ -1,0 +1,80 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>
+                <a>Listado de Administradores</a>
+            </h2>
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('PaginaInicioAdmin')}}" class="button fit">Volver</a></li>
+            </ul>
+        </div>
+    </header>
+                            
+    <div>
+        <section>  
+            <div class="row">
+                <div class="col-6 col-12-medium">
+                    <h5 style="margin-bottom:40px;"><b>Nuevo Administrador</b></h5>
+                    <form id="formNuevoIngrediente" method="POST" action="{{url_for('ListadoAdmin')}}" enctype="multipart/form-data">
+                        <div class="row gtr-uniform">
+                            {{ form.hidden_tag() }}
+                            {{ form.csrf_token }}
+                            <div class="col-8 col-12-medium">
+                                {% if form.usuario.errors %}                    
+                                    {{ form.usuario() }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.usuario.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                </div>
+                                {% else %}    
+                                    {{ form.usuario(placeholder="email")}}
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                {{ form.submit(type="submit", value="Agregar") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div  class="col-6 col-12-medium">
+                    <div class="table-wrapper">
+                        <div class="dataTable" style="width:96%;">
+                            <table id="table_listadoRecetas" class="table table-striped" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Nombre y Apellido</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                    
+                                <tbody>
+                                    {% for admin in administradores %}
+                                        <tr>
+                                            <td> {{ admin.email}}</td>
+                                            <td> {{ admin.nombre}} {{ admin.apelido}}</td>
+                                            <td>
+                                                <a href="{{url_for('EliminarAdmin',idAdmin=admin.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</article>
+
+{% endblock %}

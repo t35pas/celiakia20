@@ -1,0 +1,79 @@
+{% extends 'administrador/admin_layout.html' %}
+
+{% block contentLayoutMain %}
+
+<article class="post">
+    <header>
+        <div class="title">
+            <h2>
+                <a>Listado de Unidades</a>
+            </h2>
+        </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('PaginaInicioAdmin')}}" class="button fit">Volver</a></li>
+            </ul>
+        </div>
+    </header>
+                            
+    <div>
+        <section>  
+            <div class="row">
+                <div class="col-6 col-12-medium">
+                    <h5 style="margin-bottom:40px;"><b>Nueva Unidad</b></h5>
+                    <form id="formNuevoIngrediente" method="POST" action="{{url_for('ListadoUnidades')}}" enctype="multipart/form-data">
+                        <div class="row gtr-uniform">
+                            {{ form.hidden_tag() }}
+                            {{ form.csrf_token }}
+                            <div class="col-8 col-12-medium">
+                                {% if form.descripcionUnidad.errors %}                    
+                                    {{ form.descripcionUnidad() }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.descripcionUnidad.errors %}
+                                            <span>{{ error }}</span> 
+                                        {% endfor %}
+                                </div>
+                                {% else %}    
+                                    {{ form.descripcionUnidad(placeholder="Unidad")}}
+                                {% endif %}
+                            </div>
+                            <div>
+                                {{ form.submit() }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div  class="col-6 col-12-medium">
+                    <div class="table-wrapper">
+                        <div class="dataTable" style="width:96%;">
+                            <table id="table_listadoRecetas" class="table table-striped" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                    
+                                <tbody>
+                                    {% for unidad in unidades %}
+                                        <tr>
+                                            <td> {{ unidad.id}}</td>
+                                            <td> {{ unidad.descripcion}}</td>
+                                            <td>
+                                                <a href="{{url_for('EliminarUnidad',idUni=unidad.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</article>
+
+{% endblock %}
