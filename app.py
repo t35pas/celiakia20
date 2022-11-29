@@ -17,10 +17,10 @@ from flask_sqlalchemy import SQLAlchemy, Pagination
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
-
+UPLOAD_FOLDER = os.path.join('static', 'imagenes')
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-UPLOAD_FOLDER = '/app/static/imagenes/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
 ROWS_PER_PAGE = 5
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -67,7 +67,7 @@ def guardar_imagen(nombre, imagen):
                 nombreImagen = nombre + extension
                 print("Nombre imagen con la extension",nombreImagen)
                 filename = secure_filename(nombreImagen)
-                imagen.save(UPLOAD_FOLDER + filename)
+                imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return filename
 
 def renombrar_imagen(nombreActual, nombreNuevo):
@@ -296,7 +296,7 @@ def MundoCeliakia():
 
 @app.route('/ObtenerImagen/<nombre>')
 def ObtenerImagen(nombre):
-        return send_from_directory(UPLOAD_FOLDER, nombre)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], nombre)
 
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
 @login_required
