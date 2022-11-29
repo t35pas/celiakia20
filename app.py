@@ -558,7 +558,7 @@ def EditarImagenReceta(idReceta):
                 #Obtengo el nombre de la imagen (esto no se modifica aca)
                 nombreImagen = receta.nombre_imagen
                 #Elimino el archivo con ese nombre
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'],nombreImagen))
+                #os.remove(os.path.join(app.config['UPLOAD_FOLDER'],nombreImagen))
                 #Cargo el nuevo archivo 
                 imagen = cambiarImagen.imagenReceta.data
                 guardar_imagen(nombreImagen,imagen)
