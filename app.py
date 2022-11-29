@@ -556,7 +556,7 @@ def EditarImagenReceta(idReceta):
         
         if cambiarImagen.validate_on_submit():
                 #Obtengo el nombre de la imagen (esto no se modifica aca)
-                nombreImagen = "rec_" + receta.tituloReceta.data.replace(' ', '').lower()
+                nombreImagen = "rec_" + receta.titulo.replace(' ', '').lower()
                 #Elimino el archivo con ese nombre
                 #os.remove(os.path.join(app.config['UPLOAD_FOLDER'],nombreImagen))
                 #Cargo el nuevo archivo 
