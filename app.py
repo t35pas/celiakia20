@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = './imagenes'
+app.config['UPLOAD_FOLDER'] = '/app/static/imagenes/'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
 ROWS_PER_PAGE = 5
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
