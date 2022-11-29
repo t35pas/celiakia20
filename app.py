@@ -561,7 +561,9 @@ def EditarImagenReceta(idReceta):
                 #os.remove(os.path.join(app.config['UPLOAD_FOLDER'],nombreImagen))
                 #Cargo el nuevo archivo 
                 imagen = cambiarImagen.imagenReceta.data
-                guardar_imagen(nombreImagen,imagen)
+                nombreImagen = guardar_imagen(nombreImagen,imagen)
+                receta.nombre_imagen = nombreImagen
+                db.session.commit()
                 return redirect(url_for('EditarReceta', idReceta = idReceta))
 
         return render_template('administrador/editar_imagen_receta.html', 
