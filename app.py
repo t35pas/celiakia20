@@ -167,9 +167,13 @@ def Logout():
 def PaginaInicio():
         #Cada vez que ingreso a busqueda por receta elimino session de ingredientes
         session.pop('ingredientes_id',None)
-        return render_template('index.html', 
-                                form = BuscarPorReceta(),
-                                random = selectRandom())
+        if Receta.query.all():
+                return render_template('index.html', 
+                                        form = BuscarPorReceta(),
+                                        random = selectRandom())
+        else:
+                return render_template('index.html', 
+                                        form = BuscarPorReceta())
 
 #Ver receta por nombre
 @app.route('/recetasNombre/buscar' , methods = ['GET', 'POST'])
