@@ -44,6 +44,7 @@ Mako = "==1.1.4"
 pyrebase4 = "*"
 numpy = "*"
 authentication = "*"
+flask-reuploaded = "*"
 
 [requires]
 python_version = "3.7"

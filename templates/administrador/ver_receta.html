@@ -32,7 +32,7 @@
                 </ul>
             </div>
         </header>
-        <span class="image featured"><img src="{{url_for('ObtenerImagen', nombre=receta.nombre_imagen)}}" alt="" /></span>
+        <span class="image featured"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>
         <p>{{ receta.descripcion }}</p>
        
         <!-- Mini Posts -->
@@ -49,7 +49,7 @@
                                 <time class="published" style="margin-top: 5px;"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
                             </header>
                             <a href="#" class="image">
-                                <img style="width:35px; height:35px;" src="{{url_for('ObtenerImagen', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
+                                <img style="width:35px; height:35px;" src="{{url_for('ImagenIngrediente', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
                             </a>
                         </article>
                     </li>

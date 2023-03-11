@@ -16,25 +16,34 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 from flask_sqlalchemy import SQLAlchemy, Pagination
 from werkzeug.security import generate_password_hash
 
+
+from flask_uploads import UploadSet, IMAGES, configure_uploads
+
 app = Flask(__name__)
-UPLOAD_FOLDER = os.path.join('static', 'imagenes')
+
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
 ROWS_PER_PAGE = 5
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 db = SQLAlchemy(app)
 api = Api(app)
-
-bcrypt = Bcrypt(app) #Para encriptar las contrasenas
 loginManager = LoginManager(app) #Para manejar las sesiones
 loginManager.login_view = 'Login'
 
 from models import ConsejosCeliakia,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 from forms import CrearAdmin,CrearConsejo,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
-
 from authentication import auth
+
+#CONFIGURACION IMAGENES DE LA APLICACION
+UPLOAD_RECETAS = os.path.join('static', 'recetas')
+UPLOAD_INGREDIENTES = os.path.join('static', 'ingredientes')
+app.config["UPLOADED_IMGRECETAS_DEST"] = UPLOAD_RECETAS
+app.config["UPLOADED_IMGINGREDIENTES_DEST"] = UPLOAD_INGREDIENTES
+imgrecetas = UploadSet('imgrecetas', IMAGES, app.config["UPLOADED_IMGRECETAS_DEST"])
+imgingredientes = UploadSet('imgingredientes',IMAGES, app.config["UPLOADED_IMGINGREDIENTES_DEST"])
+configure_uploads(app, imgrecetas)
+configure_uploads(app, imgingredientes)
 
 
 @app.route('/gen/<passw>', methods = ['GET', 'POST'])
@@ -60,14 +69,14 @@ def extension_permitida(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def guardar_imagen(nombre, imagen):
+def guardar_imagen(imagen, nombre):
         if extension_permitida(imagen.filename):
                 _, extension = os.path.splitext(imagen.filename)
                 print("La extension de mi imagen es:",extension)
                 nombreImagen = nombre + extension
                 print("Nombre imagen con la extension",nombreImagen)
                 filename = secure_filename(nombreImagen)
-                imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                imgrecetas.save(imagen,None,filename)
         return filename
 
 def renombrar_imagen(nombreActual, nombreNuevo):
@@ -298,9 +307,13 @@ def ResultadoBusqueda():
 def MundoCeliakia():
     return render_template('indexMundoCeliakia.html')
 
-@app.route('/ObtenerImagen/<nombre>')
-def ObtenerImagen(nombre):
-        return send_from_directory(app.config['UPLOAD_FOLDER'], nombre)
+@app.route('/Receta/Imagen/<nombre>')
+def ImagenReceta(nombre):
+        return send_from_directory(app.config["UPLOADED_IMGRECETAS_DEST"], nombre)
+
+@app.route('/Ingrediente/Imagen/<nombre>')
+def ImagenIngrediente(nombre):
+        return send_from_directory(app.config["UPLOADED_IMGRECETAS_DEST"], nombre)
 
 @app.route('/verReceta/<idReceta>', methods = ['GET', 'POST'])
 @login_required
@@ -416,9 +429,7 @@ def InfoGeneral():
                 if receta.imagenReceta: 
                         nombreImagen = "rec_" + receta.tituloReceta.data.replace(' ', '').lower()
                         imagen = receta.imagenReceta.data
-                        print("nombre imagen antes de gudardarla:",nombreImagen)
-                        imagenReceta = guardar_imagen(nombreImagen,imagen)
-                        
+                        imagenReceta = guardar_imagen(imagen,nombreImagen)                        
                         
                         if imagenReceta:
                                 #si la imagen fue cargada con éxito
@@ -559,13 +570,14 @@ def EditarImagenReceta(idReceta):
         receta = Receta.find_by_id(idReceta)
         
         if cambiarImagen.validate_on_submit():
-                #Obtengo el nombre de la imagen (esto no se modifica aca)
-                nombreImagen = "rec_" + receta.titulo.replace(' ', '').lower()
-                #Elimino el archivo con ese nombre
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'],receta.nombre_imagen))
+                #Elimino el archivo anterior
+                os.remove(os.path.join(app.config["UPLOADED_IMGRECETAS_DEST"],receta.nombre_imagen))
                 #Cargo el nuevo archivo 
                 imagen = cambiarImagen.imagenReceta.data
-                nombreImagen = guardar_imagen(nombreImagen,imagen)
+                #Obtengo el nombre de la imagen basado en el titulo de la receta
+                nombreImagen = "rec_" + receta.titulo.replace(' ', '').lower()
+                #Nueva imagen, puede variar la extension por eso vuelvo a guardarlo en la BD
+                nombreImagen = guardar_imagen(imagen, nombreImagen)
                 receta.nombre_imagen = nombreImagen
                 db.session.commit()
                 return redirect(url_for('EditarReceta', idReceta = idReceta))

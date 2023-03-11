@@ -81,7 +81,7 @@
 							<section>
 								{% if session.administrador %}
 									<ul class="actions stacked">
-										<li><a href="{{url_for('PaginaInicio')}}" class="button large fit">Usuario</a></li>
+										<li><a href="{{url_for('PaginaInicio')}}" class="button large fit">MODO USUARIO</a></li>
 									</ul>
 								{% endif %}
 
@@ -100,7 +100,6 @@
 	</body>
 
 		<!-- Scripts -->
-
 		<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
@@ -110,6 +109,7 @@
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 	    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 		<script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
+		<!-- Tablas ListadoIngredientes, ListadoRecetas, ListadoPreparacion -->
 		<script>
 			$(document).ready(function () {
 			  $('#table_listadoRecetas').DataTable({
@@ -179,5 +179,5 @@
 			  });
 
 			});
-		  </script>
+		</script>
 </html>
