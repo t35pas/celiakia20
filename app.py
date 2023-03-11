@@ -139,6 +139,7 @@ def Login():
                         iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
                         
                         usuario = Usuario.query.filter_by(email=email).first()
+                        
                         print(usuario)
                         login_user(usuario)
 
