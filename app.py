@@ -131,16 +131,10 @@ def Login():
         if form.validate_on_submit():
                 passw = form.contrasenia.data
                 email = form.nombreUsuario.data.strip()
-                print(passw)
-                print(email)
-                prueba = Usuario.query.all()
-                print(prueba)
+
                 try:
                         iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
-                        
-                        usuario = Usuario.query.filter_by(email=email).first()
-                        
-                        print(usuario)
+                        usuario = Usuario.find_by_email(email)
                         login_user(usuario)
 
                         if usuario.administrador == True:
