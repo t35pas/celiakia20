@@ -131,10 +131,15 @@ def Login():
         if form.validate_on_submit():
                 passw = form.contrasenia.data
                 email = form.nombreUsuario.data.strip()
-
+                print(passw)
+                print(email)
+                prueba = Usuario.query.all()
+                print(prueba)
                 try:
                         iniciar_sesion = auth.sign_in_with_email_and_password(email,passw)
-                        usuario = Usuario.find_by_email(email)
+                        
+                        usuario = Usuario.query.filter_by(email=email).first()
+                        print(usuario)
                         login_user(usuario)
 
                         if usuario.administrador == True:
@@ -144,7 +149,7 @@ def Login():
                         else: 
                                 return redirect(url_for('PaginaInicio'))
                 except:
-                        return flash('Inicio incorrecto')
+                        return render_template('login.html', form = form)
         return render_template('login.html', form = form)
 
 @app.route('/logout', methods = ['GET', 'POST'])

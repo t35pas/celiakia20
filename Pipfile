@@ -43,6 +43,7 @@ Flask-WTF = "==0.14.3"
 Mako = "==1.1.4"
 pyrebase4 = "*"
 numpy = "*"
+authentication = "*"
 
 [requires]
 python_version = "3.7"
