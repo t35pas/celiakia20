@@ -21,7 +21,7 @@ class Form_InformacionGeneral(FlaskForm):
 class Form_Preparacion(FlaskForm):
     ordenPaso = IntegerField('Orden', validators=[DataRequired()])
     descripcionPaso = TextAreaField('Descripción',validators=[DataRequired()])
-    tiempoPaso = IntegerField('Tiempo aprox del paso', validators=[DataRequired()])
+    tiempoPaso = IntegerField('Tiempo de preparación del paso', validators=[DataRequired()])
     submit = SubmitField('Guardar')
 
 class Form_Ingrediente(FlaskForm):
@@ -31,6 +31,7 @@ class Form_Ingrediente(FlaskForm):
     submit = SubmitField('Agregar')
 
 class Form_Editar_Ing_Por_Receta(FlaskForm):
+    descripcionIngrediente = StringField('Ingrediente',validators=[DataRequired()])
     unidad = SelectField('Unidad',choices=[],coerce=int)
     cantidad = StringField('Cantidad',validators=[DataRequired()])
     submit = SubmitField('Guardar')

@@ -9,7 +9,7 @@
             </div>
             <div class="meta">
                 <ul class="actions fit">
-                    <li><a href="{{url_for('IngPorReceta')}}" class="button fit">Volver</a></li>
+                    <li><a href="{{url_for('IngPorReceta',idReceta = receta.id)}}" class="button fit">Volver</a></li>
                 </ul>
             </div>
         </header>
@@ -32,12 +32,14 @@
                 <div class="row gtr-uniform">
                     {{ form.hidden_tag() }}
                     {{ form.csrf_token }}
-                    
-                    <div>
-                        <h5>{{ ixr.ingredientes.descripcion }}</h5>
+
+                    <div class="col-3 col-12-xsmall">
+                        {{ form.descripcionIngrediente.label() }}
+                        {{ form.descripcionIngrediente(readonly=true)}}
                     </div>
 
                     <div class="col-3 col-12-xsmall">
+                        {{ form.unidad.label() }}
                         {% if form.unidad.errors %}                            
                             {{ form.unidad() }}
                             <div>
@@ -51,6 +53,7 @@
                     </div>
 
                     <div class="col-3 col-12-xsmall">
+                        {{ form.cantidad.label() }}
                         {% if form.cantidad.errors %}                
                             {{ form.cantidad() }}
                             <div>
@@ -63,8 +66,10 @@
                         {% endif %}
                     </div>                            
 
-                    <div class="col-3 col-12-xsmall">
-                        {{ form.submit(type="submit") }}
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li>{{ form.submit(type="submit", value="Guardar") }}</li>
+                        </ul>
                     </div>
                 </div>
             </form>
