@@ -1,183 +1,295 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 
 <html>
-	<head>
-		<title>CeliaKIA</title>
-		<meta  charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
-		<script src="https://kit.fontawesome.com/228c5469ee.js" crossorigin="anonymous"></script>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-    </head>
+  <head>
+    <title>CeliaKIA</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assets/css/main.css') }}"
+    />
+    <script
+      src="https://kit.fontawesome.com/228c5469ee.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css"
+    />
+  </head>
 
-	<body class="cambio-bg">
+  <body class="cambio-bg">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <header id="header">
+        <!--<img class="logo" src="../static/kiasf2.png"/>-->
+        <h1><a href="#"> CeliaKIA</a></h1>
+        <nav class="links">
+          <ul>
+            <li><a href="#">ADMINISTRADOR</a></li>
+          </ul>
+        </nav>
+        <nav class="main">
+          <ul>
+            <li class="menu">
+              <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+      <!-- Menu -->
+      <section id="menu">
+        <!-- Links -->
+        <section>
+          <ul class="links">
+            <li>
+              <a
+                href="{{url_for('PaginaInicioAdmin')}}"
+                style="text-decoration: none"
+              >
+                <h3>Home</h3>
+              </a>
+            </li>
+            <li>
+              <a href="{{url_for('Listado')}}" style="text-decoration: none">
+                <h3>Recetas</h3>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{{url_for('ListadoIngredientes')}}"
+                style="text-decoration: none"
+              >
+                <h3>Ingredientes</h3>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{{url_for('ListadoUnidades')}}"
+                style="text-decoration: none"
+              >
+                <h3>Unidades</h3>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{{url_for('ListadoNivelDificultad')}}"
+                style="text-decoration: none"
+              >
+                <h3>Dificultad</h3>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{{url_for('ListadoConsejos')}}"
+                style="text-decoration: none"
+              >
+                <h3>Consejos</h3>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{{url_for('ListadoAdmin')}}"
+                style="text-decoration: none"
+              >
+                <h3>Administradores</h3>
+              </a>
+            </li>
+          </ul>
+        </section>
 
-				<header id="header">
-					<!--<img class="logo" src="../static/kiasf2.png"/>-->
-						<h1><a href="#"> CeliaKIA</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="#">ADMINISTRADOR</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-								<li class="menu">
-									<a class="fa-bars" href="#menu">Menu</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
+        <!-- Actions -->
+        <section>
+          {% if session.administrador %}
+          <ul class="actions stacked">
+            <li>
+              <a href="{{url_for('PaginaInicio')}}" class="button large fit"
+                >MODO USUARIO</a
+              >
+            </li>
+          </ul>
+          {% endif %}
 
-				<!-- Menu -->
-					<section id="menu">
+          <ul class="actions stacked">
+            <li>
+              <a href="{{url_for('Logout')}}" class="button large fit">Salir</a>
+            </li>
+          </ul>
+        </section>
+      </section>
+      <div id="main">
+        <!-- Main-->
+        {% block contentLayoutMain %} {% endblock %}
+      </div>
+    </div>
+  </body>
 
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="{{url_for('PaginaInicioAdmin')}}" style="text-decoration:none">
-											<h3>Home</h3>
-										</a>
-									</li>
-									<li>
-										<a href="{{url_for('Listado')}}" style="text-decoration:none">
-											<h3>Recetas</h3>
-										</a>
-									</li>									
-									<li>
-										<a href="{{url_for('ListadoIngredientes')}}" style="text-decoration:none">
-											<h3>Ingredientes</h3>
-										</a>
-									</li>
-									<li>
-										<a href="{{url_for('ListadoUnidades')}}" style="text-decoration:none">
-											<h3>Unidades</h3>
-										</a>
-									</li>
-									<li>
-										<a href="{{url_for('ListadoNivelDificultad')}}" style="text-decoration:none">
-											<h3>Dificultad</h3>
-										</a>
-									</li>
-									<li>
-										<a href="{{url_for('ListadoConsejos')}}" style="text-decoration:none">
-											<h3>Consejos</h3>
-										</a>
-									</li>
-									<li>
-										<a href="{{url_for('ListadoAdmin')}}" style="text-decoration:none">
-											<h3>Administradores</h3>
-										</a>
-									</li>
-								</ul>
-							</section>
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script
+    type="text/javascript"
+    charset="utf8"
+    src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"
+  ></script>
+  <script
+    type="text/javascript"
+    charset="utf8"
+    src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"
+  ></script>
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
+  <!-- Tablas ListadoIngredientes, ListadoRecetas, ListadoPreparacion -->
+  <script>
+    $(document).ready(function () {
+      $("#table_listadoRecetas").DataTable({
+        autoWidth: true,
+        language: {
+          lengthMenu: "Mostrar _MENU_ Recetas por página",
+          zeroRecords: "¡No existen recetas!",
+          info: "Mostrando página _PAGE_ de _PAGES_",
+          infoEmpty: "No se encontraron resultados",
+          search: "Buscar:",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior",
+          },
+          infoFiltered: "(Filtrado de _MAX_ recetas totales)",
+        },
+      });
+    });
 
-						<!-- Actions -->
-							<section>
-								{% if session.administrador %}
-									<ul class="actions stacked">
-										<li><a href="{{url_for('PaginaInicio')}}" class="button large fit">MODO USUARIO</a></li>
-									</ul>
-								{% endif %}
+    $(document).ready(function () {
+      $("#table_listadoIngredientes").DataTable({
+        autoWidth: true,
+        language: {
+          lengthMenu: "Mostrar _MENU_ Ingredientes por página",
+          zeroRecords: "No Existe ese ingrediente",
+          info: "Mostrando página _PAGE_ de _PAGES_",
+          infoEmpty: "No se encontraron resultados",
+          search: "Buscar:",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior",
+          },
+          infoFiltered: "(Filtrado de _MAX_ ingredientes totales)",
+        },
+      });
+    });
 
-								<ul class="actions stacked">
-									<li><a href="{{url_for('Logout')}}" class="button large fit">Salir</a></li>
-								</ul>
-							</section>
-					</section>
-					<div id="main">
-						<!-- Main-->
-						{% block contentLayoutMain %}   {% endblock %}
-					</div>
+    $(document).ready(function () {
+      $("#table_listadoPreparacion").DataTable({
+        autoWidth: true,
+        language: {
+          lengthMenu: "Mostrar _MENU_ Pasos por página",
+          zeroRecords: "No existe ese paso",
+          info: "Mostrando página _PAGE_ de _PAGES_",
+          infoEmpty: "No se encontraron resultados",
+          search: "Buscar:",
+          loadingRecords: "Cargando...",
+          processing: "Procesando...",
+          paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior",
+          },
+          infoFiltered: "(Filtrado de _MAX_ pasos totales)",
+        },
+      });
+    });
+  </script>
+  <script>
+    var count = 0;
+    var id_anterior = 1;
 
-			</div>
+    function Reproducir_Pausar(id) {
+      var id_text = "paso" + id;
+      var boton_reproducir_pausar = document.getElementById(id);
 
-	</body>
+      if (
+        boton_reproducir_pausar.innerHTML ==
+        '<a class="icon solid fa-pause"></a>'
+      )
+        boton_reproducir_pausar.innerHTML =
+          '<a class="icon solid fa-play"></a>';
+      else
+        boton_reproducir_pausar.innerHTML =
+          '<a class="icon solid fa-pause"></a>';
 
-		<!-- Scripts -->
-		<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
-		<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
-		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-	    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
-		<script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
-		<!-- Tablas ListadoIngredientes, ListadoRecetas, ListadoPreparacion -->
-		<script>
-			$(document).ready(function () {
-			  $('#table_listadoRecetas').DataTable({
-				"autoWidth": true,
-				"language": {
-					"lengthMenu": "Mostrar _MENU_ Recetas por página",
-					"zeroRecords": "¡No existen recetas!",
-					"info": "Mostrando página _PAGE_ de _PAGES_",
-					"infoEmpty": "No se encontraron resultados",
-					"search":"Buscar:",
-					"loadingRecords": "Cargando...",
-					"processing":"Procesando...",
-					"paginate": {
-						"first":"Primero",
-						"last":"Último",
-						"next":"Siguiente",
-						"previous":"Anterior"
-					},
-					"infoFiltered": "(Filtrado de _MAX_ recetas totales)"
-				}
-			  });
+      if (id_anterior != id) {
+        responsiveVoice.cancel();
+        var boton_reproducir_pausar_anterior =
+          document.getElementById(id_anterior);
+        boton_reproducir_pausar_anterior.innerHTML =
+          '<a class="icon solid fa-play"></a>';
+      }
 
-			});
+      var text = document.getElementById(id_text);
 
-			$(document).ready(function () {
-			  $('#table_listadoIngredientes').DataTable({
-				"autoWidth": true,
-				"language": {
-					"lengthMenu": "Mostrar _MENU_ Ingredientes por página",
-					"zeroRecords": "No Existe ese ingrediente",
-					"info": "Mostrando página _PAGE_ de _PAGES_",
-					"infoEmpty": "No se encontraron resultados",
-					"search":"Buscar:",
-					"loadingRecords": "Cargando...",
-					"processing":"Procesando...",
-					"paginate": {
-						"first":"Primero",
-						"last":"Último",
-						"next":"Siguiente",
-						"previous":"Anterior"
-					},
-					"infoFiltered": "(Filtrado de _MAX_ ingredientes totales)"
-				}
-			  });
+      if (responsiveVoice.isPlaying()) {
+        if (count == 1) {
+          count = 0;
+          responsiveVoice.resume();
+        } else {
+          responsiveVoice.pause();
+          count = 1;
+        }
+      } else {
+        responsiveVoice.speak(
+          text.textContent,
+          "Spanish Latin American Female",
+          {
+            onend: function () {
+              boton_reproducir_pausar.innerHTML =
+                '<a class="icon solid fa-play"></a>';
+            },
+          }
+        );
+      }
 
-			});
+      id_anterior = id;
+    }
 
-			$(document).ready(function () {
-			  $('#table_listadoPreparacion').DataTable({
-				"autoWidth": true,
-				"language": {
-					"lengthMenu": "Mostrar _MENU_ Pasos por página",
-					"zeroRecords": "No existe ese paso",
-					"info": "Mostrando página _PAGE_ de _PAGES_",
-					"infoEmpty": "No se encontraron resultados",
-					"search":"Buscar:",
-					"loadingRecords": "Cargando...",
-					"processing":"Procesando...",
-					"paginate": {
-						"first":"Primero",
-						"last":"Último",
-						"next":"Siguiente",
-						"previous":"Anterior"
-					},
-					"infoFiltered": "(Filtrado de _MAX_ pasos totales)"
-				}
-			  });
+    function Stop(idStop) {
+      id_reproducir_pausar = idStop.substring(4, idStop.length);
 
-			});
-		</script>
+      responsiveVoice.cancel();
+
+      var boton_reproducir_pausar =
+        document.getElementById(id_reproducir_pausar);
+      boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
+
+      if (id_anterior != id_reproducir_pausar) {
+        responsiveVoice.cancel();
+        var boton_reproducir_pausar_anterior =
+          document.getElementById(id_anterior);
+        boton_reproducir_pausar_anterior.innerHTML =
+          '<a class="icon solid fa-play"></a>';
+      }
+    }
+  </script>
 </html>
