@@ -7,6 +7,11 @@
         <div class="title" style="margin-bottom: 0px;">
             <h2><a href="#">Editar receta - {{ receta.titulo }}</a></h2>
         </div>
+        <div class="meta">
+            <ul class="actions fit">
+                <li><a href="{{url_for('EditarReceta',idReceta = receta.id)}}" class="button fit">Volver</a></li>
+            </ul>
+        </div>
     </header>
     <div>
         <h3>Información general</h3>

@@ -46,15 +46,6 @@ configure_uploads(app, imgrecetas)
 configure_uploads(app, imgingredientes)
 
 
-@app.route('/gen/<passw>', methods = ['GET', 'POST'])
-def create_user(passw):
-    """Creates user with encrypted password"""
-    # Hash the user password
-    hashpass = generate_password_hash(
-        passw,
-        method='pbkdf2:sha256'
-    )
-    return hashpass
 
 def formato_fecha(date):
     months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
@@ -69,28 +60,34 @@ def extension_permitida(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def guardar_imagen(imagen, nombre):
+def guardar_imagen(imagen, nombre,type):
         if extension_permitida(imagen.filename):
                 _, extension = os.path.splitext(imagen.filename)
                 print("La extension de mi imagen es:",extension)
                 nombreImagen = nombre + extension
                 print("Nombre imagen con la extension",nombreImagen)
                 filename = secure_filename(nombreImagen)
-                imgrecetas.save(imagen,None,filename)
+                if type == 'R':
+                        imgrecetas.save(imagen,None,filename)
+                elif type == 'I':
+                        imgingredientes.save(imagen,None,filename)
         return filename
 
-def renombrar_imagen(nombreActual, nombreNuevo):
-        imgActual =os.path.join(app.config['UPLOAD_FOLDER'], nombreActual)
-        print("PathA:",imgActual)
-
-        _, extension = os.path.splitext(nombreActual)
-
-        nombreImagen = nombreNuevo + extension
-        imgNueva =os.path.join(app.config['UPLOAD_FOLDER'], nombreImagen)
-        print("PathB:",imgNueva)
-
+def renombrar_imagen(nombreActual, nombreNuevo, type):
+        
+        if type == 'R':
+                imgActual =os.path.join(app.config["UPLOADED_IMGRECETAS_DEST"] , nombreActual)  
+                _, extension = os.path.splitext(nombreActual)
+                nombreImagen = nombreNuevo + extension
+                imgNueva =os.path.join(app.config["UPLOADED_IMGRECETAS_DEST"], nombreImagen)              
+        elif type == 'I':
+                imgActual =os.path.join(app.config["UPLOADED_IMGINGREDIENTES_DEST"] , nombreActual)
+                _, extension = os.path.splitext(nombreActual)
+                nombreImagen = nombreNuevo + extension
+                imgNueva =os.path.join(app.config["UPLOADED_IMGINGREDIENTES_DEST"], nombreImagen)
+        
         os.rename(imgActual, imgNueva)
-
+        
         return nombreImagen
 
 def selectRandom():
@@ -430,7 +427,7 @@ def InfoGeneral():
                 if receta.imagenReceta: 
                         nombreImagen = "rec_" + receta.tituloReceta.data.replace(' ', '').lower()
                         imagen = receta.imagenReceta.data
-                        imagenReceta = guardar_imagen(imagen,nombreImagen)                        
+                        imagenReceta = guardar_imagen(imagen,nombreImagen,'R')                        
                         
                         if imagenReceta:
                                 #si la imagen fue cargada con éxito
@@ -660,7 +657,7 @@ def EditarImagenReceta(idReceta):
                 #Obtengo el nombre de la imagen basado en el titulo de la receta
                 nombreImagen = "rec_" + receta.titulo.replace(' ', '').lower()
                 #Nueva imagen, puede variar la extension por eso vuelvo a guardarlo en la BD
-                nombreImagen = guardar_imagen(imagen, nombreImagen)
+                nombreImagen = guardar_imagen(imagen, nombreImagen,'R')
                 receta.nombre_imagen = nombreImagen
                 db.session.commit()
                 return redirect(url_for('EditarReceta', idReceta = idReceta))
@@ -684,20 +681,18 @@ def EditarInfoGeneral(idReceta):
                 if receta.titulo != infoGeneral.tituloReceta.data:
                         
                         #Tengo que renombrar el archivo primero
-                        nombreImagenNuevo = renombrar_imagen(receta.nombre_imagen, nombreImagen)
- 
+                        nombreImagenNuevo = renombrar_imagen(receta.nombre_imagen, nombreImagen,'R')
                         receta.titulo = infoGeneral.tituloReceta.data, 
-                        receta.fecha_modificacion = datetime.now(),
                         receta.nombre_imagen = nombreImagenNuevo,
-                        receta.id_dificultad = infoGeneral.dificultad.data,
-                        receta.descripcion = infoGeneral.descripcion.data
-
                         db.session.commit()
 
-                        return redirect(url_for('EditarReceta', idReceta = idReceta))
+                receta.fecha_modificacion = datetime.now(),
+                receta.id_dificultad = infoGeneral.dificultad.data,
+                receta.descripcion = infoGeneral.descripcion.data
 
-                else:
-                        return redirect(url_for('EditarReceta', idReceta = idReceta))
+                db.session.commit()
+                
+                return redirect(url_for('EditarReceta', idReceta = idReceta))
         else:
                 infoGeneral.tituloReceta.data = receta.titulo
                 infoGeneral.dificultad.data = receta.id_dificultad
@@ -751,7 +746,7 @@ def ListadoIngredientes():
 
                 if imagen: 
                         nombreImagen = "ing_" + descripcion.replace(' ', '').lower()
-                        imagenIngrediente = guardar_imagen(nombreImagen,imagen)
+                        imagenIngrediente = guardar_imagen(nombreImagen,imagen,'I')
                         
                         if imagenIngrediente:
                                 #si la imagen fue cargada con éxito
