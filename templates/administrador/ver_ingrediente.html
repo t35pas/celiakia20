@@ -1,0 +1,42 @@
+{% extends 'administrador/admin_layout.html' %} {% block contentLayoutMain %}
+<article class="post">
+  <header>
+    <div class="title">
+      <h2>
+        <a>Listado de Ingredientes</a>
+      </h2>
+    </div>
+    <div class="meta">
+      <ul class="actions fit">
+        <li>
+          <a href="{{url_for('ListadoIngredientes')}}" class="button fit"
+            >Volver</a
+          >
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Mini Posts -->
+  <section>
+    <ul class="posts">
+      <li style="padding-top: 10px">
+        <article>
+          <header>
+            <h5>
+              <a><b>{{ingrediente.descripcion}}</b></a>
+            </h5>
+          </header>
+          <a href="#" class="image">
+            <img
+              src="{{url_for('ImagenIngrediente', nombre=ingrediente.nombre_imagen)}}"
+              alt=""
+            />
+          </a>
+        </article>
+      </li>
+    </ul>
+  </section>
+</article>
+
+{% endblock %}
