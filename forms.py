@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField, Selec
 from wtforms.fields.core import BooleanField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
-from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario,ConsejosCeliakia
 
 class LoginForm(FlaskForm):
     nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=20)])

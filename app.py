@@ -956,11 +956,17 @@ def ListadoConsejos():
 
     if form.validate_on_submit():
 
-        titulo = form.tituloConsejo.data
+        tituloConsejo = form.tituloConsejo.data
         descripcion = form.descripcionConsejo.data
 
+        consejo = ConsejosCeliakia.query.filter_by(titulo = tituloConsejo).first()
+
+        if consejo: 
+            #error ya existe ese titulo
+            return redirect(url_for('ListadoConsejos'))
+        
         nuevoConsejo = ConsejosCeliakia(
-            titulo=titulo,
+            titulo=tituloConsejo,
             descripcion=descripcion,
             id_autor=current_user.id)
         # Guardamos en db
@@ -982,6 +988,13 @@ def EditarConsejo(idCons):
     consejo = ConsejosCeliakia.find_by_id(idCons)
 
     if form.validate_on_submit():
+
+        buscarConsejo = ConsejosCeliakia.query.filter_by(titulo = form.tituloConsejo.data).first()
+
+        if buscarConsejo: 
+            #error ya existe ese titulo
+            return redirect(url_for('ListadoConsejos'))
+        
 
         consejo.titulo = form.tituloConsejo.data
         consejo.descripcion = form.descripcionConsejo.data

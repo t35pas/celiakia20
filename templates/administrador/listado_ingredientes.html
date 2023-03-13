@@ -76,6 +76,7 @@
                                             <td> {{ ingrediente.id}}</td>
                                             <td> {{ ingrediente.descripcion}}</td>
                                             <td>
+                                                <a href="{{url_for('VerIngrediente', idIng = ingrediente.id)}}" class="icon solid fa-eye" style="color:lightseagreen"></a>
                                                 <a href="{{url_for('EliminarIngrediente',idIng=ingrediente.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
                                             </td>
                                         </tr>
