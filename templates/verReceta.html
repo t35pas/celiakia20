@@ -78,12 +78,10 @@
                         {% for paso in receta.preparacion %}
                             <tr>
                                 <td lang="es"> {{ paso.orden_del_paso}}</td>
-                                <td id="reproducirDescripcion" lang="es"> {{ paso.descripcion}}</td>
+                                <td id="paso{{paso.orden_del_paso}}" lang="es"> {{ paso.descripcion}}</td>
                                 <td>
-                                    <a onclick="responsiveVoice.speak('{{paso.descripcion}}','Spanish Latin American Female');"
-                                    class="icon solid fa-play" value="Reproducir">
-                                    </a>  
-                                    
+                                    <button id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
+                                    <button id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -94,5 +92,6 @@
     </article>
 
 {% endblock %}
+
 
 

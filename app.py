@@ -746,7 +746,7 @@ def ListadoIngredientes():
 
                 if imagen: 
                         nombreImagen = "ing_" + descripcion.replace(' ', '').lower()
-                        imagenIngrediente = guardar_imagen(nombreImagen,imagen,'I')
+                        imagenIngrediente = guardar_imagen(imagen,nombreImagen,'I')
                         
                         if imagenIngrediente:
                                 #si la imagen fue cargada con éxito
