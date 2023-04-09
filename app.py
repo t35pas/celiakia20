@@ -980,7 +980,7 @@ def ListadoConsejos():
                                consejos=consejos,
                                form=form)
 
-
+ 
 @app.route('/admin/consejo/<idCons>/editar', methods=['GET', 'POST'])
 @login_required
 def EditarConsejo(idCons):
