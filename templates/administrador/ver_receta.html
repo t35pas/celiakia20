@@ -9,8 +9,8 @@
             </ul>
     </article>
     <article class="post">
-        
         <header>
+            
             <div class="title">
                 <h2> <a>{{receta.titulo}}</a></h2>
                 <ul class="stats">
@@ -30,58 +30,65 @@
                         </a>
                     </li>
                 </ul>
+                <br>
+                <p>{{ receta.descripcion }}.</p>
+            </div>
+            <div class="meta">
+                <div class="col-12"><span class="image fit"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span></div>
             </div>
         </header>
-        <p><span class="image left"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>{{ receta.descripcion }}.</p>
-       
-        <!-- Mini Posts -->
-        <section>
-            <h5 style="margin-top: 40px;"><a><b>Ingredientes</b></a></h5>
-            <ul class="posts">
-                {% for ixr in receta.ingrediente %}
-                    <li style="padding-top: 10px;
-                               margin-bottom: -10;
-                               margin-top: 10px;">
-                        <article>
-                            <header>
-                                <h3><a><b>{{ixr.ingredientes.descripcion}}</b></a></h3>
-                                <time class="published" style="margin-top: 5px;"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
-                            </header>
-                            <a href="#" class="image">
-                                <img style="width:35px; height:35px;" src="{{url_for('ImagenIngrediente', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
-                            </a>
-                        </article>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
-        <section>
-            <h5 style="margin-top: 40px; margin-bottom: 20px;"><a><b>Paso a paso</b></a></h5>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Orden</th>
-                            <th>Descripción</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    
-                    <tbody>
-                        {% for paso in receta.preparacion %}
+        
+
+        <div>
+            <!-- Mini Posts -->
+            <section>
+                <h5 style="margin-top: 40px;"><a><b>Ingredientes</b></a></h5>
+                <ul class="posts">
+                    {% for ixr in receta.ingrediente %}
+                        <li style="padding-top: 10px;
+                                margin-bottom: -10;
+                                margin-top: 10px;">
+                            <article>
+                                <header>
+                                    <h3><a><b>{{ixr.ingredientes.descripcion}}</b></a></h3>
+                                    <time class="published" style="margin-top: 5px;"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
+                                </header>
+                                <a href="#" class="image">
+                                    <img style="width:35px; height:35px;" src="{{url_for('ImagenIngrediente', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
+                                </a>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section>
+                <h5 style="margin-top: 40px; margin-bottom: 20px;"><a><b>Paso a paso</b></a></h5>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
                             <tr>
-                                <td lang="es"> {{ paso.orden_del_paso}}</td>
-                                <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"> {{ paso.descripcion}}</td>
-                                <td style="max-width: 50px; overflow: hidden;">
-                                    <button class="button small" id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
-                                    <button class="button small" id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
-                                </td>
+                                <th>Orden</th>
+                                <th>Descripción</th>
+                                <th></th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                        </thead>
+                        
+                        <tbody>
+                            {% for paso in receta.preparacion %}
+                                <tr>
+                                    <td lang="es"> {{ paso.orden_del_paso}}</td>
+                                    <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"> {{ paso.descripcion}}</td>
+                                    <td style="max-width: 50px; overflow: hidden;">
+                                        <button class="button small" id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
+                                        <button class="button small" id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </article>
 
 {% endblock %}
