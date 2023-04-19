@@ -32,8 +32,7 @@
                 </ul>
             </div>
         </header>
-        <span class="image featured"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>
-        <p>{{ receta.descripcion }}</p>
+        <p><span class="image left"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>{{ receta.descripcion }}.</p>
        
         <!-- Mini Posts -->
         <section>
@@ -72,7 +71,7 @@
                         {% for paso in receta.preparacion %}
                             <tr>
                                 <td lang="es"> {{ paso.orden_del_paso}}</td>
-                                <td id="paso{{paso.orden_del_paso}}" lang="es"> {{ paso.descripcion}}</td>
+                                <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"> {{ paso.descripcion}}</td>
                                 <td style="max-width: 50px; overflow: hidden;">
                                     <button class="button small" id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
                                     <button class="button small" id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
