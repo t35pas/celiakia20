@@ -47,7 +47,7 @@
                     {% for ixr in receta.ingrediente %}
                         <li style="padding-top: 10px;
                                 margin-bottom: -10;
-                                margin-top: 10px;">
+                                margin-top: 8px;">
                             <article>
                                 <header>
                                     <h3><a><b>{{ixr.ingredientes.descripcion}}</b></a></h3>
@@ -67,8 +67,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Orden</th>
-                                <th>Descripción</th>
+                                <th>ORDEN</th>
+                                <th>DESCRIPCIÓN</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -76,8 +76,8 @@
                         <tbody>
                             {% for paso in receta.preparacion %}
                                 <tr>
-                                    <td lang="es"> {{ paso.orden_del_paso}}</td>
-                                    <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"> {{ paso.descripcion}}</td>
+                                    <td lang="es"><h6>{{ paso.orden_del_paso}}</h6></td>
+                                    <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"><h7>{{ paso.descripcion}}</h7></td>
                                     <td style="max-width: 50px; overflow: hidden;">
                                         <button class="button small" id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
                                         <button class="button small" id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
