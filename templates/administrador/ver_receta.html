@@ -62,32 +62,29 @@
                 </ul>
             </section>
             <section>
-                <h5 style="margin-top: 40px; margin-bottom: 20px;"><a><b>Paso a paso</b></a></h5>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ORDEN</th>
-                                <th>DESCRIPCIÓN</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                            {% for paso in receta.preparacion %}
-                                <tr>
-                                    <td lang="es"><h6>{{ paso.orden_del_paso}}</h6></td>
-                                    <td id="paso{{paso.orden_del_paso}}" lang="es" style="max-width: 300px;"><h7>{{ paso.descripcion}}</h7></td>
-                                    <td style="max-width: 50px; overflow: hidden;">
-                                        <button class="button small" id="{{paso.orden_del_paso}}" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
-                                        <button class="button small" id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <h5 style="margin-top: 40px;"><a><b>Paso a Paso</b></a></h5>
+                <ul class="posts">
+                    {% for paso in receta.preparacion %}
+                        <li style="padding-top: 10px;
+                                margin-bottom: -10;
+                                margin-top: 8px;">
+                            <article>
+                                <header>
+                                    <h3>
+                                        <button class="button small" id="{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
+                                        <button class="button small" id="stop{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
+                                    </h3>
+                                    <time class="published" style="margin-top: 5px;"> {{ paso.descripcion}} </time>
+                                </header>
+                                <a href="#" class="image">
+                                    <h2>{{paso.orden_del_paso}}</h2>
+                                </a>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
             </section>
+           
         </div>
     </article>
 
