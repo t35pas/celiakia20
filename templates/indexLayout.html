@@ -254,6 +254,19 @@
 
 				}
 			}
+
+			function Leer_Escuchar(totalPasos){
+				for (i=1;i<=totalPasos;i++) {
+					var id_escuchar = "escuchar" + i;
+					var x = document.getElementById(id_escuchar);
+					console.log(x)
+					if (x.style.display === "none") {
+						x.style.display = "block";
+					} else {
+						x.style.display = "none";
+					}
+				}  
+				}
 			</script>
 			<script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
 		</body>
