@@ -63,6 +63,7 @@
             </section>
             <section>
                 <h5 style="margin-top: 40px;"><a><b>Paso a Paso</b></a></h5>
+                <button class="button small" id="{{receta.preparacion|length}}" onclick="Leer_Escuchar(this.id)">Activar Sonido</button>
                 <ul class="posts">
                     {% for paso in receta.preparacion %}
                         <li style="padding-top: 10px;
@@ -70,7 +71,7 @@
                                 margin-top: 8px;">
                             <article>
                                 <header>
-                                    <h3>
+                                    <h3 id="escuchar{{paso.orden_del_paso}}" style="display: none;">
                                         <button id="{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
                                         <button id="stop{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
                                     </h3>
