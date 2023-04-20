@@ -71,10 +71,10 @@
                             <article>
                                 <header>
                                     <h3>
-                                        <button class="button small" id="{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
-                                        <button class="button small" id="stop{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
+                                        <button id="{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
+                                        <button id="stop{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
                                     </h3>
-                                    <time class="published" style="margin-top: 5px;"> {{ paso.descripcion}} </time>
+                                    <time id="paso{{paso.orden_del_paso}}" class="published" style="margin-top: 5px;"> {{ paso.descripcion}} </time>
                                 </header>
                                 <a href="#" class="image">
                                     <h2>{{paso.orden_del_paso}}</h2>
