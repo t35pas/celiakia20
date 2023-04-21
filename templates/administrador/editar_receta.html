@@ -86,8 +86,9 @@
                         <article>
                             <header>
                                 <h3 id="escuchar{{paso.orden_del_paso}}" style="display: none;">
-                                    <button id="{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Reproducir_Pausar(this.id)"><a class="icon solid fa-play"></a></button>
-                                    <button id="stop{{paso.orden_del_paso}}" style="height: 0; width: 0;" onclick="Stop(this.id)"><a class="icon solid fa-stop"></a></button>
+                                    <a id="play{{paso.orden_del_paso}}" style="display: block;" onclick="Play(this.id)" class="icon solid fa-play"></a>
+                                    <a id="pausa{{paso.orden_del_paso}}" style="display: none;" onclick="Pausa(this.id)" class="icon solid fa-pause"></a>
+                                    <a id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)" class="icon solid fa-stop"></a>
                                 </h3>
                                 <time id="paso{{paso.orden_del_paso}}" class="published" style="margin-top: 5px;"> {{ paso.descripcion}} </time>
                             </header>

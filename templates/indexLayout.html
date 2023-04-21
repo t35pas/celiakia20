@@ -196,77 +196,88 @@
 			</script>
 			<script>
 
-			var count = 0;
-			var id_anterior = 1
+			var id_anterior = 1;
 
-			function Reproducir_Pausar(id) {
-				var id_text = 'paso'+id
-				var boton_reproducir_pausar = document.getElementById(id);
-				var text = document.getElementById(id_text);
-				
-				if (id_anterior != id) {
-					responsiveVoice.cancel();
-					console.log("cancelo rvoice")
-					var boton_reproducir_pausar_anterior = document.getElementById(id_anterior);
-					boton_reproducir_pausar_anterior.innerHTML = '<a class="icon solid fa-play"></a>';
+			function Pausa(id_pausa){
+			let id_play = 'play' + id_pausa.substring(5)
+			var x = document.getElementById(id_pausa);
+			var y = document.getElementById(id_play);
+			if (responsiveVoice.isPlaying()) {
+				responsiveVoice.pause();
+				if (y.style.display === "none") {
+					y.style.display = "block";
+					x.style.display = "none";
+				} 
+			}
+			}
 
+			function Play(id_play){
+			var id_pausa = 'pausa'+ id_play.substring(4)
+			var id_text = 'paso'+ id_play.substring(4)
+					var text = document.getElementById(id_text);
+			var x = document.getElementById(id_pausa);
+			var y = document.getElementById(id_play);
+
+			if (id_anterior != id_play.substring(4)){
+				responsiveVoice.cancel()
+				var x_anterior = document.getElementById('pausa'+ id_anterior);
+				var y_anterior = document.getElementById('play'+ id_anterior);
+				if (y_anterior.style.display === "none") {
+					y_anterior.style.display = "block";
+					x_anterior.style.display = "none";
 				}
+			}
 
-				if (responsiveVoice.isPlaying()) {
-					if (count == 1) {
-						count = 0;
-						responsiveVoice.resume();
-						if (boton_reproducir_pausar.innerHTML == '<a class="icon solid fa-play"></a>') 
-							boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
-						else boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
-					}
-					else {
-						responsiveVoice.pause();
-						if (boton_reproducir_pausar.innerHTML == '<a class="icon solid fa-pause"></a>') 
-							boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
-						else boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
-						count = 1;
-					}
+			if (responsiveVoice.isPlaying()) {
+				responsiveVoice.resume();
 				} else {
-						responsiveVoice.speak(text.textContent, 
-											'Spanish Latin American Female',
-											{onend: function() {boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>'}}
-						);
-						boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
+				responsiveVoice.speak(text.textContent, 'Spanish Latin American Female');
+				} 
+				if (x.style.display === "none") {
+					x.style.display = "block";
+					y.style.display = "none";
 				}
+			
+				id_anterior = id_play.substring(4);
+			}
 
-				id_anterior = id
+			function Stop(id_stop) {
+			var id_play = 'play' + id_stop.substring(4)
+			var id_pausa = 'pausa' + id_stop.substring(4)
+			
+			var x = document.getElementById(id_pausa);
+			var y = document.getElementById(id_play);
+			
+			if (id_anterior != id_stop.substring(4)) {
+				responsiveVoice.cancel();
+				var x_anterior = document.getElementById('pausa'+ id_anterior);
+				var y_anterior = document.getElementById('play'+ id_anterior);
+				if (y_anterior.style.display === "none") {
+					y_anterior.style.display = "block";
+					x_anterior.style.display = "none";
+				}
+			}
+
+			responsiveVoice.cancel();
+			if (y.style.display === "none") {
+				y.style.display = "block";
+				x.style.display = "none";
+			} 
 			}
 			
-
-			function Stop(idStop) {
-				id_reproducir_pausar = idStop.substring(4,idStop.length)
-				
-				responsiveVoice.cancel();
-
-				var boton_reproducir_pausar = document.getElementById(id_reproducir_pausar);
-				boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
-
-				if (id_anterior != id_reproducir_pausar) {
-					responsiveVoice.cancel();
-					var boton_reproducir_pausar_anterior = document.getElementById(id_anterior);
-					boton_reproducir_pausar_anterior.innerHTML = '<a class="icon solid fa-play"></a>';
-
-				}
-			}
-
 			function Leer_Escuchar(totalPasos){
-				let total = totalPasos.substring(13);
-				for (i=1;i<=total;i++) {
-					var id_escuchar = "escuchar" + i;
-					var x = document.getElementById(id_escuchar);
-					if (x.style.display === "none") {
-						x.style.display = "block";
-					} else {
-						x.style.display = "none";
-					}
-				}  
+			let total = totalPasos.substring(13);
+			for (i=1;i<=total;i++) {
+				var id_escuchar = "escuchar" + i;
+				var x = document.getElementById(id_escuchar);
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+			}  
 			}
+
 			</script>
 			<script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
 		</body>
