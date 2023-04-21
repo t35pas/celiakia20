@@ -293,7 +293,8 @@
     }
 
     function Leer_Escuchar(totalPasos){
-      for (i=1;i<=totalPasos;i++) {
+      let total = totalPasos.substring(13);
+      for (i=1;i<=total;i++) {
         var id_escuchar = "escuchar" + i;
         var x = document.getElementById(id_escuchar);
         console.log(x)
