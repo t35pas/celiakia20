@@ -1,272 +1,61 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>El Mundo de la Celiquía</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-	</head>
-	<body class="homepage is-preload">
-		<div id="page-wrapper">
+{% extends 'indexVistaBusqueda.html' %}
 
-			<!-- Header -->
-				<header id="header">
-					<div class="logo container">
-						<div>
-							<div id="container">
-								<img src="{{url_for('static', filename='kiasf2.png')}}" class="kia_avatar">
-							</div>
-							<h1><a href="index" id="logo">CeliaKIA</a></h1>
-						</div>
-					</div>
-				</header>
-
-			<!-- MENÚ Superior -->
-				<nav id="nav"> 
-					<div >
-						<img class="img-fluid" src="static/kiasf.png" width="40" height="36" alt="Logo" />
-					</div>
-					<ul>
-						<li class="Current"><a href="index">¿Y ahora qué como?</a></li>
-						<li>
-							<a href="indexMundoCeliakia">El mundo de la CeliaKIA</a>
-							<ul>
-								<li><a href="indexMundoCeliakia.html#TitQueEs">¿Qué es la Celiaquía?</a></li>
-								<li><a href="indexMundoCeliakia.html#TitSintomas">Sintomas</a></li>
-								<li><a href="indexMundoCeliakia.html#TitComoSeDiagnostica">¿Cómo se diagnostica?</a></li>
-								<li><a href="indexMundoCeliakia.html#TitContaminacionCruzada">Contaminación cruzada</a></li>
-								<li><a href="indexMundoCeliakia.html#TitComoVivirSinGluten">¿Cómo vivir sin glúten en el hogar?</a></li>
-								<li><a href="indexMundoCeliakia.html#TitComoLlevarUnaDieta">¿Cómo llevar una dieta libre de glúten?</a></li>
-								<li><a href="indexMundoCeliakia.html#TitComoOrdenarElRefrigerador">¿Cómo ordenar el refrigerador?</a></li>
-								<li><a href="indexMundoCeliakia.html#TitComerFueraDeCasa">Comer fuera de casa</a></li>
-								<li><a href="indexMundoCeliakia.html#TitQueHacerSiTengoUnHijoCeliaco">¿Qué hacer si tengo un hijo celíaco?</a></li>
-							</ul>
-						</li>
-						<li><a href="left-sidebar.html">Favoritos</a></li>
-						<li><a href="right-sidebar.html">KIA</a></li>
-						<li><a href="{{url_for('Logout')}}">Salir</a></li>
-					</ul>
-				</nav>
-
-			<!-- Main -->
-				<section id="main">
-					<div class="container">
-						<div class="row gtr-200">
-							<div class="col-12">
-
-								<!-- Highlight -->
-									<section class="box highlight">
-										<ul class="special">
-											<li><a href="#" class="icon solid fa-search"><span class="label">Magnifier</span></a></li>
-											<li><a href="#" class="icon solid fa-tablet-alt"><span class="label">Tablet</span></a></li>
-											<li><a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a></li>
-											<li><a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a></li>
-										</ul>
-										<header>
-											<h2>El Mundo de la Celiaquía</h2>
-										</header>
-									</section>
-
-							</div>
-							<div class="col-12">
-
-								<!-- Features -->
-									<section class="box features">
-										<h2 class="major"><span>Información general de la enfermedad Celíaca.</span></h2>
-										<div>
-											<div class="row">
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic01.jpg" alt="" /></a>
-														<h3><a id="TitQueEs" >¿Qué es la Celiaquía?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic02.jpg" alt="" /></a>
-														<h3><a id="TitSintomas">Síntomas de la Celiaquía</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic03.jpg" alt="" /></a>
-														<h3><a id="TitComoSeDiagnostica">¿Cómo se diagnostica la Celiaquía?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id=TitContaminacionCruzada>Contaminación cruzada</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id="TitComoVivirSinGluten">¿Cómo vivir sin glúten en el hogar?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id="TitComoLlevarUnaDieta">¿Cómo llevar una dieta libre de glúten?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id="TitComoOrdenarElRefrigerador">¿Cómo ordenar el refrigerador?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id="TitComerFueraDeCasa">Comer fuera de casa</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-
-												<div class="col-3 col-6-medium col-12-small">
-
-													<!-- Feature -->
-													<section class="box feature">
-														<a href="#" class="image featured"><img src="static/images/pic04.jpg" alt="" /></a>
-														<h3><a id="TitQueHacerSiTengoUnHijoCeliaco">¿Qué hacer si tengo un hijo celíaco?</a></h3>
-														<p>
-															Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-															lectus dolore. Praesent semper mod quis eget sed etiam eu ante risus.
-														</p>
-													</section>
-
-												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><a href="#" class="button large">Búsqueda de Recetas</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</section>
-
-							</div>
-						</div>
-					</div>
-				</section>
-
-			<!-- Footer -->
-				<footer id="footer">
-					<div class="container">
-						<div class="row gtr-200">
-							<div class="col-12">
-
-								<!-- About -->
-									<section>
-										<h2 class="major"><span>What's this about?</span></h2>
-										<p>
-											This is <strong>TXT</strong>, yet another free responsive site template designed by
-											<a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>. It's released under the
-											<a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for
-											whatever you're working on (personal or commercial), just be sure to give us credit for the design.
-											That's basically it :)
-										</p>
-									</section>
-
-							</div>
-							<div class="col-12">
-
-								<!-- Contact -->
-									<section>
-										<h2 class="major"><span>Get in touch</span></h2>
-										<ul class="contact">
-											<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-											<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-											<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-											<li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-											<li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
-										</ul>
-									</section>
-
-							</div>
-						</div>
-
-						<!-- Copyright -->
-							<div id="copyright">
-								<ul class="menu">
-									<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-								</ul>
-							</div>
-
-					</div>
-				</footer>
-
+{% block contentMain %}
+	<article class="post">
+		<div class="title">
+			<h2 style="text-align:center;"><a href="#">Buscar por Receta</a></h2>
 		</div>
+		<form method="post" action="{{url_for('RecetasPorNombre')}}">
+			{{ form.hidden_tag() }}
+			{{ form.csrf_token }}
+			<div class="row gtr-uniform">
+				<div class="col-12">
+					{% if form.nombreReceta.errors %}                    
+						{{ form.nombreReceta() }}
+						<div>
+							{% for error in form.nombreReceta.errors %}
+								<span>{{ error }}</span> 
+							{% endfor %}
+						</div>
+					{% else %}    
+						{{ form.nombreReceta(type="text",placeholder="Nombre de la receta a buscar...") }}				
+					{% endif %}
+				</div>
+				<div class="col-12">
+					{{ form.submit(class="button fit") }}
+				</div>
+			</div>
+		</form>	
+	</article>
 
-		<!-- Scripts -->
-			<script src="static/assets/js/jquery.min.js"></script>
-			<script src="static/assets/js/jquery.dropotron.min.js"></script>
-			<script src="static/assets/js/jquery.scrolly.min.js"></script>
-			<script src="static/assets/js/browser.min.js"></script>
-			<script src="static/assets/js/breakpoints.min.js"></script>
-			<script src="static/assets/js/util.js"></script>
-			<script src="static/assets/js/main.js"></script>
-
-	</body>
-</html>
+	{% if random.all() %}
+		<section>
+			<h3>Recomendación del día</h3>
+			<div class="mini-posts">
+				{% for receta in random %}
+					<article class="mini-post">
+                        <header>
+                            <h2> 
+                                <a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a>
+                            </h2>
+                            {% if receta.dificultad.descripcion == 'Baja' %}
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightseagreen;margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% elif receta.dificultad.descripcion == 'Media' %}    
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:rgb(240, 216, 0);margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% else %}
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightsalmon;margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% endif %}
+                                </p>
+                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-clock" style="margin-bottom: 10px;"> {{ receta.tiempoPreparacion(receta.id)}} minutos</p>
+                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-bowl-food"> Ingredientes necesarios: {{ receta.ingrediente|length}}</p>
+                        </header>
+                        <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></a>
+                    </article> 
+				{% endfor %}
+			</div>
+		</section>
+	{% endif %}
+{% endblock %}
