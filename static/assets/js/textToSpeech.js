@@ -1,16 +1,13 @@
-// Initialize new SpeechSynthesisUtterance object
-let speech = new SpeechSynthesisUtterance();
+let speech = window.speechSynthesis;
 
 // Set Speech Language
 speech.lang = "es";
 
 
 var id_anterior = 1;
-var speaking = 0;
 
 speech.onend = function () {
-    speaking = 0;
-    window.speechSynthesis.cancel();
+    speech.cancel();
     console.log(speaking);
     console.log(id_anterior);
     var x = document.getElementById('pausa'+ id_anterior);
@@ -30,7 +27,7 @@ function Play(id_play){
     var y = document.getElementById(id_play);
 
     if (id_anterior != id_play.substring(4)){
-        window.speechSynthesis.cancel();
+        speech.cancel();
         var x_anterior = document.getElementById('pausa'+ id_anterior);
         var y_anterior = document.getElementById('play'+ id_anterior);
         if (y_anterior.style.display === "none") {
@@ -39,15 +36,12 @@ function Play(id_play){
         }
     }
     console.log(speech.speaking)
-    if (speaking == 1) {
-        window.speechSynthesis.resume();
-        speech.text = text.textContent;
-        console.log(speech)
-        window.speechSynthesis.speak(speech);
+    if (speech.speaking) {
+        speech.resume();
       } else {      
-        speech.text = text.textContent;
         console.log(speech)
-        window.speechSynthesis.speak(speech);
+        let texto = new SpeechSynthesisUtterance(text.textContent)
+        speech.speak(texto);
         speaking = 1
       } 
       if (x.style.display === "none") {
@@ -63,7 +57,7 @@ function Pausa(id_pausa){
     let id_play = 'play' + id_pausa.substring(5)
     var x = document.getElementById(id_pausa);
     var y = document.getElementById(id_play);
-    window.speechSynthesis.pause();
+    speech.pause();
     if (y.style.display === "none") {
         y.style.display = "block";
         x.style.display = "none";
@@ -78,7 +72,7 @@ function Stop(id_stop) {
     var y = document.getElementById(id_play);
     
     if (id_anterior != id_stop.substring(4)) {
-        window.speechSynthesis.cancel();
+        speech.cancel();
         speaking = 0;
         var x_anterior = document.getElementById('pausa'+ id_anterior);
         var y_anterior = document.getElementById('play'+ id_anterior);
@@ -87,7 +81,7 @@ function Stop(id_stop) {
             x_anterior.style.display = "none";
         }
     }
-    window.speechSynthesis.cancel();
+    speech.cancel();
     speaking = 0;
     if (y.style.display === "none") {
         y.style.display = "block";
