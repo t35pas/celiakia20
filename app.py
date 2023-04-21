@@ -357,12 +357,6 @@ def ResultadoBusqueda():
                            recetas=recetas)
 
 
-@app.route('/MundoCeliakia', methods=['GET', 'POST'])
-@login_required
-def MundoCeliakia():
-    return render_template('indexMundoCeliakia.html')
-
-
 @app.route('/Receta/Imagen/<nombre>')
 def ImagenReceta(nombre):
     return send_from_directory(app.config["UPLOADED_IMGRECETAS_DEST"], nombre)
