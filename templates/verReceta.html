@@ -19,27 +19,30 @@
                     {% endif %}    
                     <a>{{receta.titulo}}</a> 
                 </h2>
-                    <ul class="stats">
-                        <li>
-                            <a>
-                                Dificultad {{receta.dificultad.descripcion}}
-                            </a>      
-                        </li>
-                        <li>
-                            <a class="icon solid fa-clock"> 
-                                {{ receta.tiempoPreparacion(receta.id)}} minutos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="icon solid fa-bowl-food"> 
-                                Ingredientes necesarios: {{ receta.ingrediente|length}}
-                            </a>
-                        </li>
-                    </ul>
+                <ul class="stats">
+                    <li>
+                        <a>
+                            Dificultad {{receta.dificultad.descripcion}}
+                        </a>      
+                    </li>
+                    <li>
+                        <a class="icon solid fa-clock"> 
+                            {{ receta.tiempoPreparacion(receta.id)}} minutos
+                        </a>
+                    </li>
+                    <li>
+                        <a class="icon solid fa-bowl-food"> 
+                            Ingredientes necesarios: {{ receta.ingrediente|length}}
+                        </a>
+                    </li>
+                </ul>
+                <br>
+                <p>{{ receta.descripcion }}.</p>
+            </div>
+            <div class="meta">
+                <div class="col-12"><span class="image fit"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span></div>
             </div>
         </header>
-        <span class="image featured"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>
-        <p>{{ receta.descripcion }}</p>
        
         <!-- Mini Posts -->
         <section>
