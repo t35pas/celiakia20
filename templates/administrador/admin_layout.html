@@ -230,12 +230,10 @@
       let id_play = 'play' + id_pausa.substring(5)
       var x = document.getElementById(id_pausa);
       var y = document.getElementById(id_play);
-      if (responsiveVoice.isPlaying()) {
-        responsiveVoice.pause();
-        if (y.style.display === "none") {
-            y.style.display = "block";
-            x.style.display = "none";
-        } 
+      responsiveVoice.pause();
+      if (y.style.display === "none") {
+          y.style.display = "block";
+          x.style.display = "none";
       }
     }
 
