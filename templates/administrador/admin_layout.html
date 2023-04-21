@@ -141,6 +141,7 @@
   <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/datatable.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/js/textToSpeech.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -154,91 +155,5 @@
     charset="utf8"
     src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"
   ></script>
-  <script src="https://code.responsivevoice.org/responsivevoice.js?key=ylsXV674"></script>
-  <!-- Tablas ListadoIngredientes, ListadoRecetas, ListadoPreparacion -->
-  <script>
-    $(document).ready(function () {
-      $("#table_listadoRecetas").DataTable({
-        autoWidth: true,
-        language: {
-          lengthMenu: "Mostrar _MENU_ Recetas por página",
-          zeroRecords: "¡No existen recetas!",
-          info: "Mostrando página _PAGE_ de _PAGES_",
-          infoEmpty: "No se encontraron resultados",
-          search: "Buscar:",
-          loadingRecords: "Cargando...",
-          processing: "Procesando...",
-          paginate: {
-            first: "Primero",
-            last: "Último",
-            next: "Siguiente",
-            previous: "Anterior",
-          },
-          infoFiltered: "(Filtrado de _MAX_ recetas totales)",
-        },
-      });
-    });
 
-    $(document).ready(function () {
-      $("#table_listadoIngredientes").DataTable({
-        autoWidth: true,
-        language: {
-          lengthMenu: "Mostrar _MENU_ Ingredientes por página",
-          zeroRecords: "No Existe ese ingrediente",
-          info: "Mostrando página _PAGE_ de _PAGES_",
-          infoEmpty: "No se encontraron resultados",
-          search: "Buscar:",
-          loadingRecords: "Cargando...",
-          processing: "Procesando...",
-          paginate: {
-            first: "Primero",
-            last: "Último",
-            next: "Siguiente",
-            previous: "Anterior",
-          },
-          infoFiltered: "(Filtrado de _MAX_ ingredientes totales)",
-        },
-      });
-    });
-
-    $(document).ready(function () {
-      $("#table_listadoPreparacion").DataTable({
-        autoWidth: true,
-        language: {
-          lengthMenu: "Mostrar _MENU_ Pasos por página",
-          zeroRecords: "No existe ese paso",
-          info: "Mostrando página _PAGE_ de _PAGES_",
-          infoEmpty: "No se encontraron resultados",
-          search: "Buscar:",
-          loadingRecords: "Cargando...",
-          processing: "Procesando...",
-          paginate: {
-            first: "Primero",
-            last: "Último",
-            next: "Siguiente",
-            previous: "Anterior",
-          },
-          infoFiltered: "(Filtrado de _MAX_ pasos totales)",
-        },
-      });
-    });
-  </script>
-  <script>
-
-    function Leer_Escuchar(totalPasos){
-      let total = totalPasos.substring(13);
-      for (i=1;i<=total;i++) {
-        var id_escuchar = "escuchar" + i;
-        var x = document.getElementById(id_escuchar);
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-      }  
-    }
-
-
-
-</script>
 </html>

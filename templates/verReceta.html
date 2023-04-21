@@ -75,14 +75,14 @@
                             margin-top: 8px;">
                         <article>
                             <header>
-                                <h3 id="escuchar{{paso.orden_del_paso}}" style="display: none;">
-                                    <a id="play{{paso.orden_del_paso}}" style="display: block;" onclick="Play(this.id)" class="icon solid fa-play"></a>
-                                    <a id="pausa{{paso.orden_del_paso}}" style="display: none;" onclick="Pausa(this.id)" class="icon solid fa-pause"></a>
-                                    <a id="stop{{paso.orden_del_paso}}" onclick="Stop(this.id)" class="icon solid fa-stop"></a>
-                                </h3>
                                 <time id="paso{{paso.orden_del_paso}}" class="published" style="margin-top: 5px;"> {{ paso.descripcion}} </time>
+                                <ul class="icons" id="escuchar{{paso.orden_del_paso}}" style="display: none;">
+                                    <li><a id="play{{paso.orden_del_paso}}" style="display: block;" onclick="Play(this.id)"><b class="icon solid fa-play"></b></a></li>
+                                    <li style= "margin-top: 0px; padding-top: 0px;"></li>
+                                    <li style= "margin-top: 0px; padding-top: 0px;"><a id="stop{{paso.orden_del_paso}}" style="display: block;" onclick="Stop(this.id)"><b class="icon solid fa-stop"></b></a></li>
+                                </ul>
                             </header>
-                            <a href="#" class="image">
+                            <a href="" class="image">
                                 <h2>{{paso.orden_del_paso}}</h2>
                             </a>
                         </article>
