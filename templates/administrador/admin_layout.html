@@ -227,52 +227,43 @@
     var id_anterior = 1;
 
     function Reproducir_Pausar(id) {
-      var id_text = "paso" + id;
-      var boton_reproducir_pausar = document.getElementById(id);
+				var id_text = 'paso'+id
+				var boton_reproducir_pausar = document.getElementById(id);
+				var text = document.getElementById(id_text);
+				
+				if (id_anterior != id) {
+					responsiveVoice.cancel();
+					console.log("cancelo rvoice")
+					var boton_reproducir_pausar_anterior = document.getElementById(id_anterior);
+					boton_reproducir_pausar_anterior.innerHTML = '<a class="icon solid fa-play"></a>';
 
-      if (
-        boton_reproducir_pausar.innerHTML ==
-        '<a class="icon solid fa-pause"></a>'
-      )
-        boton_reproducir_pausar.innerHTML =
-          '<a class="icon solid fa-play"></a>';
-      else
-        boton_reproducir_pausar.innerHTML =
-          '<a class="icon solid fa-pause"></a>';
+				}
 
-      if (id_anterior != id) {
-        responsiveVoice.cancel();
-        var boton_reproducir_pausar_anterior =
-          document.getElementById(id_anterior);
-        boton_reproducir_pausar_anterior.innerHTML =
-          '<a class="icon solid fa-play"></a>';
-      }
+				if (responsiveVoice.isPlaying()) {
+					if (count == 1) {
+						count = 0;
+						responsiveVoice.resume();
+						if (boton_reproducir_pausar.innerHTML == '<a class="icon solid fa-play"></a>') 
+							boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
+						else boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
+					}
+					else {
+						responsiveVoice.pause();
+						if (boton_reproducir_pausar.innerHTML == '<a class="icon solid fa-pause"></a>') 
+							boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
+						else boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>';
+						count = 1;
+					}
+				} else {
+						responsiveVoice.speak(text.textContent, 
+											'Spanish Latin American Female',
+											{onend: function() {boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-play"></a>'}}
+						);
+						boton_reproducir_pausar.innerHTML = '<a class="icon solid fa-pause"></a>';
+				}
 
-      var text = document.getElementById(id_text);
-
-      if (responsiveVoice.isPlaying()) {
-        if (count == 1) {
-          count = 0;
-          responsiveVoice.resume();
-        } else {
-          responsiveVoice.pause();
-          count = 1;
-        }
-      } else {
-        responsiveVoice.speak(
-          text.textContent,
-          "Spanish Latin American Female",
-          {
-            onend: function () {
-              boton_reproducir_pausar.innerHTML =
-                '<a class="icon solid fa-play"></a>';
-            },
-          }
-        );
-      }
-
-      id_anterior = id;
-    }
+				id_anterior = id
+			}
 
     function Stop(idStop) {
       id_reproducir_pausar = idStop.substring(4, idStop.length);
