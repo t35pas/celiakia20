@@ -197,8 +197,35 @@ def PaginaInicio():
         return render_template('index.html',
                                form=BuscarPorReceta())
 
-# Ver receta por nombre
+#Mundo de la celiakia
+@app.route('/MundoCeliaKIA', methods=['GET', 'POST'])
+def MundoCeliakia():
+    return render_template('mundoCeliakia/indexMundoCeliakia.html')
 
+#Mundo de la celiakia
+@app.route('/MundoCeliaKIA/articulos/<idArticulo>', methods=['GET', 'POST'])
+def MundoCeliakiaArticulos(idArticulo):
+    if idArticulo == 1:
+        return render_template('mundoCeliakia/enfermedadCeliaca.html')
+    elif idArticulo == 2:
+        return render_template('mundoCeliakia/sintomas.html')
+    elif idArticulo == 3:
+        return render_template('mundoCeliakia/diagnostico.html')
+    elif idArticulo == 4:
+        return render_template('mundoCeliakia/dietaGlutenFree.html')
+    elif idArticulo == 5:
+        return render_template('mundoCeliakia/contaminacionCruzada.html')
+    elif idArticulo == 6:
+        return render_template('mundoCeliakia/ordenRefrigerador.html')
+    elif idArticulo == 7:
+        return render_template('mundoCeliakia/comerFueraDeCasa.html')
+    elif idArticulo == 8:
+        return render_template('mundoCeliakia/familiarCeliaco.html')
+    else:
+        return render_template('mundoCeliakia/indexMundoCeliakia.html')
+
+
+# Ver receta por nombre
 
 @app.route('/recetasNombre/buscar', methods=['GET', 'POST'])
 def RecetasPorNombre():
