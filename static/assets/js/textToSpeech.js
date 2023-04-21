@@ -41,6 +41,9 @@ function Play(id_play){
     console.log(speech.speaking)
     if (speaking == 1) {
         window.speechSynthesis.resume();
+        speech.text = text.textContent;
+        console.log(speech)
+        window.speechSynthesis.speak(speech);
       } else {      
         speech.text = text.textContent;
         console.log(speech)
