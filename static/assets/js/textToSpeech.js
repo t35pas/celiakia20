@@ -38,11 +38,35 @@ function Play(id_play){
     console.log(speech.speaking)
     if (speech.speaking) {
         speech.resume();
+
+        let timer
+
+        speech.onstart = () => {
+        resumeInfinity(speech)
+        }
+
+        const clear = () => {  clearTimeout(timer) }
+
+        speech.onerror = clear
+
+        const resumeInfinity = (target) => {
+        // prevent memory-leak in case speech is deleted, while this is ongoing
+        if (!target && timer) { return clear() }
+
+        speechSynthesis.pause()
+        speechSynthesis.resume()
+
+        timer = setTimeout(function () {
+            resumeInfinity(target)
+        }, 5000)
+        }
+
+
       } else {      
         console.log(speech)
         let texto = new SpeechSynthesisUtterance(text.textContent)
         speech.speak(texto);
-        speaking = 1
+        
       } 
       if (x.style.display === "none") {
           x.style.display = "block";
