@@ -54,9 +54,6 @@
                             <h3><a><b>{{ixr.ingredientes.descripcion}}</b></a></h3>
                             <time class="published" style="margin-top: 5px;"> {{ixr.cantidad}} {{ixr.unidad.descripcion}}</time>
                         </header>
-                        <a href="#" class="image">
-                            <img style="width:35px; height:35px;" src="{{url_for('ImagenIngrediente', nombre=ixr.ingredientes.nombre_imagen)}}" alt="" />
-                        </a>
                     </article>
                 </li>
                 {% endfor %}
