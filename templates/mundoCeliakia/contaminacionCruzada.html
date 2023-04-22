@@ -1,0 +1,32 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">La importancia de la contaminación cruzada</a></h2>
+        </div>
+    </header>
+    <p>
+        La contaminación cruzada es el proceso mediante el cual los alimentos entran en contacto con otros que están cocinados o no y que terminan por contaminarse como resultado del intercambio de sustancias ajenas.
+        <br><br>
+        La contaminación cruzada puede darse de manera directa o indirecta. La contaminación cruzada directa se produce cuando los alimentos entran en contacto y se contaminan entre sí y la contaminación cruzada indirecta se produce cuando los utensilios de cocina contaminados entran en contacto con alimentos crudos o cocinados.
+        <br><br>
+        Hay muchas medidas a tomar para evitar la contaminación cruzada de los alimentos que vas a ingerir. Las medidas más comunes son las siguientes:
+        <ul>
+            <li>Separar los alimentos crudos de los alimentos cocidos.</li>
+            <li>Lavarse las manos con agua y jabón antes de empezar a cocinar.</li>
+            <li>Separar los alimentos a la hora de almacenarlos.</li>
+            <li>Utilizar utensilios diferentes para tratar alimentos distintos.</li>
+            <li>Al limpiar no alcanza con pasar un trapo por encima de los utensilios sucios, sino que se deben limpiar con agua caliente e incluso con detergente.</li>        
+        </ul>
+
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://manipulador-de-alimentos.com/que-es-la-contaminacion-cruzada/">Fuente: https://manipulador-de-alimentos.com/que-es-la-contaminacion-cruzada/</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}

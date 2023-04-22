@@ -198,31 +198,56 @@ def PaginaInicio():
                                form=BuscarPorReceta())
 
 #Mundo de la celiakia
-@app.route('/MundoCeliaKIA', methods=['GET', 'POST'])
-def MundoCeliakia():
-    return render_template('mundoCeliakia/indexMundoCeliakia.html')
+@app.route('/sobreNosotros', methods=['GET', 'POST'])
+def SobreNosotros():
+    return render_template('sobreNosotros.html',
+                           random=selectRandom())
+#Mundo de la celiakia
+@app.route('/MundoCeliaKIA/<idPagina>', methods=['GET', 'POST'])
+def MundoCeliakia(idPagina):
+    if idPagina == '1':
+        return render_template('mundoCeliakia/indexMundoCeliakia_1.html',
+                           random=selectRandom())
+    elif idPagina == '2':
+        return render_template('mundoCeliakia/indexMundoCeliakia_2.html',
+                           random=selectRandom())
+    elif idPagina == '3':
+        return render_template('mundoCeliakia/indexMundoCeliakia_3.html',
+                           random=selectRandom())
+    elif idPagina == '4':
+        return render_template('mundoCeliakia/indexMundoCeliakia_4.html',
+                           random=selectRandom())
 
 #Mundo de la celiakia
 @app.route('/MundoCeliaKIA/articulos/<idArticulo>', methods=['GET', 'POST'])
-def MundoCeliakiaArticulos(idArticulo):
-    if idArticulo == 1:
-        return render_template('mundoCeliakia/enfermedadCeliaca.html')
-    elif idArticulo == 2:
-        return render_template('mundoCeliakia/sintomas.html')
-    elif idArticulo == 3:
-        return render_template('mundoCeliakia/diagnostico.html')
-    elif idArticulo == 4:
-        return render_template('mundoCeliakia/dietaGlutenFree.html')
-    elif idArticulo == 5:
-        return render_template('mundoCeliakia/contaminacionCruzada.html')
-    elif idArticulo == 6:
-        return render_template('mundoCeliakia/ordenRefrigerador.html')
-    elif idArticulo == 7:
-        return render_template('mundoCeliakia/comerFueraDeCasa.html')
-    elif idArticulo == 8:
-        return render_template('mundoCeliakia/familiarCeliaco.html')
+def MundoCeliakiaArticulo(idArticulo):
+    if idArticulo == '1':
+        return render_template('mundoCeliakia/enfermedadCeliaca.html',
+                           random=selectRandom())
+    elif idArticulo == '2':
+        return render_template('mundoCeliakia/sintomas.html',
+                           random=selectRandom())
+    elif idArticulo == '3':
+        return render_template('mundoCeliakia/diagnostico.html',
+                           random=selectRandom())
+    elif idArticulo == '4':
+        return render_template('mundoCeliakia/dietaGlutenFree.html',
+                           random=selectRandom())
+    elif idArticulo == '5':
+        return render_template('mundoCeliakia/contaminacionCruzada.html',
+                           random=selectRandom())
+    elif idArticulo == '6':
+        return render_template('mundoCeliakia/ordenRefrigerador.html',
+                           random=selectRandom())
+    elif idArticulo == '7':
+        return render_template('mundoCeliakia/comerFueraDeCasa.html',
+                           random=selectRandom())
+    elif idArticulo == '8':
+        return render_template('mundoCeliakia/familiarCeliaco.html',
+                           random=selectRandom())
     else:
-        return render_template('mundoCeliakia/indexMundoCeliakia.html')
+        return render_template('mundoCeliakia/indexMundoCeliakia_1.html',
+                           random=selectRandom())
 
 
 # Ver receta por nombre

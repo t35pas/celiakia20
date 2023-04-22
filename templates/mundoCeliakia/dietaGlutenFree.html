@@ -1,0 +1,56 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">¿Cómo llevar una dieta libre de glúten?</a></h2>
+        </div>
+    </header>
+    <p>
+        Para llevar una dieta sin gluten se deben evitar los alimentos que contengan trigo, avena, cebada o centeno o alguno de sus derivados. 
+        <br><br>
+        Existen muchos alimentos frescos naturales que no contienen gluten:
+        <ul>
+            <li>Frutas y verduras</li>
+            <li>Frijoles, semillas, legumbres y frutos secos en su forma natural, sin procesar.</li>
+            <li>Huevos.</li>
+            <li>Carnes magras y no procesadas, pescado y carne de aves.</li>
+            <li>La mayoría de los productos lácteos bajos en grasas.</li>
+        </ul>
+
+        Entre los granos, los almidones y las harinas que pueden formar parte de una dieta sin gluten, se incluyen los siguientes:
+        <br><br>
+        <ul>
+            <li>Maíz (harina de maíz, sémola de maíz y polenta etiquetada como libre de gluten)</li>
+            <li>Lino</li>
+            <li>Harinas sin gluten (de arroz, soja, maíz, papa y frijol)</li>
+            <li>Maíz precocido (maíz)</li>
+            <li>Mijo</li>
+            <li>Quinua</li>
+            <li>Arroz</li>
+            <li>Sorgo</li>
+            <li>Soja</li>
+            <li>Entre otros</li>
+        </ul>
+        Cuando compres alimentos procesados, lee las etiquetas para comprobar si estos contienen gluten. En el caso de los alimentos que contienen trigo, cebada, centeno o triticale (o algún ingrediente derivado), el nombre del grano debe figurar en la lista de ingredientes de la etiqueta.
+        <br><br>
+        Hay alimentos que se etiquetan como sin gluten, entre ellos se incluyen los siguientes:
+        <br><br>
+        <ul>
+            <li>Alimentos que naturalmente no contienen gluten.</li>
+            <li>Comidas preparadas que no tienen un ingrediente que contenga gluten.</li>
+            <li>Alimentos que no se contaminaron con ingredientes que contienen gluten durante la producción.</li>
+            <li>Alimentos con un ingrediente que contiene gluten y que se procesaron para quitar el gluten.</li>
+            <li>Las bebidas alcohólicas elaboradas con ingredientes naturales sin gluten, como las uvas o las bayas de enebro, pueden etiquetarse como sin gluten.</li>
+        </ul>
+
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://www.mayoclinic.org/es-es/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/gluten-free-diet/art-20048530">Fuente: https://www.mayoclinic.org/es-es/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/gluten-free-diet/art-20048530</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}

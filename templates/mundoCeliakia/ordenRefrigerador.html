@@ -1,0 +1,32 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">CONSEJOS PARA ORDENAR EL REFIGERADOR</a></h2>
+        </div>
+    </header>
+    <p>
+        Afortunadamente no es necesario tener una cocina exclusiva para cocinar sin gluten, tan sólo hay que saber cómo organizarla. Así pues, es posible producir y manipular productos seguros sin gluten en un espacio no dedicado específicamente para ello, pero es necesario que existan normas y procedimientos para prevenir la contaminación cruzada. ¡Te dejamos con unas pautas que te serán de ayuda!
+        <br><br>
+        Definir un espacio o bandeja específica de uso exclusivo en el congelador y refrigerador para los productos libres de gluten. Siempre deben estar separados del resto. 
+        <br><br>
+        Una buena idea es cubrir con papel de aluminio todos aquellos alimentos que no estén envasados para evitar que se crucen las migas. 
+        <br><br>
+        Las masas crudas y cocidas como panqueques, también puedes congelarlas en bolsas herméticas. Es bien importante identificarlas con lo que contiene y la fecha.  
+        <br><br>
+        Tener cuidado con las sobras de alimentos, pues estos deben consumirse rápidamente para que no dañen y contaminen a otras comidas o bebidas. 
+        <br><br>
+        Limpiar todos los rincones del refrigerador y congelador, incluso las gomas de cierre con agua caliente.
+        <br><br>
+        Recordar que durante los meses de calor, la temperatura del refrigerador, debe ser más fría que en los meses de invierno. Por ende, regula el termostato.
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://delmoli.cl/blogs/blog-del-moli/como-organizar-el-refrigerador-de-una-persona-celiaca-y-no-morir-en-el-intento#:~:text=Siempre%20deben%20estar%20separados%20del,puedes%20congelarlas%20en%20bolsitas%20herm%C3%A9ticas">Fuente: https://delmoli.cl/blogs/blog-del-moli/como-organizar-el-refrigerador-de-una-persona-celiaca-y-no-morir-en-el-intento#:~:text=Siempre%20deben%20estar%20separados%20del,puedes%20congelarlas%20en%20bolsitas%20herm%C3%A9ticas</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}

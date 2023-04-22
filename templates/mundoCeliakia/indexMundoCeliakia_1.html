@@ -1,0 +1,38 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">¿Qué es la enfermedad Celíaca?</a></h2>
+			</div>
+		</header>
+		<p>La enfermedad celíaca es una intolerancia permanente al gluten, una proteína que se encuentra en el trigo, avena, cebada y centeno, que afecta al intestino delgado de las personas con predisposición genética. La enfermedad puede aparecer en cualquier momento de la vida, desde que se incorpora gluten a la alimentación hasta la adultez avanzada.</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=2)}}">¿Cuáles son sus síntomas?</a></h2>
+			</div>
+		</header>
+		<p>La enfermedad celíaca presenta un cuadro clínico complejo y los síntomas pueden variar significativamente de una persona a otra, o no presentar síntomas. Esa variabilidad hace que muchas veces el diagnóstico se retrase.</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=2)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+	<ul class="actions pagination">
+		<li><a href="{{url_for('MundoCeliakia', idPagina=1)}}" class="disabled button large previous">1</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=2)}}" class="button large next">2</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=3)}}" class="button large next">3</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=4)}}" class="button large next">4</a></li>
+	</ul>
+
+{% endblock %}

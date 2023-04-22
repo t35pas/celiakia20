@@ -1,0 +1,27 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">¿Cómo se diagnostica?</a></h2>
+        </div>
+    </header>
+    <p>
+        Si pertenecés a un grupo de riesgo o presentás uno o varios de los síntomas mencionados, concurrí al médico/a, que te solicitará los análisis correspondientes.
+        <br>
+        En principio se requiere un análisis de sangre, en el que se incluye el anticuerpo Antitransglutaminasa IgA.
+        <br>
+        Luego, el diagnóstico se confirma a través de una biopsia intestinal, que debe efectuarse siempre antes de iniciar el tratamiento.
+        <br>
+        La detección temprana y el tratamiento oportuno son fundamentales para evitar complicaciones secundarias a largo plazo.
+
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://www.argentina.gob.ar/salud/celiaquia/quees/como-se-diagnostica">Fuente: https://www.argentina.gob.ar/salud/celiaquia/quees/como-se-diagnostica</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}

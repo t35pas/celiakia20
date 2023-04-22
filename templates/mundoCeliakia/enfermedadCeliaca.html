@@ -1,0 +1,22 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">¿Qué es la enfermedad celíaca?</a></h2>
+        </div>
+    </header>
+    <p>
+        La enfermedad celíaca es una intolerancia permanente al gluten, una proteína que se encuentra en el trigo, avena, cebada y centeno, que afecta al intestino delgado de las personas con predisposición genética. La enfermedad puede aparecer en cualquier momento de la vida, desde que se incorpora gluten a la alimentación hasta la adultez avanzada.
+        <br>
+        El consumo de gluten por una persona con celiaquía afecta la mucosa del intestino y disminuye la capacidad de absorber nutrientes.
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://www.argentina.gob.ar/salud/celiaquia/que-es">Fuente: https://www.argentina.gob.ar/salud/celiaquia/que-es</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=5)}}">La importancia de la contaminación cruzada</a></h2>
+			</div>
+		</header>
+		<p>
+			La contaminación cruzada es el proceso mediante el cual los alimentos entran en contacto con otros que están cocinados o no y que terminan por contaminarse como resultado del intercambio de sustancias ajenas.
+			La contaminación cruzada puede darse de manera directa o indirecta. La contaminación cruzada directa se produce cuando los alimentos entran en contacto y se contaminan entre sí y la contaminación cruzada indirecta se produce cuando los utensilios de cocina contaminados entran en contacto con alimentos crudos o cocinados.
+		</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=5)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=6)}}">Consejos para ordenar el refigerador</a></h2>
+			</div>
+		</header>
+		<p>
+			Afortunadamente no es necesario tener una cocina exclusiva para cocinar sin gluten, tan sólo hay que saber cómo organizarla. Así pues, es posible producir y manipular productos seguros sin gluten en un espacio no dedicado específicamente para ello, pero es necesario que existan normas y procedimientos para prevenir la contaminación cruzada. ¡Te dejamos con unas pautas que te serán de ayuda!
+		</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=6)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+
+	<ul class="actions pagination">
+		<li><a href="{{url_for('MundoCeliakia', idPagina=1)}}" class="button large next">1</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=2)}}" class="button large next">2</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=3)}}" class="button large next">3</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=4)}}" class="disabled button large previous">4</a></li>
+	</ul>
+{% endblock %}

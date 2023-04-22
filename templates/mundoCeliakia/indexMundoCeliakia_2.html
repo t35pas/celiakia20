@@ -1,0 +1,42 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=7)}}">Consejos para comer fuera de casa.</a></h2>
+			</div>
+		</header>
+		<p>
+			Estas son algunas de las precauciones que debemos tener en cuenta cuando salimos a comer fuera de casa, especialmente si vamos con no celiacos, porque a la hora de compartir mesa también tenemos que ser conscientes del riesgo de contaminación.
+		</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=7)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+
+	<article class="post">
+		<header>
+			<div class="title">
+				<h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=8)}}">¿Que hacer si tengo un familiar celiaco?</a></h2>
+			</div>
+		</header>
+		<p>
+			«Mi hijo es celiaco, ¿qué le doy de comer? ¿qué significa ser celiaco?». Cuando unos padres reciben esta noticia por parte de su pediatra comienza una etapa llena de preguntas, dudas y temores, que provocan un pequeño terremoto en la familia. El primer paso para avanzar en esta etapa es la clave, una buena información.
+		</p>
+		<footer>
+			<ul class="actions">
+				<li><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=8)}}" class="button large">Continuar leyendo</a></li>
+			</ul>
+		</footer>
+	</article>
+
+	<ul class="actions pagination">
+		<li><a href="{{url_for('MundoCeliakia', idPagina=1)}}" class="button large next">1</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=2)}}" class="disabled button large previous">2</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=3)}}" class="button large next">3</a></li>
+		<li><a href="{{url_for('MundoCeliakia', idPagina=4)}}" class="button large next">4</a></li>
+	</ul>
+{% endblock %}

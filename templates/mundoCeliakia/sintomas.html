@@ -1,0 +1,41 @@
+{% extends 'mundoCeliakia/indexVistaMundoCeliakia.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">¿Cuáles son los síntomas de la celiaquía?</a></h2>
+        </div>
+    </header>
+    <p>
+        La enfermedad celíaca presenta un cuadro clínico complejo y los síntomas pueden variar significativamente de una persona a otra, o no presentar síntomas. Esa variabilidad hace que muchas veces el diagnóstico se retrase.
+        <h4>Síntomas</h4> 
+        Aunque suene a cliché, a perogrullo, es muy importante mantener la calma y estar tranquilos. Evidentemente nos acaban de decir que nuestro hijo es celiaco y no tenemos ni idea de qué va el tema, pero lo primero que debes saber es que la enfermedad celiaca tiene un tratamiento, la dieta sin gluten, y realizando la dieta de forma correcta tu hijo celiaco crecerá sano y fuerte como cualquier otro niño. En los últimos años el mundo sin gluten ha cambiado para bien y cada vez es todo más sencillo.
+        <br><br>
+        <ul>
+            <li> Diarrea crónica o malabsortiva. </li>
+            <li> Distensión abdominal y dolor. </li>
+            <li> Pérdida de peso. </li>
+            <li> Desnutrición. </li>
+            <li> Anemia. </li>
+            <li> Aftas orales. </li>
+            <li> Constipación.  </li>
+            <li> Baja estatura. </li>
+            <li> Abortos a repetición, menarca tardía, menopausia precoz. </li>
+            <li> Reflujo gastroesofágico. </li>
+            <li> Trastornos del esmalte dental. </li>
+            <li> Caída del cabello, uñas quebradizas. </li>
+            <li> Osteoporosis y fracturas óseas con traumas mínimos. </li>
+            <li> Cefalea, depresión. </li>
+            <li> Convulsiones con calcificaciones occipitales. </li>
+            <li> Parestesias, tetania, calambres</li>
+        </ul>
+    </p>
+    <footer>
+        <ul class="stats">
+            <li><a href="https://www.argentina.gob.ar/salud/celiaquia/quees/sintomas">Fuente: https://www.argentina.gob.ar/salud/celiaquia/quees/sintomas</a></li>
+        </ul>
+    </footer>
+</article>
+
+{% endblock %}
