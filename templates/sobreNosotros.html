@@ -1,0 +1,55 @@
+{% extends 'indexVistaBusqueda.html' %}
+
+{% block contentMain %}
+<article class="post">
+    <header>
+        <div class="title">
+            <h2><a href="{{url_for('MundoCeliakiaArticulo', idArticulo=1)}}">Sobre Nosotros</a></h2>
+        </div>
+    </header>
+    <p>
+        <h4>La historia de KIA</h4>
+		CeliaKIA surge como un proyecto universitario de Evelyn, Nicolás y Timoteo. Tres aprendices del mundo del software pero con una visión y valores comunes que fomentaron una dinámica cultura organizativa. Surge así un “lugar” donde focalizar nuestros esfuerzos y es el Mundo de la Celiaquía.
+		<br><br>
+        <h4>La aplicación</h4>
+		Consta de una serie de funcionalidades orientadas a personas intolerantes al gluten. Entre ellas encontramos en primer lugar, información necesaria para comprender la importancia de la dieta para una persona celíaca, pues es el único tratamiento existente para la enfermedad. 
+		<br>
+		Es por ese motivo que se ofrece una sección de recetas para ayudar a aquellas personas que están comenzando el camino de una dieta libre de gluten. Y para brindar nuevas ideas a aquellos que ya conocen algunas recetas. 
+		<br><br>
+        <h4>Función de KIA en la aplicación</h4>
+		KIA es el asistente que te ayudará con la lectura de los pasos de la receta. Para que puedas concentrarte absolutamente en evitar la contaminación cruzada, y en que la receta salga de la mejor forma posible.
+    </p>
+
+</article>
+
+	{% if random.all() %}
+		<section>
+			<h3>Recomendación del día</h3>
+			<div class="mini-posts">
+				{% for receta in random %}
+					<article class="mini-post">
+                        <header>
+                            <h2> 
+                                <a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a>
+                            </h2>
+                            {% if receta.dificultad.descripcion == 'Baja' %}
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightseagreen;margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% elif receta.dificultad.descripcion == 'Media' %}    
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:rgb(240, 216, 0);margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% else %}
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightsalmon;margin-bottom: 10px;">
+                                Dificultad {{receta.dificultad.descripcion}} 
+                            {% endif %}
+                                </p>
+                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-clock" style="margin-bottom: 10px;"> {{ receta.tiempoPreparacion(receta.id)}} minutos</p>
+                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-bowl-food"> Ingredientes necesarios: {{ receta.ingrediente|length}}</p>
+                        </header>
+                        <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></a>
+                    </article> 
+				{% endfor %}
+			</div>
+		</section>
+	{% endif %}
+{% endblock %}
