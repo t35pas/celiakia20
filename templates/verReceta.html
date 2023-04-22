@@ -36,10 +36,11 @@
                         </a>
                     </li>
                 </ul>
-                <br>
             </div>
         </header>
-        <p><span class="image right"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" />{{ receta.descripcion }}.</p>
+        <span class="image featured"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span>
+        <h7>{{ receta.descripcion }}</h7>
+        <br><br>
         <!-- Mini Posts -->
         <section>
             <h3>Ingredientes</h3>

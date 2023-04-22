@@ -103,7 +103,7 @@ class Ingrediente_Por_Receta(db.Model):
     id_receta = db.Column(db.Integer, db.ForeignKey('receta.id'), nullable = False)
     id_ingrediente = db.Column(db.Integer, db.ForeignKey('ingrediente.id'), nullable = False)
     id_unidad = db.Column(db.Integer, db.ForeignKey('unidad.id'), nullable = False)
-    cantidad = db.Column(db.Integer, nullable = False)
+    cantidad = db.Column(db.String, nullable = False)
     
 
     def __init__(self, id_receta, id_ingrediente, id_unidad, cantidad):

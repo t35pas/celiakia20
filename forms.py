@@ -27,7 +27,7 @@ class Form_Preparacion(FlaskForm):
 class Form_Ingrediente(FlaskForm):
     descripcionIngrediente = SelectField('Nombre del ingrediente',id = 'descripcionIngrediente',choices=[],coerce=int)
     unidad = SelectField('Unidad',choices=[],coerce=int)
-    cantidad = IntegerField('Cantidad',validators=[DataRequired()])
+    cantidad = StringField('Cantidad',validators=[DataRequired()])
     submit = SubmitField('Agregar')
 
 class Form_Editar_Ing_Por_Receta(FlaskForm):
