@@ -85,6 +85,14 @@ class CrearAdmin(FlaskForm):
     usuario = SelectField('Usuario',choices=[], coerce=int)
     submit = SubmitField('Agregar')
 
+class CrearUsuario(FlaskForm):
+    nombreUsuario = StringField('Nombre', validators=[DataRequired('Debes completar este campo'), Length(min=2, max=20)])
+    apellidoUsuario = StringField('Apellido', validators=[DataRequired('Debes completar este campo'), Length(min=2, max=20)])
+    emailUsuario = StringField('Email', validators=[Email('Ingresa un formato de email válido.')])
+    contraseniaUsuario = PasswordField('Contraseña',validators=[DataRequired('Debes completar este campo'), EqualTo('Repetir Contraseña','Las contraseñas deben conicidir.')])
+    repetirContrasenia = PasswordField('Repetir Contraseña',validators=[DataRequired('Debes completar este campo')])
+    submit = SubmitField('Agregar')
+
 class SearchForm(FlaskForm):
     autocomp = StringField('Insert City', id='city_autocomplete')
 

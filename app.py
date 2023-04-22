@@ -32,7 +32,7 @@ loginManager = LoginManager(app) #Para manejar las sesiones
 loginManager.login_view = 'Login'
 
 from models import ConsejosCeliakia,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import CrearAdmin,CrearConsejo,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
+from forms import CrearUsuario,CrearAdmin,CrearConsejo,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
 from authentication import auth
 
 # CONFIGURACION IMAGENES DE LA APLICACION
@@ -168,6 +168,33 @@ def Login():
             return render_template('login.html', form=form)
     return render_template('login.html', form=form)
 
+@app.route('/crearCuenta', methods=['GET', 'POST'])
+def CrearCuenta():
+    if current_user.is_authenticated:
+        return redirect(url_for('PaginaInicio'))
+
+    form = CrearUsuario()
+
+    if form.validate_on_submit():
+        nombre = form.nombreUsuario.data
+        apellido = form.apellidoUsuario.data
+        passw = form.contraseniaUsuario.data
+        email = form.emailUsuario.data.strip()
+        try:
+            usuario = auth.create_user_with_email_and_password(email, passw)
+            nuevoUsuario = Usuario(nombre=nombre,
+                                   apellido=apellido,
+                                   email=email,
+                                   id_token= usuario['idToken'],
+                                   administrador = False)
+            Usuario.save_to_db(nuevoUsuario)
+            print(usuario['idToken'])
+            print(nuevoUsuario)
+            return redirect(url_for('Login'))
+        
+        except:
+            return render_template('crearCuenta.html', form=form)
+    return render_template('crearCuenta.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
