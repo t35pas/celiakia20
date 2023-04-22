@@ -9,7 +9,16 @@
                 <p style="margin-top: 10px;">
                     Completa los pasos para preparar la receta.
                     <br>
-                    No olvides presionar FINALIZAR una vez que estén todos los pasos.</p>								
+                    No olvides presionar FINALIZAR una vez que estén todos los pasos.</p>	
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-info" role="alert">
+                                {{ message }}
+                            </div>							
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}							
             </div>
             <div class="meta">
                 <ul class="actions fit">
@@ -23,7 +32,16 @@
     {% else %}
         <header>
             <div class="title" style="margin-bottom: 0px;">
-                <h2><a>Editar receta - {{ receta.titulo }}</a></h2>									
+                <h2><a>Editar receta - {{ receta.titulo }}</a></h2>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-info" role="alert">
+                                {{ message }}
+                            </div>							
+                        {% endfor %}
+                    {% endif %}
+			    {% endwith %}
             </div>
             <div class="meta">
                 <ul class="actions fit">

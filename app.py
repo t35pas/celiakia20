@@ -677,7 +677,7 @@ def EditarIngDeReceta(idIxr):
 def EliminarIngPorReceta(idIxr):
     ingrediente = Ingrediente_Por_Receta.find_by_id(idIxr)
     Ingrediente_Por_Receta.delete_from_db(ingrediente)
-    # flash('Ingrediente eliminado correctamente de la receta!')
+    flash('El Ingrediente se ha eliminado correctamente de la receta.')
     return redirect(url_for('IngPorReceta'))
 
 # Crear paso
@@ -764,7 +764,7 @@ def EditarPasoReceta(idPaso):
 def EliminarPrepPorReceta(idPaso):
     paso = Preparacion.find_by_id(idPaso)
     Preparacion.delete_from_db(paso)
-    # flash('Paso eliminado correctamente de la receta!')
+    flash('El paso se ha eliminado correctamente de la receta.')
     return redirect(url_for('PrepPorReceta'))
 
 # Eliminar receta completa
@@ -938,17 +938,16 @@ def ListadoIngredientes():
                                ingredientes=ingredientes,
                                form=form)
 
-
 @app.route('/admin/ingrediente/eliminar/<idIng>', methods=['GET', 'POST'])
 @login_required
 def EliminarIngrediente(idIng):
     ingrediente = Ingrediente.find_by_id(idIng)
     if ingrediente.por_receta:
-        # Existe en una receta, no lo puedo eliminar
+        flash('El ingrediente forma parte de una receta, no es posible eliminarlo.')
         return redirect(url_for('ListadoIngredientes'))
     else:
         Ingrediente.delete_from_db(ingrediente)
-        # flash('Ingrediente eliminado correctamente de la receta!')
+        flash('El ingrediente se ha eliminado correctamente.')
         return redirect(url_for('ListadoIngredientes'))
     
 @app.route('/admin/ingrediente/ver/<idIng>', methods=['GET', 'POST'])

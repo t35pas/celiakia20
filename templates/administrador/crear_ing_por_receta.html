@@ -9,6 +9,15 @@
                 <p style="margin-top: 10px;">
                     Agregá todos los ingredientes necesarios para preparar la receta. <br>
                     Tené en cuenta que el ingrediente debió ser creado previamente desde ABM INGREDIENTES</p>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-info" role="alert">
+                                {{ message }}
+                            </div>							
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </div>
             <div class="meta">
                 <ul class="actions fit">
@@ -26,7 +35,17 @@
                 <p style="margin-top: 10px;">
                     Agregá todos los ingredientes necesarios para preparar la receta. <br>
                     Tené en cuenta que el ingrediente debió ser creado previamente desde ABM INGREDIENTES</p>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-info" role="alert">
+                                {{ message }}
+                            </div>							
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </div>
+
             <div class="meta">
                 <ul class="actions fit">
                     <li><a href="{{url_for('EditarIngPorReceta', idReceta = receta.id)}}" class="button fit">Volver</a></li>
