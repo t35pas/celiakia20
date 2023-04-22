@@ -46,6 +46,7 @@ pyrebase4 = "*"
 numpy = "*"
 authentication = "*"
 flask-reuploaded = "*"
+flask-uploads = "*"
 
 [requires]
 python_version = "3.7"

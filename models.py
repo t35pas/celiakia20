@@ -383,7 +383,6 @@ class Usuario(db.Model, UserMixin):
     favoritos = relationship('Favorito', backref = 'usuario')
     administrador = db.Column(db.Boolean())
     recetas = relationship('Receta', backref = 'receta_autor', lazy = True)
-    consejos = relationship('ConsejosCeliakia', backref = 'consejo_autor', lazy = True)
     
     
     def __init__(self, nombre, apellido, email, id_token):
@@ -428,38 +427,3 @@ class Usuario(db.Model, UserMixin):
         db.session.delete(self)
         db.session.commit()
 
-class ConsejosCeliakia(db.Model):
-    __tablename__ = 'consejos_celiakia'
-    __table_args__ = {'extend_existing': True} 
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    titulo = db.Column(db.String(), nullable = False)
-    descripcion = db.Column(db.Text(), nullable = False)
-    id_autor = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = False)
-
-    def __init__(self,titulo, descripcion, id_autor):
-        self.titulo = titulo
-        self.descripcion = descripcion
-        self.id_autor = id_autor
-
-    def __repr__(self):
-        return '<id {}>'.format(self.id)
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'titulo': self.titulo,
-            'descripcion': self.descripcion
-    }
-
-    @classmethod
-    def find_by_id(cls, idConsejo):
-        return cls.query.filter_by(id=idConsejo).first()
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()

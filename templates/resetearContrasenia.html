@@ -17,12 +17,12 @@
 						<article class="post">
 							<header>
 								<div class="title">
-									<h2><a>Bienvenido a CeliaKIA</a></h2></br>
+									<h2><a>Resetear Contraseña - CeliaKIA</a></h2></br>
 									<p>Una aplicación donde encontrarás las mejores recetas ideadas especialmente para celíacos.</p>
 									{% with messages = get_flashed_messages() %}
 									{% if messages %}
 										{% for message in messages %}
-										<div class="alert alert-info" role="alert">
+										<div class="alert alert-warning" role="alert">
 											{{ message }}
 										</div>
 											
@@ -30,35 +30,32 @@
 									{% endif %}
 								  {% endwith %}
 								</div>
+
 							</header>
 
 							<section>
-									<form method="post" action="{{url_for('Login')}}">
+									<form method="post" action="{{url_for('ResetearContrasenia')}}">
 										{{ form.hidden_tag() }}
 										<div class="row gtr-uniform">
-											<div class="col-6 col-12-xsmall">
-												{{ form.nombreUsuario(type="text",  id="demo-email", value="", placeholder="Nombre de usuario") }}
-											</div>
-											<div class="col-6 col-12-xsmall">
-												{{ form.contrasenia(type="password", id="demo-password", value="", placeholder="Contraseña") }}
-											</div>
-										
+                                            <div class="col-4 col-12-xsmall">
+                                                {{ form.emailUsuario(type="text",  id="email", value="", placeholder="email") }}
+                                                <div>
+                                                    {% for error in form.emailUsuario.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="row gtr-uniform">
 											<div class="col-12">
 												<ul class="actions">
-													<li>{{ form.submit( type="submit", value="Ingresar") }}</li>
+													<li>{{ form.submit( type="submit", value="Enviar") }}</li>
 												</ul>
 											</div>
 										</div>
 									</form>
-							</section>
-
-							<footer>
-								<ul class="stats">
-									<li><a href="{{url_for('CrearCuenta')}}" style="color:gray">Crear Nueva Cuenta</a></li>
-									<li><a href="{{url_for('ResetearContrasenia')}}" style="color:gray">Olvidé mi Contraseña</a></li>
-								</ul>
-							</footer>
-
+								</section>
 						</article>
 					</div>
 

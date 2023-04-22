@@ -31,8 +31,8 @@ api = Api(app)
 loginManager = LoginManager(app) #Para manejar las sesiones
 loginManager.login_view = 'Login'
 
-from models import ConsejosCeliakia,Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
-from forms import CrearUsuario,CrearAdmin,CrearConsejo,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
+from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
+from forms import ReseteoContrasenia, CrearUsuario,CrearAdmin,CrearDificultad,CrearUnidad,CrearIngrediente,CambiarImagen,Form_Editar_Ing_Por_Receta,BuscarPorIngrediente, BuscarPorReceta, LoginForm, Form_Ingrediente, Form_InformacionGeneral, Form_Preparacion
 from authentication import auth
 
 # CONFIGURACION IMAGENES DE LA APLICACION
@@ -180,21 +180,41 @@ def CrearCuenta():
         apellido = form.apellidoUsuario.data
         passw = form.contraseniaUsuario.data
         email = form.emailUsuario.data.strip()
+
         try:
             usuario = auth.create_user_with_email_and_password(email, passw)
+
             nuevoUsuario = Usuario(nombre=nombre,
-                                   apellido=apellido,
-                                   email=email,
-                                   id_token= usuario['idToken'],
-                                   administrador = False)
+                                    apellido=apellido,
+                                    email=email,
+                                    id_token= usuario['idToken']
+                                    )
             Usuario.save_to_db(nuevoUsuario)
-            print(usuario['idToken'])
-            print(nuevoUsuario)
+            flash('La cuenta se creó exitosamente. Escribe tu email y contraseña para ingresar.')
             return redirect(url_for('Login'))
-        
         except:
-            return render_template('crearCuenta.html', form=form)
+            flash('Hubo un error con tu cuenta, revisa nuevamente los datos ingresados.')
+            return redirect(url_for('CrearCuenta'))
+        
     return render_template('crearCuenta.html', form=form)
+
+@app.route('/reseteoContrasenia', methods=['GET', 'POST'])
+def ResetearContrasenia():
+    if current_user.is_authenticated:
+        return redirect(url_for('PaginaInicio'))
+
+    form = ReseteoContrasenia()
+
+    if form.validate_on_submit():
+        email = form.emailUsuario.data.strip()
+        try:
+            usuario = auth.send_password_reset_email(email)
+            flash('Te enviamos un email a la cuenta de correo para que puedas resetear tu contraseña.')
+            return redirect(url_for('Login'))
+        except:
+            flash('El correo ingresado no pertenece a una cuenta existente.')
+            return redirect(url_for('ResetearContrasenia'))
+    return render_template('resetearContrasenia.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
@@ -1018,81 +1038,6 @@ def EliminarDificultad(idDif):
         return redirect(url_for('ListadoNivelDificultad'))
 
 
-##############################################################################
-##                               ABM CONSEJOS                               ##
-##############################################################################
-
-@app.route('/admin/consejos', methods=['GET', 'POST'])
-@login_required
-def ListadoConsejos():
-    form = CrearConsejo()
-
-    if form.validate_on_submit():
-
-        tituloConsejo = form.tituloConsejo.data
-        descripcion = form.descripcionConsejo.data
-
-        consejo = ConsejosCeliakia.query.filter_by(titulo = tituloConsejo).first()
-
-        if consejo: 
-            #error ya existe ese titulo
-            return redirect(url_for('ListadoConsejos'))
-        
-        nuevoConsejo = ConsejosCeliakia(
-            titulo=tituloConsejo,
-            descripcion=descripcion,
-            id_autor=current_user.id)
-        # Guardamos en db
-        ConsejosCeliakia.save_to_db(nuevoConsejo)
-
-        return redirect(url_for('ListadoConsejos'))
-
-    else:
-        consejos = ConsejosCeliakia.query.all()
-        return render_template('administrador/listado_consejos.html',
-                               consejos=consejos,
-                               form=form)
-
- 
-@app.route('/admin/consejo/<idCons>/editar', methods=['GET', 'POST'])
-@login_required
-def EditarConsejo(idCons):
-    form = CrearConsejo()
-    consejo = ConsejosCeliakia.find_by_id(idCons)
-
-    if form.validate_on_submit():
-
-        buscarConsejo = ConsejosCeliakia.query.filter_by(titulo = form.tituloConsejo.data).first()
-
-        if buscarConsejo: 
-            #error ya existe ese titulo
-            return redirect(url_for('ListadoConsejos'))
-        
-
-        consejo.titulo = form.tituloConsejo.data
-        consejo.descripcion = form.descripcionConsejo.data
-
-        db.session.commit()
-
-        return redirect(url_for('ListadoConsejos'))
-
-    else:
-        form.tituloConsejo.data = consejo.titulo
-        form.descripcionConsejo.data = consejo.descripcion
-
-        consejos = ConsejosCeliakia.query.all()
-        return render_template('administrador/listado_consejos.html',
-                               consejos=consejos,
-                               form=form)
-
-
-@app.route('/admin/consejo/<idCons>/eliminar', methods=['GET', 'POST'])
-@login_required
-def EliminarConsejo(idCons):
-    consejo = ConsejosCeliakia.find_by_id(idCons)
-    ConsejosCeliakia.delete_from_db(consejo)
-    # flash('Nivel de dificultad eliminado correctamente de la receta!')
-    return redirect(url_for('ListadoConsejos'))
 
 ##############################################################################
 ##                               ABM ADMINISTRADORES                        ##

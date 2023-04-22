@@ -37,13 +37,9 @@
                     </li>
                 </ul>
                 <br>
-                <p>{{ receta.descripcion }}.</p>
-            </div>
-            <div class="meta">
-                <div class="col-12"><span class="image fit"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></span></div>
             </div>
         </header>
-       
+        <p><span class="image right"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" />{{ receta.descripcion }}.</p>
         <!-- Mini Posts -->
         <section>
             <h3>Ingredientes</h3>

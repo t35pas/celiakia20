@@ -20,21 +20,46 @@
 									<h2><a>Bienvenido a CeliaKIA</a></h2></br>
 									<p>Una aplicación donde encontrarás las mejores recetas ideadas especialmente para celíacos.</p>
 								</div>
+                                {% with messages = get_flashed_messages() %}
+									{% if messages %}
+										{% for message in messages %}
+										<div class="alert alert-warning" role="alert">
+											{{ message }}
+										</div>
+											
+										{% endfor %}
+									{% endif %}
+								{% endwith %}
 							</header>
 
 							<section>
                                     <h4><a>Crear Cuenta</a></h4>
-									<form method="post" action="{{url_for('Login')}}">
+									<form method="post" action="{{url_for('CrearCuenta')}}">
 										{{ form.hidden_tag() }}
 										<div class="row gtr-uniform">
 											<div class="col-4 col-12-xsmall">
 												{{ form.nombreUsuario(type="text",  id="nombre", value="", placeholder="Nombre") }}
+                                                <div>
+                                                    {% for error in form.nombreUsuario.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
 											</div>
                                             <div class="col-4 col-12-xsmall">
 												{{ form.apellidoUsuario(type="text",  id="apellido", value="", placeholder="Apellido") }}
+                                                <div>
+                                                    {% for error in form.apellidoUsuario.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
 											</div>
                                             <div class="col-4 col-12-xsmall">
                                                 {{ form.emailUsuario(type="text",  id="email", value="", placeholder="email") }}
+                                                <div>
+                                                    {% for error in form.emailUsuario.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
                                             </div>
                                         </div>
                                         <br><br>
@@ -42,9 +67,19 @@
                                             
 											<div class="col-6 col-12-xsmall">
 												{{ form.contraseniaUsuario(type="password", id="password", value="", placeholder="Contraseña") }}
+                                                <div>
+                                                    {% for error in form.contraseniaUsuario.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
 											</div>
                                             <div class="col-6 col-12-xsmall">
 												{{ form.repetirContrasenia(type="password", id="repetir-password", value="", placeholder="Repetí tu Contraseña") }}
+                                                <div>
+                                                    {% for error in form.repetirContrasenia.errors %}
+                                                        <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
 											</div>
 											<div class="col-12">
 												<ul class="actions">

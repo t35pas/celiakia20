@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField, Selec
 from wtforms.fields.core import BooleanField
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
-from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario,ConsejosCeliakia
+from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 class LoginForm(FlaskForm):
     nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=20)])
@@ -89,9 +89,23 @@ class CrearUsuario(FlaskForm):
     nombreUsuario = StringField('Nombre', validators=[DataRequired('Debes completar este campo'), Length(min=2, max=20)])
     apellidoUsuario = StringField('Apellido', validators=[DataRequired('Debes completar este campo'), Length(min=2, max=20)])
     emailUsuario = StringField('Email', validators=[Email('Ingresa un formato de email válido.')])
-    contraseniaUsuario = PasswordField('Contraseña',validators=[DataRequired('Debes completar este campo'), EqualTo('Repetir Contraseña','Las contraseñas deben conicidir.')])
-    repetirContrasenia = PasswordField('Repetir Contraseña',validators=[DataRequired('Debes completar este campo')])
+    contraseniaUsuario = PasswordField('Contraseña',validators=[DataRequired('Debes completar este campo'), EqualTo('repetirContrasenia','Las contraseñas deben conicidir.')])
+    repetirContrasenia = PasswordField('repetirContrasenia',validators=[DataRequired('Debes completar este campo')])
     submit = SubmitField('Agregar')
+
+    def validate_emailUsuario(self, emailUsuario):
+        usuario = Usuario.query.filter_by(email = emailUsuario.data).first()
+        if usuario:
+            raise ValidationError('Ya existe un usuario con ese correo electrónico')
+
+class ReseteoContrasenia(FlaskForm):
+    emailUsuario = StringField('Email', validators=[Email('Ingresa un formato de email válido.')])
+    submit = SubmitField('Resetear Contraseña')
+
+    def validate_existeEmailUsuario(self, emailUsuario):
+        usuario = Usuario.query.filter_by(email = emailUsuario.data).first()
+        if not usuario:
+            raise ValidationError('No existe un usuario con ese correo electrónico')
 
 class SearchForm(FlaskForm):
     autocomp = StringField('Insert City', id='city_autocomplete')
