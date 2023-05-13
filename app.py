@@ -998,12 +998,16 @@ def ListadoUnidades():
 def EliminarUnidad(idUni):
 
     unidad = Unidad.find_by_id(idUni)
-
+    
     if unidad.ingredientes:
+        receta_unidad = [str(ixr.id_receta) for ixr in unidad.ingredientes]
+        recetas = ', '.join(list(set(receta_unidad)))
+        mensaje = 'No fue posible eliminar la Unidad. Esta siendo utilizada en id_receta: ' + recetas
+        flash(mensaje)
         return redirect(url_for('ListadoUnidades'))
     else:
         Unidad.delete_from_db(unidad)
-        # flash('Unidad eliminada correctamente de la receta!')
+        flash('Unidad eliminada correctamente.')
         return redirect(url_for('ListadoUnidades'))
 
 ##############################################################################
@@ -1038,11 +1042,14 @@ def ListadoNivelDificultad():
 def EliminarDificultad(idDif):
     dificultad = Dificultad.find_by_id(idDif)
     if dificultad.recetas:
-        # Esta asociado a una receta, no lo puedo eliminar
+        receta_dificultad = [str(r.id) for r in dificultad.recetas]
+        recetas = ', '.join(list(set(receta_dificultad)))
+        mensaje = 'No fue posible eliminar la Dificultad. Esta siendo utilizada en id_receta: ' + recetas
+        flash(mensaje)
         return redirect(url_for('ListadoNivelDificultad'))
     else:
         Dificultad.delete_from_db(dificultad)
-        # flash('Nivel de dificultad eliminado correctamente de la receta!')
+        flash('Nivel de dificultad eliminado correctamente de la receta.')
         return redirect(url_for('ListadoNivelDificultad'))
 
 
