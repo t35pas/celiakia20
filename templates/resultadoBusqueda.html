@@ -1,60 +1,71 @@
 {% extends 'indexVistaResultado.html' %}
 
 {% block contentMain %}
-
-    <!-- Posts -->
-    <article class="post">
-        <!-- Mini Posts -->
-        <section>
-            <div class="mini-posts">
-                {% for receta in recetas.items %}
-                    <article class="mini-post">
-                        <header>
-                            <h2> 
-                                <a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a>
-                            </h2>
-                            {% if receta.dificultad.descripcion == 'Baja' %}
-                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightseagreen;margin-bottom: 10px;">
-                                Dificultad {{receta.dificultad.descripcion}} 
-                            {% elif receta.dificultad.descripcion == 'Media' %}    
-                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:rgb(240, 216, 0);margin-bottom: 10px;">
-                                Dificultad {{receta.dificultad.descripcion}} 
+    {% if recetas.items|length > 0 %}
+        <!-- Posts -->
+        <article class="post">
+            <!-- Mini Posts -->
+            <section>
+                <div class="mini-posts">
+                    {% for receta in recetas.items %}
+                        <article class="mini-post">
+                            <header>
+                                <h2> 
+                                    <a href="{{url_for('VerReceta', idReceta=receta.id)}}">{{ receta.titulo}}</a>
+                                </h2>
+                                {% if receta.dificultad.descripcion == 'Baja' %}
+                                    <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightseagreen;margin-bottom: 10px;">
+                                    Dificultad {{receta.dificultad.descripcion}} 
+                                {% elif receta.dificultad.descripcion == 'Media' %}    
+                                    <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:rgb(240, 216, 0);margin-bottom: 10px;">
+                                    Dificultad {{receta.dificultad.descripcion}} 
+                                {% else %}
+                                    <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightsalmon;margin-bottom: 10px;">
+                                    Dificultad {{receta.dificultad.descripcion}} 
+                                {% endif %}
+                                    </p>
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-clock" style="margin-bottom: 10px;"> {{ receta.tiempoPreparacion(receta.id)}} minutos</p>
+                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-bowl-food"> Ingredientes necesarios: {{ receta.ingrediente|length}}</p>
+                            </header>
+                            <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></a>
+                        </article> 
+                    {% endfor %}
+                </div>
+            </section>
+        </article>
+        <!-- Pagination -->
+        <ul class="actions pagination">
+            <li>
+                <a  href="{{ url_for('ResultadoBusqueda', page=recetas.prev_num) }}" 
+                    class=" {% if recetas.page == 1 %}
+                                disabled button large previous
                             {% else %}
-                                <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-circle" style="color:lightsalmon;margin-bottom: 10px;">
-                                Dificultad {{receta.dificultad.descripcion}} 
-                            {% endif %}
-                                </p>
-                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-clock" style="margin-bottom: 10px;"> {{ receta.tiempoPreparacion(receta.id)}} minutos</p>
-                            <p href="{{url_for('VerReceta', idReceta=receta.id)}}" class="icon solid fa-bowl-food"> Ingredientes necesarios: {{ receta.ingrediente|length}}</p>
-                        </header>
-                        <a href="{{url_for('VerReceta', idReceta=receta.id)}}" class="image"><img src="{{url_for('ImagenReceta', nombre=receta.nombre_imagen)}}" alt="" /></a>
-                    </article> 
-                {% endfor %}
-            </div>
-        </section>
-    </article>
-    <!-- Pagination -->
-    <ul class="actions pagination">
-        <li>
-            <a  href="{{ url_for('ResultadoBusqueda', page=recetas.prev_num) }}" 
-                class=" {% if recetas.page == 1 %}
-                            disabled button large previous
-                        {% else %}
-                            button large previous
-                        {% endif %}">Anterior
-            </a>
-        </li>
-        <li>
-            <a  href="{{ url_for('ResultadoBusqueda', page=recetas.next_num) }}" 
-                class=" {% if recetas.page == recetas.pages %}
-                            disabled button large next
-                        {% else %}
-                            button large next
-                        {% endif %}">Siguiente
-            </a>
-        </li>    
-    </ul>
-    
+                                button large previous
+                            {% endif %}">Anterior
+                </a>
+            </li>
+            <li>
+                <a  href="{{ url_for('ResultadoBusqueda', page=recetas.next_num) }}" 
+                    class=" {% if recetas.page == recetas.pages %}
+                                disabled button large next
+                            {% else %}
+                                button large next
+                            {% endif %}">Siguiente
+                </a>
+            </li>    
+        </ul>
+    {% else %}
+        <article class="post">
+            <!-- Mini Posts -->
+            <section>
+                <div class="mini-posts">
+                    <header>
+                        <h2><a>Ups, lo sentimos, no encontramos recetas relacionadas con tu búsqueda.</a></h2>
+                    </header>
+                </div>
+            </section>
+        </article>
+    {% endif %}
 
 {% endblock %}
 
