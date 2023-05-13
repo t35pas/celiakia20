@@ -953,12 +953,11 @@ def ListadoIngredientes():
 def EliminarIngrediente(idIng):
     ingrediente = Ingrediente.find_by_id(idIng)
     if ingrediente.por_receta:
-        flash('El ingrediente forma parte de una receta, no es posible eliminarlo.')
-        return redirect(url_for('ListadoIngredientes'))
-    else:
-        Ingrediente.delete_from_db(ingrediente)
-        flash('El ingrediente se ha eliminado correctamente.')
-        return redirect(url_for('ListadoIngredientes'))
+        for ixr in ingrediente.por_receta:
+            Ingrediente_Por_Receta.delete_from_db(ixr)  
+    Ingrediente.delete_from_db(ingrediente)
+    flash('El ingrediente se ha eliminado correctamente.')
+    return redirect(url_for('ListadoIngredientes'))
     
 @app.route('/admin/ingrediente/ver/<idIng>', methods=['GET', 'POST'])
 @login_required
