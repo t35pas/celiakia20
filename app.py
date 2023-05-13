@@ -189,9 +189,8 @@ def CrearCuenta():
                                     id_token= usuario['idToken']
                                     )
             Usuario.save_to_db(nuevoUsuario)
-            
-            print(nuevoUsuario.id)
-
+            nuevoUsuario.administrador = False
+            Usuario.save_to_db(nuevoUsuario)
             if Usuario.find_by_id(nuevoUsuario.id):
                 flash('La cuenta se creó exitosamente. Escribe tu email y contraseña para ingresar.')
                 return redirect(url_for('Login'))
@@ -1091,7 +1090,7 @@ def EliminarAdmin(idAdmin):
     usuario = Usuario.find_by_id(idAdmin)
     usuario.administrador = False
     db.session.commit()
-
+    flash('Permisos de administrador eliminados para usuario: '+ usuario.email)
     return redirect(url_for('ListadoAdmin'))
 
 
