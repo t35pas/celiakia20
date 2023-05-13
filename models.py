@@ -417,7 +417,7 @@ class Usuario(db.Model, UserMixin):
 
     @classmethod
     def find_users(cls):
-        return cls.query.filter_by(administrador=False).all()
+        return cls.query.filter((cls.administrador==False) | (cls.administrador == None)).all()
 
     def save_to_db(self):
         db.session.add(self)

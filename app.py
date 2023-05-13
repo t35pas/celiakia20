@@ -182,16 +182,23 @@ def CrearCuenta():
         email = form.emailUsuario.data.strip()
 
         try:
-            usuario = auth.create_user_with_email_and_password(email, passw)
-
+            usuario = auth.create_user_with_email_and_password(email, passw)            
             nuevoUsuario = Usuario(nombre=nombre,
                                     apellido=apellido,
                                     email=email,
                                     id_token= usuario['idToken']
                                     )
             Usuario.save_to_db(nuevoUsuario)
-            flash('La cuenta se creó exitosamente. Escribe tu email y contraseña para ingresar.')
-            return redirect(url_for('Login'))
+            
+            print(nuevoUsuario.id)
+
+            if Usuario.find_by_id(nuevoUsuario.id):
+                flash('La cuenta se creó exitosamente. Escribe tu email y contraseña para ingresar.')
+                return redirect(url_for('Login'))
+            else: 
+                auth.delete_user_account(usuario['idToken'])
+                flash('Hubo un error con tu cuenta, revisa nuevamente los datos ingresados.')
+                return redirect(url_for('CrearCuenta'))    
         except:
             flash('Hubo un error con tu cuenta, revisa nuevamente los datos ingresados.')
             return redirect(url_for('CrearCuenta'))
@@ -232,17 +239,20 @@ def Logout():
 # Por default se carga buscar por nombre de receta
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/recetasNombre', methods=['GET', 'POST'])
-@login_required
 def PaginaInicio():
-    # Cada vez que ingreso a busqueda por receta elimino session de ingredientes
-    session.pop('ingredientes_id', None)
-    if Receta.query.all():
-        return render_template('index.html',
-                               form=BuscarPorReceta(),
-                               random=selectRandom())
+
+    if current_user.is_authenticated:
+        # Cada vez que ingreso a busqueda por receta elimino session de ingredientes
+        session.pop('ingredientes_id', None)
+        if Receta.query.all():
+            return render_template('index.html',
+                                form=BuscarPorReceta(),
+                                random=selectRandom())
+        else:
+            return render_template('index.html',
+                                form=BuscarPorReceta())
     else:
-        return render_template('index.html',
-                               form=BuscarPorReceta())
+        return redirect(url_for('Login'))
 
 #Mundo de la celiakia
 @app.route('/sobreNosotros', methods=['GET', 'POST'])
@@ -1048,6 +1058,8 @@ def EliminarDificultad(idDif):
 def ListadoAdmin():
     form = CrearAdmin()
     form.usuario.choices = [(i.id, i.email) for i in Usuario.find_users()]
+    users = [(i.id, i.email,i.administrador) for i in Usuario.find_users()]
+    print(users)
 
     if form.validate_on_submit():
 
