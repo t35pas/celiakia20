@@ -28,11 +28,11 @@
 			</ul>
 		</footer>
 	</article>
-	<ul class="actions pagination">
-		<li><a href="{{url_for('MundoCeliakia', idPagina=1)}}" class="disabled button large previous">1</a></li>
-		<li><a href="{{url_for('MundoCeliakia', idPagina=2)}}" class="button large next">2</a></li>
-		<li><a href="{{url_for('MundoCeliakia', idPagina=3)}}" class="button large next">3</a></li>
-		<li><a href="{{url_for('MundoCeliakia', idPagina=4)}}" class="button large next">4</a></li>
+	<ul>
+		<a href="{{url_for('MundoCeliakia', idPagina=1)}}" class="disabled button small previous">PÁGINA ACTUAL</a>
+		<a href="{{url_for('MundoCeliakia', idPagina=2)}}" class="button small next">2</a>
+		<a href="{{url_for('MundoCeliakia', idPagina=3)}}" class="button small next">3</a>
+		<a href="{{url_for('MundoCeliakia', idPagina=4)}}" class="button small next">4</a>
 	</ul>
 
 {% endblock %}
