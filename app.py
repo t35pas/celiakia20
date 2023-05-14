@@ -255,11 +255,13 @@ def PaginaInicio():
 
 #Mundo de la celiakia
 @app.route('/sobreNosotros', methods=['GET', 'POST'])
+@login_required
 def SobreNosotros():
     return render_template('sobreNosotros.html',
                            random=selectRandom())
 #Mundo de la celiakia
 @app.route('/MundoCeliaKIA/<idPagina>', methods=['GET', 'POST'])
+@login_required
 def MundoCeliakia(idPagina):
     if idPagina == '1':
         return render_template('mundoCeliakia/indexMundoCeliakia_1.html',
@@ -276,6 +278,7 @@ def MundoCeliakia(idPagina):
 
 #Mundo de la celiakia
 @app.route('/MundoCeliaKIA/articulos/<idArticulo>', methods=['GET', 'POST'])
+@login_required
 def MundoCeliakiaArticulo(idArticulo):
     if idArticulo == '1':
         return render_template('mundoCeliakia/enfermedadCeliaca.html',
@@ -309,6 +312,7 @@ def MundoCeliakiaArticulo(idArticulo):
 # Ver receta por nombre
 
 @app.route('/recetasNombre/buscar', methods=['GET', 'POST'])
+@login_required
 def RecetasPorNombre():
     form = BuscarPorReceta()
 
