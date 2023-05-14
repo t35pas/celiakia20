@@ -689,9 +689,14 @@ def EditarIngDeReceta(idIxr):
 @login_required
 def EliminarIngPorReceta(idIxr):
     ingrediente = Ingrediente_Por_Receta.find_by_id(idIxr)
+    idReceta = ingrediente.id_receta
     Ingrediente_Por_Receta.delete_from_db(ingrediente)
     flash('El Ingrediente se ha eliminado correctamente de la receta.')
-    return redirect(url_for('IngPorReceta'))
+    
+    if 'creando' in session:
+        return redirect(url_for('IngPorReceta', idReceta=idReceta))
+    else:
+        return redirect(url_for('EditarIngPorReceta', idReceta=idReceta))
 
 # Crear paso
 
@@ -776,9 +781,13 @@ def EditarPasoReceta(idPaso):
 @login_required
 def EliminarPrepPorReceta(idPaso):
     paso = Preparacion.find_by_id(idPaso)
+    idReceta = paso.id_receta
     Preparacion.delete_from_db(paso)
     flash('El paso se ha eliminado correctamente de la receta.')
-    return redirect(url_for('PrepPorReceta'))
+    if 'creando' in session:
+        return redirect(url_for('PrepPorReceta', idReceta=idReceta))
+    else:
+        return redirect(url_for('EditarPrepPorReceta', idReceta=idReceta))
 
 # Eliminar receta completa
 
