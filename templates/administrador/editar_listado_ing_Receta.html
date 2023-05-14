@@ -48,7 +48,7 @@
                                     <td>{{ ixr.ingredientes.descripcion }}</td>
                                     <td>
                                         <a href="{{url_for('EditarIngDeReceta',idIxr = ixr.id)}}" class="icon solid fa-pen-to-square" style="color:rgb(154, 73, 230)"></a>
-                                        <a href="#" class="icon solid fa-trash-can" style="color:lightcoral"></a>
+                                        <a href="{{url_for('EliminarIngPorReceta',idIxr = ixr.id)}}" class="icon solid fa-trash-can" style="color:lightcoral"></a>
                                     </td>
                                 </tr>
                             {% endfor %}
