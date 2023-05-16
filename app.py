@@ -152,8 +152,6 @@ def Login():
     if form.validate_on_submit():
         passw = form.contrasenia.data
         email = form.nombreUsuario.data.strip()
-        print(passw)
-        print(email)
         try:
             print("iniciando sesion")
             iniciar_sesion = auth.sign_in_with_email_and_password(email, passw)
