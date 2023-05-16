@@ -152,8 +152,10 @@ def Login():
     if form.validate_on_submit():
         passw = form.contrasenia.data
         email = form.nombreUsuario.data.strip()
-
+        print(passw)
+        print(email)
         try:
+            print("iniciando sesion")
             iniciar_sesion = auth.sign_in_with_email_and_password(email, passw)
             usuario = Usuario.find_by_email(email)
             login_user(usuario)
@@ -165,6 +167,7 @@ def Login():
             else:
                 return redirect(url_for('PaginaInicio'))
         except:
+            print("exception")
             return render_template('login.html', form=form)
     return render_template('login.html', form=form)
 
