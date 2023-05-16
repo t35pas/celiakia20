@@ -591,8 +591,10 @@ def InfoGeneral():
                 Receta.save_to_db(nuevaReceta)
 
                 session['creando'] = True
-
-                return redirect(url_for('IngPorReceta', idReceta=nuevaReceta.id))
+                receta = Receta.find_by_id(nuevaReceta.id)
+                return render_template('administrador/crear_ing_por_receta.html',
+                               form=Form_Ingrediente(),
+                               receta=receta)
 
             else:
                 return redirect(url_for('InfoGeneral'))
