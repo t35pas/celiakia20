@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationE
 from models import Dificultad,Favorito,Ingrediente,Ingrediente_Por_Receta,Preparacion,Receta,Unidad,Usuario
 
 class LoginForm(FlaskForm):
-    nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=20)])
+    nombreUsuario = StringField('Nombre de usuario', validators=[DataRequired(), Length(min=2, max=100)])
     contrasenia = PasswordField('Contrasenia',validators=[DataRequired()])
     submit = SubmitField('Ingresar')
 
