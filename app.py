@@ -926,11 +926,11 @@ def VerRecetaAdmin(idReceta):
 @login_required
 def ListadoIngredientes():
     form = CrearIngrediente()
-
+    
+    descripcion = form.descripcionIngrediente.data
+    imagen = form.imagenIngrediente.data
+    
     if form.validate_on_submit():
-
-        descripcion = form.descripcionIngrediente.data
-        imagen = form.imagenIngrediente.data
 
         if imagen:
             nombreImagen = "ing_" + descripcion.replace(' ', '').lower()
