@@ -326,6 +326,8 @@ def RecetasPorNombre():
         # Guardo los ids de las recetas que coinciden con la busqueda
         session['recetas_id'] = recetas_id
         return redirect(url_for('ResultadoBusqueda'))
+    else: 
+        return redirect(url_for('PaginaInicio'))
 
 # Ver receta por ingrediente
 
